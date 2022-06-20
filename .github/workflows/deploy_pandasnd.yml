@@ -88,5 +88,5 @@ jobs:
         with:
           app-name: "pdvoucher"
           slot-name: "Production"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF74F2398F8448C8A651F97B0FAD4D64 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D92F9CB500454871BD10F43BD516C2E8 }}
           package: .
