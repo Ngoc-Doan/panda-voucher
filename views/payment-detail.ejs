@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Checkout | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+<style>
+    .paymentDetailPage .breadcrumbs .breadcrumb li a.payment:after {
+        content: "";
+        height: auto;
+        width: auto;
+        border-width: 8px;
+        border-style: solid;
+        border-color: transparent transparent transparent #FE980F;
+        position: absolute;
+        top: 11px;
+        left: 178px;
+    }
+    .paymentDetailPage .shopper-informations label {
+        margin-top: 20px;
+        font-family: 'Roboto', sans-serif;
+    }
+    .paymentDetailPage .shopper-informations p {
+        margin-top: 10px;
+    }
+    .paymentDetailPage .order-status {
+
+    }
+
+@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+    .paymentDetailPage .snip1582 {
+        background-color: #c47135;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'BenchNine', Arial, sans-serif;
+        font-size: 1em;
+        font-size: 22px;
+        line-height: 1em;
+        margin: 0px 40px;
+        outline: none;
+        padding: 12px 40px 10px;
+        position: relative;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .paymentDetailPage .snip1582:before,
+    .paymentDetailPage .snip1582:after {
+        border-color: transparent;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+        border-style: solid;
+        border-width: 0;
+        content: "";
+        height: 24px;
+        position: absolute;
+        width: 24px;
+    }
+
+    .paymentDetailPage .snip1582:before {
+        border-color: #c47135;
+        border-top-width: 2px;
+        left: 0px;
+        top: -5px;
+    }
+
+    .paymentDetailPage .snip1582:after {
+        border-bottom-width: 2px;
+        border-color: #c47135;
+        bottom: -5px;
+        right: 0px;
+    }
+
+    .paymentDetailPage .snip1582:hover,
+    .paymentDetailPage .snip1582.hover {
+        background-color: #c47135;
+    }
+
+    .paymentDetailPage .snip1582:hover:before,
+    .paymentDetailPage .snip1582.hover:before,
+    .paymentDetailPage .snip1582:hover:after,
+    .paymentDetailPage .snip1582.hover:after {
+        height: 100%;
+        width: 100%;
+    }
+
+    .paymentDetailPage .order-status .order-status-false {
+        background-color: #c47135;
+        border: none;
+        color: #ffffff;
+        display: inline-block;
+        font-family: 'BenchNine', Arial, sans-serif;
+        font-size: 1em;
+        font-size: 22px;
+        line-height: 1em;
+        margin: 0px 40px;
+        outline: none;
+        padding: 12px 40px 10px;
+        position: relative;
+        text-transform: uppercase;
+        font-weight: 700;
+        border-radius: 30px;
+    }
+    .paymentDetailPage .order-status {
+        margin: 50px;
+    }
+    .paymentDetailPage .cancel-purchase-order {
+        border: 1px solid;
+        margin-bottom: 30px;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 20px;
+    }
+    .paymentDetailPage .cancel-purchase-order:hover {
+        background-color: #f1e8e8;
+    }
+    .paymentDetailPage .display-button-cancel-purchase {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-content: center;
+        justify-content: space-around;
+    }
+</style>
+</head><!--/head-->
+
+<body>
+    <div class="paymentDetailPage">
+        <%- include component/header.ejs %>
+        <!--/header-->
+    
+        <section id="cart_items">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <ol class="breadcrumb">
+                      <li><a href="./">Trang chủ</a></li>
+                      <li><a href="./payment" class="payment">Thanh toán</a></li>
+                      <li class="active">Chi tiết</li>
+                    </ol>
+                </div><!--/breadcrums-->
+                <div class="shopper-informations">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="shopper-info">
+                                <p>Thông tin khách hàng</p>
+                                <label for="">Họ và tên:</label>
+                                <div>
+                                    <%= buy.name %>
+                                </div>
+                                <label for="">Số điện thoại:</label>
+                                <div>
+                                    <%= buy.phone %>
+                                </div>
+                                <label for="">Email:</label>
+                                <div>
+                                    <%= buy.email %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 clearfix">
+                            <div class="bill-to">
+                                <p>Địa chỉ giao hàng</p>
+                                <div class="form-one">
+                                    <label for="">Tỉnh / thành phố:</label>
+                                    <div>
+                                        <%= buy.city.name %>
+                                    </div>
+                                    <label for="">Quận / Thị xã:</label>
+                                    <div>
+                                        <%= buy.district %>
+                                    </div>
+                                    <label for="">Địa chỉ:</label>
+                                    <div>
+                                        <%= buy.address %>
+                                    </div>
+                                </div>
+                                <div class="form-one">
+                                    <label for="">Nhà vận chuyển:</label>
+                                    <div>
+                                        <%= buy.shipper.item.name %>
+                                    </div>
+                                    <label for="">Phí vận chuyển:</label>
+                                    <div>
+                                        <%= buy.shipper.price %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="bill-to">
+                                <p>Thông tin khác</p>
+                                <label for="">Ngày đặt hàng:</label>
+                                <div>
+                                    <%= moment(buy.orderDate).format('HH:mm DD/MM/YYYY') %>
+                                </div>
+                                <label for="">Giao hàng dự kiến:</label>
+                                <div>
+                                    <%= moment(buy.deliveryDate).format('HH:mm DD/MM/YYYY') %>
+                                </div>
+                                <label for="">Ghi chú:</label>
+                                <div>
+                                    <%= buy.note %>
+                                </div>
+                                <label>Lưu ý</label>
+                                <% if (buy.check) { %>
+                                    <div>
+                                        Yêu cầu kiểm tra trước khi nhận hàng
+                                    </div>
+                                <% } else { %>
+                                    <div>
+                                        Không yêu cầu kiểm tra trước khi nhận hàng
+                                    </div>
+                                <% } %>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-payment">
+                    <h2>Chi tiết sản phẩm</h2>
+                </div>
+    
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu" style="text-align: center;">
+                                <td class="image" colspan="2">Sản phẩm</td>
+                                <td class="price">Giá tiền</td>
+                                <td class="quantity">Số lượng</td>
+                                <td class="total">Tổng tiền</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% buy.products.forEach(v => { %>
+                                <tr>
+                                    <td class="cart_product">
+                                        <a href=""><img src="<%= v.voucher.image[0] %>" alt="" width="100px" height="100px"></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="./detail?id=<%= v.voucher._id %>"><%= v.voucher.name %></a></h4>
+                                        <p>Web ID: <%= v.voucher._id.toString().substring(0,6) %></p>
+                                    </td>
+                                    <td class="cart_price" style="text-align: center;">
+                                        <p><%= v.voucher.price.toLocaleString() %></p>
+                                    </td>
+                                    <td class="cart_quantity" style="text-align: center;">
+                                        <div class="cart_quantity_button">
+                                            <input class="cart_quantity_input" type="text" name="quantity" value="<%= v.amount %>" autocomplete="off" size="2" disabled>
+                                        </div>
+                                    </td>
+                                    <td class="cart_total" style="text-align: center;">
+                                        <p class="cart_total_price"><%= (v.voucher.price * v.amount).toLocaleString() %></p>
+                                    </td>
+                                </tr>
+                            <% }) %>
+
+
+                            <tr>
+                                <tr colspan="4">&nbsp;</tr>
+                                <td colspan="3">
+                                    <table class="table table-condensed total-result">
+                                        <tr>
+                                            <td>Tổng giá giỏ hàng</td>
+                                            <td class="all-price" ><%= buy.totalPrice.toLocaleString() %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nhà vận chuyển</td>
+                                            <td class="name-shipper"><%= buy.shipper.item.name %></td>
+                                        </tr>
+                                        <tr class="shipping-cost">
+                                            <td>Phí vận chuyển</td>
+                                            <td class="price-ship"><%= buy.shipper.price.toLocaleString() %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tổng cộng</td>
+                                            <td><span class="all-price-total"><%= (buy.totalPrice + buy.shipper.price).toLocaleString() %></span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="order-status" style="text-align: center;">
+                    <% if (buy.validation) { %>
+                        <% if (buy.receive.check) { %>
+                            <div class="order-status-false">
+                                Khách hàng đã nhận hàng vào <%= moment(buy.receive.date).format('HH:mm') %> ngày <%= moment(buy.receive.date).format('DD/MM/YYYY') %>
+                            </div>
+                        <% } else if (buy.cancel.check) { %>
+                            <div class="order-status-false">
+                                Đơn hàng đã bị huỷ vào <%= moment(buy.cancel.date).format('HH:mm') %> ngày <%= moment(buy.cancel.date).format('DD/MM/YYYY') %>
+                            </div>
+                        <% } else { %>
+                            <div style="text-align: center;">
+                                <button class="snip1582" data-buy="<%= buy._id %>" onclick="updateReceivePurchase(this)">Đã nhận được hàng ?</button>
+                            </div>
+                        <% } %>
+                    <% } else { %>
+                        <% if (buy.cancel.check) { %>
+                            <div class="order-status-false">
+                                Đơn hàng đã bị huỷ vào <%= moment(buy.cancel.date).format('HH:mm') %> ngày <%= moment(buy.cancel.date).format('DD/MM/YYYY') %>
+                            </div>
+                        <% } else { %>
+                            <div class="display-button-cancel-purchase">
+                                <div class="cancel-purchase-order">
+                                    <i class="fas fa-ban"></i> HUỶ ĐƠN HÀNG
+                                </div>
+                            </div>
+    
+                            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+                                <div class="modal-dialog modal-sm">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title" id="myModalLabel">Bạn chắc chắn chứ ?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" id="modal-btn-no">Huỷ bỏ</button>
+                                      <button type="button" class="btn btn-primary" id="modal-btn-yes" data-id="<%= buy._id %>" style="margin: 0px;">Đồng ý</button>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+    
+                            <div class="order-status-false">
+                                Đang xác thực
+                            </div>
+                        <% } %>
+                    <% } %>
+
+                    <!-- <div class="order-status-false">
+                        Đơn hàng hoàn thành
+                    </div> -->
+                </div>
+            </div>
+        </section> <!--/#cart_items-->
+        <%- include component/footer.ejs %>
+    </div>
+
+    <%- include component/message-alert.ejs %>
+</body>
+</html>

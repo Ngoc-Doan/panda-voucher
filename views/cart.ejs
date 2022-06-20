@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cart | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+</head>
+<!--/head-->
+
+<Style>
+.cartPage .cart_info .cart_menu {
+    text-align: center;
+}
+.cartPage .cart_quantity input:disabled {
+    background: rgb(255, 255, 255);
+}
+.cartPage #do_action .user_info .input_city_other {
+    display: none;
+}
+</Style>
+<body>
+    <%- include component/header.ejs %>
+    <!--/header-->
+    <div class="cartPage" data-user="<%= user._id %>">
+        <section id="cart_items">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li class="active">Giỏ hàng</li>
+                    </ol>
+                </div>
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="image" colspan="2">Sản phẩm</td>
+                                <td class="price">Giá</td>
+                                <td class="quantity" width="140px">Số lượng</td>
+                                <td class="total">Tổng giá</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% carts.forEach(cart => { %>
+                                <tr class="<%= cart._id %>">
+                                    <td class="cart_product">
+                                        <a href=""><img src="<%= cart.voucher.image[0] %>" alt="" width="100px" height="100px"></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4 style="word-break: break-word;"><a href="/detail?id=<%= cart.voucher._id %>"><%= cart.voucher.name %></a></h4>
+                                        <p>Web ID: <%= cart.voucher._id.toString().substring(0,6) %></p>
+                                    </td>
+                                    <td class="cart_price" style="text-align: center;">
+                                        <p><%= cart.voucher.price.toLocaleString() %>đ</p>
+                                    </td>
+                                    <td class="cart_quantity cart_quantity<%= cart._id %>" style="text-align: center;">
+                                        <div class="cart_quantity_button">
+                                            <a class="cart_quantity_up" onclick="addQuantityItemCart(this)" data-product="<%= cart._id %>" style="cursor: pointer;"> + </a>
+                                            <input class="cart_quantity_input" type="text" name="quantity" value="<%= cart.amount %>" autocomplete="off" size="2" disabled>
+                                            <a class="cart_quantity_down" onclick="subQuantityItemCart(this)" data-product="<%= cart._id %>" style="cursor: pointer;"> - </a>
+                                        </div>
+                                    </td>
+                                    <td class="cart_total" style="text-align: center;">
+                                        <p class="cart_total_price cart_total_price<%= cart._id %>"><%= (cart.voucher.price * cart.amount).toLocaleString() %>đ</p>
+                                    </td>
+                                    <td class="cart_delete">
+                                        <a class="cart_quantity_delete" onclick="deleteItemProductCart(this)" data-product="<%= cart._id %>" style="cursor: pointer;"><i class="fa fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!--/#cart_items-->
+    
+        <section id="do_action">
+            <div class="container">
+                <div class="heading">
+                    <h3>Thông tin địa chỉ ?</h3>
+                    <p>Chọn và điền đầy đủ thông tin nhận hàng của bạn vào các ô bên dưới.</p>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="chose_area">
+                            <ul class="user_info">
+                                <li class="single_field">
+                                    <label>Tỉnh / Thành phố:</label>
+                                    <select id="select_city_cart">
+                                        <% cities.forEach(c => { %>
+                                            <option value="<%= c._id %>"><%= c.name %></option>
+                                        <% }) %>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <div class="input_city_other">
+                                        <label>Tỉnh / Thành phố khác:</label>
+                                        <input type="text" placeholder="Tỉnh / Thành phố khác" class="city">
+                                    </div>
+                                </li>
+                                <li class="single_field">
+                                    <label>Quận / Thị xã:</label>
+                                    <input type="text" placeholder="Quận / Thị xã" class="district_cart">
+    
+                                </li>
+                                <li class="single_field zip-field">
+                                    <label>Địa chỉ:</label>
+                                    <input type="text" placeholder="Địa chỉ" class="address_cart">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="total_area">
+                            <ul>
+                                <li>Tổng cộng <span class="total_price"><%= totalPrice.toLocaleString() %>đ</span></li>
+                            </ul>
+                            <!-- <a class="btn btn-default update">Cập nhật</a> -->
+                            <a class="btn btn-default check_out" id="check-out-profile" data-cart="<%= idCart %>" data-length="<%= carts.length %>" onclick="redirectCheckout(this)">Thanh toán</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--/#do_action-->
+    </div>
+    <%- include component/message-alert.ejs %>
+
+    <%- include component/footer.ejs %>
+    <!--/Footer-->
+</body>
+
+</html>

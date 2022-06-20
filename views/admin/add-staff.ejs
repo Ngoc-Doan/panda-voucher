@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin add staff | Pandas Voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+  <style>
+    .addStaffAdmin .show-image-upload .edit-review-upload-block img.edit-review-upload {
+      width: 200px;
+      height: 200px;
+    }
+    .addStaffAdmin .show-image-upload .edit-review-upload-block {
+      display:inline-block;
+      margin:5px 20px;
+      padding:5px;
+      border:1px solid #CCC;
+    }
+    .addStaffAdmin .show-image-upload {
+      width: 100%;
+      text-align:center;
+    }
+    .addStaffAdmin .cancel-review-img-upload {
+      cursor: pointer;
+    }
+    .addStaffAdmin .label-for-img-upload-input {
+      display: inline-block;
+      background-color: #A13BB6;
+      color: white;
+      padding: 0.5rem;
+      font-family: sans-serif;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .addStaffAdmin #show-message-delay-add-staff-user-admin {
+      display: none;
+    }
+    .addStaffAdmin .loading-add-staff-user-admin {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-around;
+    }
+    .addStaffAdmin .loading-add-staff-user-admin .loader,
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar {
+      width: 60px;
+      height: 20px;
+    }
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar {
+      position: absolute;
+      display: flex;
+      align-items: center;
+    }
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar::before,
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #9c27b0;
+      background: #9c27b0;
+      opacity: 0;
+      box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+      border-radius: 10px;
+      animation: slideleft 2s ease-in-out infinite;
+    }
+
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar1::before { animation-delay: 0.00s }
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar1::after  { animation-delay: 0.3s }
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar2::before { animation-delay: 0.60s }
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar2::after  { animation-delay: 0.90s }
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar3::before { animation-delay: 1.20s }
+    .addStaffAdmin .loading-add-staff-user-admin .loader .bar3::after  { animation-delay: 1.50s }
+
+    @keyframes slideleft {
+      10% { opacity: 0; transform: scale(0); right: 0 }
+      50% { opacity: 1; transform: scale(1) }
+      90% { opacity: 0; transform: scale(0); right: 100% }
+    }
+  </style>
+</head>
+
+<body class="addStaffAdmin" data-user="<%= user._id %>">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Thêm nhân viên mới</h4>
+                  <p class="card-category">Các thông tin cơ bản</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Họ tên nhân viên</label>
+                              <input type="text" class="form-control" value="" id="name-staff">
+                            </div>
+                        </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Địa chỉ email nhân viên</label>
+                          <input type="email" class="form-control" value="" id="email-staff">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">username</label>
+                          <input type="text" class="form-control"  value="" id="username-staff">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Số điện thoại nhân viên</label>
+                          <input type="text" class="form-control"  value="" id="phone-staff">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Lương cơ bản</label>
+                          <input type="number" class="form-control"  value="" id="salary-staff">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Ảnh đại diện</label>
+                          <div>
+                            <input type="file" id="img-upload-input" hidden accept=".jpg, .jpeg, .png" onchange="readURL(this)" style="opacity: 1; position: initial;"/>
+                            <label for="img-upload-input" class="label-for-img-upload-input">Chọn hình ảnh đại diện</label>
+                          </div>
+                        </div>
+                        <div class="show-image-upload">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Mật khẩu</label>
+                            <input type="password" class="form-control" id="password-staff">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Nhập lại mật khẩu</label>
+                              <input type="password" class="form-control" id="re-password-staff">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Xác thực mật khẩu của bạn</label>
+                          <input type="password" class="form-control" id="password-admin">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" id="show-message-delay-add-staff-user-admin">
+                      <div class="col-md-12 loading-add-staff-user-admin">
+                        <label style="font-size:25px;">Đang xử lý</label>
+                      </div>
+                      <div class="col-md-12 loading-add-staff-user-admin">
+                        <div class="loader">
+                          <div class="bar bar1"></div>
+                          <div class="bar bar2"></div>
+                          <div class="bar bar3"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary pull-right" id="btn-add-staff-user-admin">Thêm nhân viên mới</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+
+</html>
+<script>
+    function readURL(input) {
+      if (input.files) {
+        var filesAmount = input.files.length
+
+        for (var i = 0; i < filesAmount; i++) {
+          var reader = new FileReader();
+
+          reader.onload = (event) => {
+            $('.addStaffAdmin .show-image-upload').html(`
+            <div class="edit-review-upload-block">
+              <i class="material-icons cancel-review-img-upload" onclick="removeImg(this)">close</i>
+              <img src="${event.target.result}" class="edit-review-upload">
+            </div>
+            `)
+          }
+          reader.readAsDataURL(input.files[i]);
+        }
+      }
+    }
+
+    function removeImg(element) {
+      element.parentNode.remove()
+      $('#img-upload-input').val("")
+    }
+
+    $(document).ready(e => {
+        $('.addStaffAdmin #btn-add-staff-user-admin').on('click', e => {
+            $('.addStaffAdmin #show-message-delay-add-staff-user-admin').show()
+
+            const image = $('.addStaffAdmin .show-image-upload .edit-review-upload-block img').attr('src')
+            const id = document.querySelector('.addStaffAdmin').dataset.user
+            const name = $('.addStaffAdmin #name-staff').val()
+            const email = $('.addStaffAdmin #email-staff').val()
+            const username = $('.addStaffAdmin #username-staff').val()
+            const phone = $('.addStaffAdmin #phone-staff').val()
+            const salary = $('.addStaffAdmin #salary-staff').val()
+            const password = $('.addStaffAdmin #password-staff').val()
+            const re_password = $('.addStaffAdmin #re-password-staff').val()
+            const valid_password = $('.addStaffAdmin #password-admin').val()
+
+            const query = {
+                id,
+                name,
+                email,
+                username,
+                phone,
+                salary,
+                image,
+                password,
+                re_password,
+                valid_password
+            }
+
+            fetch('../admin/api/users/staff',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(query)
+            }).then(res => res.text())
+            .then(data => {
+                data = JSON.parse(data)
+                if (data.status) {
+                    $('.addStaffAdmin #show-message-delay-add-staff-user-admin').hide()
+                    $('.messsageAlertPage #message-alert-show .content').html(data.message)
+                    $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                    setTimeout(() => {
+                        $('.messsageAlertPage #message-alert-show').fadeOut();
+                        window.location.href = '../admin/staffs'
+                    },700)
+                }
+                else {
+                    $('.addStaffAdmin #show-message-delay-add-staff-user-admin').hide()
+                    $('.messsageAlertPage #message-alert-show .content').html(data.error)
+                    $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                    setTimeout(() => {
+                        $('.messsageAlertPage #message-alert-show').fadeOut();
+                    },3000)
+                }
+            }).catch(e => {
+                $('.addStaffAdmin #show-message-delay-add-staff-user-admin').hide()
+                $('.messsageAlertPage #message-alert-show .content').html(e.message)
+                $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                setTimeout(() => {
+                    $('.messsageAlertPage #message-alert-show').fadeOut();
+                },3000)
+            })
+        })
+    })
+</script>

@@ -1,0 +1,112 @@
+<footer id="footer">
+    <!--Footer-->
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="companyinfo">
+                        <h2><span>Pandas</span>-Voucher</h2>
+                        <p>Cung cấp các sản phẩm đầy chất lượng</p>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <% footer.forEach(f => { %>
+                        <div class="col-sm-3">
+                            <div class="video-gallery text-center">
+                                <a href="/detail?id=<%= f.voucher._id %>">
+                                    <div class="iframe-img">
+                                        <img src="<%= f.voucher.image[0] %>" alt="" width="133.13px" height="61px"/>
+                                    </div>
+                                    <div class="overlay-icon">
+                                        <i class="fa fa-play-circle-o"></i>
+                                    </div>
+                                </a>
+                                <p><%= f.voucher.name %></p>
+                                <h2><%= f.voucher.price.toLocaleString() %></h2>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                <div class="col-sm-3">
+                    <div class="address">
+                        <img src="images/home/map.png" alt="" />
+                        <p>19 Đ.Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Thành phố Hồ Chí Minh</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-widget">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="single-widget">
+                        <h2>Dịch vụ</h2>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#">Hỗ trợ trực tuyến</a></li>
+                            <li><a href="#">Liên hệ chúng tôi</a></li>
+                            <li><a href="#">Tình trạng đơn hàng</a></li>
+                            <li><a href="#">Thay đổi giỏ hàng</a></li>
+                            <li><a href="#">Câu hỏi thường gặp</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="single-widget">
+                        <h2>Phân loại</h2>
+                        <ul class="nav nav-pills nav-stacked">
+                            <% categories.forEach(g => { %>
+                                <li><a href="#"><%= g.name %></a></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="single-widget">
+                        <h2>Chính sách</h2>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#">Điều khoản sử dụng</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Chính sách hoàn lại tiền</a></li>
+                            <li><a href="#">Hệ thống thanh toán</a></li>
+                            <li><a href="#">Hệ thống vé</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="single-widget">
+                        <h2>Giới thiệu về Pandas Voucher</h2>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#">Thông tin về shop</a></li>
+                            <li><a href="#">Nghề nghiệp</a></li>
+                            <li><a href="#">Địa chỉ</a></li>
+                            <li><a href="#">Chương trình liên kết</a></li>
+                            <li><a href="#">Copyright</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-sm-offset-1">
+                    <div class="single-widget">
+                        <h2>Thông tin về Pandas Voucher ?</h2>
+                        <form action="#" class="searchform">
+                            <input type="text" placeholder="Địa chỉ của bạn" />
+                            <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                            <p>Nhận được các bản cập nhật mới nhất về <br />Pandas Voucher cho bạn...</p>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <p class="pull-left">Copyright © 2021 PANDAS-VOUCHER SHOP Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+</footer>

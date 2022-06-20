@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin Bill detail | Pandas Voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+  <style>
+    .ProfileBuyAdmin #show-message-delay-validate-buy {
+      display: none;
+    }
+    .ProfileBuyAdmin .loading-validate-buy {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-around;
+    }
+    .ProfileBuyAdmin .loading-validate-buy .loader,
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar {
+      width: 60px;
+      height: 20px;
+    }
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar {
+      position: absolute;
+      display: flex;
+      align-items: center;
+    }
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar::before,
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #9c27b0;
+      background: #9c27b0;
+      opacity: 0;
+      box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+      border-radius: 10px;
+      animation: slideleft 2s ease-in-out infinite;
+    }
+
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar1::before { animation-delay: 0.00s }
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar1::after  { animation-delay: 0.3s }
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar2::before { animation-delay: 0.60s }
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar2::after  { animation-delay: 0.90s }
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar3::before { animation-delay: 1.20s }
+    .ProfileBuyAdmin .loading-validate-buy .loader .bar3::after  { animation-delay: 1.50s }
+
+    @keyframes slideleft {
+      10% { opacity: 0; transform: scale(0); right: 0 }
+      50% { opacity: 1; transform: scale(1) }
+      90% { opacity: 0; transform: scale(0); right: 100% }
+    }
+  </style>
+</head>
+
+<body class="ProfileBuyAdmin" data-buy="<%= buy._id %>">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Chi tiết thông tin đơn hàng</h4>
+                  <p class="card-category">Thông tin chi tiết cho từng đơn hàng</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Mã hoá đơn</label>
+                                <input type="text" class="form-control" value="<%= buy._id %>" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Mã khách hàng</label>
+                                <input type="text" class="form-control" value="<%= buy.user %>" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Khách hàng</label>
+                                <input type="text" class="form-control" value="<%= buy.name %>" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Số điện thoại</label>
+                                <input type="text" class="form-control" value="<%= buy.phone %>" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Địa chỉ email</label>
+                                <input type="text" class="form-control" value="<%= buy.email %>" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Địa chỉ</label>
+                            <input type="text" class="form-control" value="<%= buy.address %>" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-4" id="expired">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Quận / Thị xã</label>
+                            <input type="text" class="form-control" value="<%= buy.district %>" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">Tỉnh / Thành phố</label>
+                            <input type="text" class="form-control" value="<%= buy.city.item.name %>" disabled>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="bmd-label-floating">Nhà vận chuyển</label>
+                              <input type="text" class="form-control" value="<%= buy.shipper.item.name %>" disabled>
+                          </div>
+                        </div>
+                        <div class="col-md-6" id="expired">
+                          <div class="form-group">
+                              <label class="bmd-label-floating">Phí vận chuyển</label>
+                              <input type="text" class="form-control" value="<%= buy.shipper.price %>" disabled>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+                              <label class="bmd-label-floating">Ngày đặt hàng</label>
+                              <input type="text" class="form-control" value="<%= moment(buy.orderDate).format('HH:ss - DD:MM:YYYY') %>" disabled>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group">
+                              <label class="bmd-label-floating">Giao hàng dự kiến</label>
+                              <input type="text" class="form-control" value="<%= moment(buy.deliveryDate).format('HH:ss - DD:MM:YYYY') %>" disabled>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Thông tin lưu ý</label>
+                                <% if (buy.check) { %>
+                                    <input type="text" class="form-control" value="Yêu cầu kiểm tra trước khi nhận hàng" disabled>
+                                <% } else { %>
+                                    <input type="text" class="form-control" value="Không có" disabled>
+                                <% } %>
+                            </div>
+                          </div>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Ghi chú</label>
+                            <div class="form-group">
+                              <label class="bmd-label-floating"> Ghi chú</label>
+                              <textarea class="form-control" rows="4" disabled><%= buy.note %></textarea>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-primary">
+                                  <h4 class="card-title ">Danh sách sản phẩm</h4>
+                                  <p class="card-category"> Sản phẩm có trong đơn hàng của khách hàng</p>
+                                </div>
+                                <div class="card-body">
+                                  <div class="table-responsive">
+                                    <table class="table">
+                                      <thead class=" text-primary">
+                                        <th colspan="2">
+                                          Sản phẩm
+                                        </th>
+                                        <th>
+                                          giá tiền
+                                        </th>
+                                        <th>
+                                          Số lượng
+                                        </th>
+                                        <th>
+                                          Tổng tiền
+                                        </th>
+                                      </thead>
+                                      <tbody>
+                                            <% buy.products.forEach(p => { %>
+                                                <tr>
+                                                    <td>
+                                                        <img src="<%= p.voucher.image[0] %>" alt="" width="100px" height="100px">
+                                                    </td>
+                                                    <td>
+                                                        <i><b><a href="../detail?id=<%= p.voucher._id %>" target="_blank"><%= p.voucher.name %></a></b></i>
+                                                    </td>
+                                                    <td>
+                                                        <%= p.voucher.price.toLocaleString() %>
+                                                    </td>
+                                                    <td>
+                                                        <%= p.amount %>
+                                                    </td>
+                                                    <td>
+                                                        <%= (p.voucher.price * p.amount).toLocaleString() %>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-md-8">
+
+                        </div>
+                        <div class="col-md-4">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Tổng giá sản phẩm
+                                    </th>
+                                    <td>
+                                        <%= buy.totalPrice.toLocaleString() %>
+                                    </td>
+                                </thead>
+                                <thead class=" text-primary">
+                                    <th>
+                                        Phí vận chuyển
+                                    </th>
+                                    <td>
+                                        <%= buy.shipper.price.toLocaleString() %>
+                                    </td>
+                                </thead>
+                                <thead class=" text-primary">
+                                    <th>
+                                        Tổng cộng hoá đơn
+                                    </th>
+                                    <td>
+                                        <%= (buy.totalPrice + buy.shipper.price).toLocaleString() %>
+                                    </td>
+                                </thead>
+                                <thead class=" text-primary">
+                                  <th>
+                                      Trạng thái đơn hàng
+                                  </th>
+                                  <% if (buy.validation) { %>
+                                    <% if (buy.receive.check) { %>
+                                      <td>
+                                        Đã nhận hàng vào <%= moment(buy.receive.date).format('HH:ss - DD:MM:YYYY') %>
+                                      </td>
+                                    <% } else if (buy.cancel.check) { %>
+                                      <td>
+                                        Đã huỷ vào <%= moment(buy.cancel.date).format('HH:ss - DD:MM:YYYY') %>
+                                      </td>
+                                    <% } else { %>
+                                      <td>
+                                        Đang giao hàng
+                                      </td>
+                                    <% } %>
+                                  <% } else { %>
+                                    <% if (buy.cancel.check) { %>
+                                      <td>
+                                        Đã huỷ vào <%= moment(buy.cancel.date).format('HH:ss - DD:MM:YYYY') %>
+                                      </td>
+                                    <% } else { %>
+                                      <td>
+                                        Cần xác thực đơn hàng
+                                      </td>
+                                    <% } %>
+                                  <% } %>
+                              </thead>
+                              </table>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                      </div>
+                    </div>
+                    <div class="row" id="show-message-delay-validate-buy">
+                      <div class="col-md-12 loading-validate-buy">
+                        <label style="font-size:25px;">Đang xử lý...</label>
+                      </div>
+                      <div class="col-md-12 loading-validate-buy">
+                        <div class="loader">
+                          <div class="bar bar1"></div>
+                          <div class="bar bar2"></div>
+                          <div class="bar bar3"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <% if (!buy.validation) { %>
+                      <% if (!buy.cancel.check) { %>
+                        <button type="button" class="btn btn-primary pull-right btn-validate-buy-user">Xác thực</button>
+                      <% } %>
+                    <% } else { %>
+                      <button type="button" onclick="downloadInvoice(this)" class="btn btn-primary pull-right btn-payment-buy-user">Xuất hoá đơn</button>
+                    <% } %>
+                    <% if (!buy.cancel.check) { %>
+                      <% if (!buy.receive.check) { %>
+                        <button type="button" class="btn btn-primary pull-right btn-cancel-buy-user" style="background-color: red;">Huỷ đơn hàng</button>
+                      <% } %>
+                    <% } %>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script src="https://unpkg.com/easyinvoice/dist/easyinvoice.min.js"></script>
+<script>
+  function downloadInvoice(element) {
+
+    $('.ProfileBuyAdmin #show-message-delay-validate-buy').show()
+    
+    const id = $('.ProfileBuyAdmin').attr('data-buy')
+    
+    fetch(`../admin/api/buys/${id}`, {
+      method: 'GET'
+    }).then(res => res.text())
+    .then(data => {
+      data = JSON.parse(data)
+      if (data.status) {
+        let temp = []
+        data.Buy.products.forEach(v => {
+          let m = {
+            "quantity": `${v.amount}`,
+            "description": `${v.voucher.name}`,
+            "tax": 0,
+            "price": `${v.voucher.price}`
+          }
+          temp.push(m)
+        })
+        var data = {
+            "documentTitle": "HOÁ ĐƠN THANH TOÁN", //Defaults to INVOICE
+            //"locale": "de-DE", //Defaults to en-US, used for number formatting (see docs)
+            "currency": "VND", //See documentation 'Locales and Currency' for more info
+            "taxNotation": "vat", //or gst
+            "marginTop": 25,
+            "marginRight": 25,
+            "marginLeft": 25,
+            "marginBottom": 25,
+            "logo": 'https://scalebranding.com/wp-content/uploads/2021/03/sleeping-panda.jpg', //or base64
+            "background": "https://public.easyinvoice.cloud/img/watermark-draft.jpg", //or base64 //img or pdf
+            "sender": {
+                "company": "PANDAS VOUCHER SHOP",
+                "address": "19 Đ.Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Tp. Hồ Chí Minh",
+                "zip": "75000",
+                "city": "Tp. Hồ Chí Minh",
+                "country": "Việt Nam"
+            },
+            "client": {
+                "company": `Khách hàng: ${data.Buy.name} - ${data.Buy.phone}`,
+                "address": `${data.Buy.address}`,
+                "zip": `${data.Buy.district}`,
+                "city": `${data.Buy.city.name}`,
+                "country": "Việt Nam",
+                "custom1": `Nhà vận chuyển: ${data.Buy.shipper.item.name}`,
+                "custom2": `Phí vận chuyển: đ${data.Buy.shipper.price.toLocaleString()}`
+            },
+            "invoiceNumber": `${id}`,
+            "invoiceDate": `${moment(new Date()).format('HH:ss - DD/MM/YYYY')}`,
+            "products": temp,
+            "bottomNotice": "Hoá đơn có hiệu lực trong 15 ngày.",
+            "translate": { 
+                "invoiceNumber": "Mã hoá đơn",
+                "invoiceDate": "Ngày xuất hoá đơn",
+                "products": "Sản phẩm",
+                "quantity": "Số lượng",
+                "price": "Giá tiền",
+                "subtotal": "Tổng giá",
+                "tax": 'Tiền vận chuyển',
+                "total": "Tổng cộng"
+            }
+        };
+        //Create your invoice! Easy!
+        easyinvoice.createInvoice(data, (result) => {
+            easyinvoice.download(`bill-${id}.pdf`)
+
+            $('.ProfileBuyAdmin #show-message-delay-validate-buy').hide()
+            $('.messsageAlertPage #message-alert-show .content').html('Xuất hoá đơn thành công')
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+        });
+      }
+      else {
+        $('.ProfileBuyAdmin #show-message-delay-validate-buy').hide()
+        $('.messsageAlertPage #message-alert-show .content').html(data.error)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      }
+    }).catch(e => {
+      $('.ProfileBuyAdmin #show-message-delay-validate-buy').hide()
+      $('.messsageAlertPage #message-alert-show .content').html(e.message)
+      $('.messsageAlertPage #message-alert-show').fadeIn();
+
+      setTimeout(() => {
+          $('.messsageAlertPage #message-alert-show').fadeOut();
+      },3000)
+    })
+  }
+
+  $(document).ready(() => {
+    $('.ProfileBuyAdmin .btn-validate-buy-user').on('click', e => {
+      $('.ProfileBuyAdmin #show-message-delay-validate-buy').show()
+      const id = document.querySelector('.ProfileBuyAdmin').dataset.buy
+
+      fetch('../admin/api/buys/validation', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+      }).then(res => res.text())
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.status) {
+          $('.messsageAlertPage #message-alert-show .content').html(data.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+              location.reload();
+          },1000)
+        }
+        else {
+          $('.messsageAlertPage #message-alert-show .content').html(data.error)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+        $('.ProfileBuyAdmin #show-message-delay-validate-buy').hide()
+      }).catch(e => {
+        $('.ProfileBuyAdmin #show-message-delay-validate-buy').hide()
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    })
+    
+    $('.ProfileBuyAdmin .btn-cancel-buy-user').on('click', e => {
+      $('.ProfileBuyAdmin #show-message-delay-validate-buy').show()
+      const id = document.querySelector('.ProfileBuyAdmin').dataset.buy
+
+      fetch('../admin/api/buys/cancel', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+      }).then(res => res.text())
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.status) {
+          $('.messsageAlertPage #message-alert-show .content').html(data.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+              location.reload();
+          },1000)
+        }
+        else {
+          $('.messsageAlertPage #message-alert-show .content').html(data.error)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+        $('.ProfileBuyAdmin #show-message-delay-validate-buy').hide()
+      }).catch(e => {
+        $('.ProfileBuyAdmin #show-message-delay-validate-buy').hide()
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    })
+  })
+
+
+  
+</script>
+</html>

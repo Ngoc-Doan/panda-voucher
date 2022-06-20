@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Payment | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+</head><!--/head-->
+
+<body>
+	<div class="paymentPage">
+		<%- include component/header.ejs %>
+		<!--/header-->
+	
+		<section id="cart_items">
+			<div class="container">
+				<div class="breadcrumbs">
+					<ol class="breadcrumb">
+					  <li><a href="./">Trang chủ</a></li>
+					  <li class="active">Thanh toán</li>
+					</ol>
+				</div>
+				<div class="table-responsive cart_info">
+					<table class="table table-condensed" style="text-align: center;">
+						<thead>
+							<tr class="cart_menu">
+								<td class="">Mã đơn hàng</td>
+								<td class="">Ngày đặt hàng</td>
+								<td class="">Ngày giao dự kiến</td>
+								<td>Số lượng sản phẩm</td>
+								<td class="">Nhà vận chuyển</td>
+								<td class="">Phí vận chuyển</td>
+								<td>Tổng tiền hàng</td>
+								<td>Tổng hoá đơn</td>
+								<td>Trạng thái</td>
+							</tr>
+						</thead>
+						<tbody>
+							<% if (buys.length != 0) { %>
+								<% buys.forEach(buy => { %>
+									<tr>
+										<td class="">
+											<a href="./payment-detail?id=<%= buy._id %>"><h5>#<%= buy._id.toString().substring(0,11) %></h5></a>
+										</td>
+										<td class="">
+											<%= buy.orderDate.toLocaleDateString('en-GB') %>
+										</td>
+										<td class="">
+											<%= buy.deliveryDate.toLocaleDateString('en-GB') %>
+										</td>
+										<td class="">
+											<%= buy.products.length %>
+										</td>
+										<td class="">
+											<%= buy.shipper.item.name %>
+										</td>
+										<td class="">
+											<%= buy.shipper.price.toLocaleString() %>
+										</td>
+										<td class="">
+											<%= buy.totalPrice.toLocaleString() %>
+										</td>
+										<td class="">
+											<%= (buy.totalPrice + buy.shipper.price).toLocaleString() %>
+										</td>
+										<% if (!buy.validation) { %>
+											<% if (buy.cancel.check) { %>
+												<td class="">
+													Đã huỷ vào <%= moment(buy.cancel.date).format('HH:ss - DD:MM:YYYY') %>
+												</td>
+											<% } else { %>
+												<td class="">
+													Đang xác thực
+												</td>
+											<% } %>
+										<% } else { %>
+											<% if (buy.receive.check) { %>
+												<td class="">
+													Đã nhận hàng vào <%= moment(buy.receive.date).format('HH:ss - DD:MM:YYYY') %>
+												</td>
+											<% } else if (buy.cancel.check) { %>
+												<td class="">
+													Đã huỷ vào <%= moment(buy.cancel.date).format('HH:ss - DD:MM:YYYY') %>
+												</td>
+											<% } else { %>
+												<td class="">
+													Đang giao hàng
+												</td>
+											<% } %>
+										<% } %>
+									</tr>
+								<% }) %>
+							<% } else { %>
+								<tr>
+									<td colspan="9" style="text-align: center; font-size: 30px; color: rgb(209, 199, 187); font-family:'Roboto', sans-serif;">
+										Không có đơn hàng nào
+									</td>
+								</tr>
+							<% } %>
+	
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section> <!--/#cart_items-->
+	
+		<!-- <section id="do_action">
+			<div class="container">
+				<div class="heading">
+					<h3>What would you like to do next?</h3>
+					<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="chose_area">
+							<ul class="user_option">
+								<li>
+									<input type="checkbox">
+									<label>Use Coupon Code</label>
+								</li>
+								<li>
+									<input type="checkbox">
+									<label>Use Gift Voucher</label>
+								</li>
+								<li>
+									<input type="checkbox">
+									<label>Estimate Shipping & Taxes</label>
+								</li>
+							</ul>
+							<ul class="user_info">
+								<li class="single_field">
+									<label>Country:</label>
+									<select>
+										<option>United States</option>
+										<option>Bangladesh</option>
+										<option>UK</option>
+										<option>India</option>
+										<option>Pakistan</option>
+										<option>Ucrane</option>
+										<option>Canada</option>
+										<option>Dubai</option>
+									</select>
+									
+								</li>
+								<li class="single_field">
+									<label>Region / State:</label>
+									<select>
+										<option>Select</option>
+										<option>Dhaka</option>
+										<option>London</option>
+										<option>Dillih</option>
+										<option>Lahore</option>
+										<option>Alaska</option>
+										<option>Canada</option>
+										<option>Dubai</option>
+									</select>
+								
+								</li>
+								<li class="single_field zip-field">
+									<label>Zip Code:</label>
+									<input type="text">
+								</li>
+							</ul>
+							<a class="btn btn-default update" href="">Get Quotes</a>
+							<a class="btn btn-default check_out" href="">Continue</a>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="total_area">
+							<ul>
+								<li>Cart Sub Total <span>$59</span></li>
+								<li>Eco Tax <span>$2</span></li>
+								<li>Shipping Cost <span>Free</span></li>
+								<li>Total <span>$61</span></li>
+							</ul>
+								<a class="btn btn-default update" href="">Update</a>
+								<a class="btn btn-default check_out" href="">Check Out</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> -->
+		<!--/#do_action-->
+	
+		<div class="container">
+			<%- include component/recommend-item.ejs %>
+		</div>
+		<%- include component/footer.ejs %>
+	</div>
+	<%- include component/message-alert.ejs %>
+</body>
+</html>

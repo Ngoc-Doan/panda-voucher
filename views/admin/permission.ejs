@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin permission | Pandas Voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+  <style>
+    .permissionUserAdminPage #option-staffs {
+      color: #AAAAAA;
+      height: 36px;
+      padding-left: 0;
+      padding-right: 0;
+      border-radius: 0;
+      font-size: 14px;
+      background-size: 0 100%, 100% 100%;
+      border: 0;
+      background-image: linear-gradient(to top, #9c27b0 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+    }
+    .permissionUserAdminPage #option-staffs:focus {
+      background-size: 100% 100%, 100% 100%;
+      transition-duration: 0.3s;
+      box-shadow: none;
+    }
+    .permissionUserAdminPage #expired .is-focused .bmd-label-floating {
+      display: block !important;
+    }
+    /* loading for add brand */
+    .permissionUserAdminPage #show-message-delay-update-permission-user {
+      display: none;
+    }
+    .permissionUserAdminPage .loading-update-permission-for-user {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-around;
+    }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader,
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar {
+      width: 60px;
+      height: 20px;
+    }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar {
+      position: absolute;
+      display: flex;
+      align-items: center;
+    }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar::before,
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #9c27b0;
+      background: #9c27b0;
+      opacity: 0;
+      box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+      border-radius: 10px;
+      animation: slideleft 2s ease-in-out infinite;
+    }
+
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar1::before { animation-delay: 0.00s }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar1::after  { animation-delay: 0.3s }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar2::before { animation-delay: 0.60s }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar2::after  { animation-delay: 0.90s }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar3::before { animation-delay: 1.20s }
+    .permissionUserAdminPage .loading-update-permission-for-user .loader .bar3::after  { animation-delay: 1.50s }
+
+    @keyframes slideleft {
+      10% { opacity: 0; transform: scale(0); right: 0 }
+      50% { opacity: 1; transform: scale(1) }
+      90% { opacity: 0; transform: scale(0); right: 100% }
+    }
+  </style>
+</head>
+
+<body class="permissionUserAdminPage" data-user="<%= user._id %>">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Phân quyền nhân viên</h4>
+                  <p class="card-category">Chọn quyền phù hợp với vị trí nhân viên</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <select id="option-staffs" style="width: 100%;">
+                            <option value="">Nhân viên</option>
+                            <% staffs.forEach(p => { %>
+                              <% if (parseInt(p._id) != parseInt(user._id)) { %>
+                                <option value="<%= p._id %>"><%= p.name %></option>
+                              <% } %>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <label for="">Danh sách các quyền</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <% permissionSelect.forEach(p => { %>
+                        <div class="col-md-4">
+                          <div class="form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" name="select_permission_user" type="checkbox" value="<%= p._id %>" id="<%= p.type %>">
+                              <span class="form-check-sign">
+                                <span class="check"></span>
+                              </span>
+                              <label for="<%= p.type %>" style="cursor: pointer;">
+                                <%= p.name %>
+                              </label>
+                            </label>
+                          </div>
+                        </div>
+                      <% }) %>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Xác thực mật khẩu</label>
+                          <input type="password" class="form-control" id="password">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" id="show-message-delay-update-permission-user">
+                      <div class="col-md-12 loading-update-permission-for-user">
+                        <label style="font-size:25px;">Đang xử lý dữ liệu</label>
+                      </div>
+                      <div class="col-md-12 loading-update-permission-for-user">
+                        <div class="loader">
+                          <div class="bar bar1"></div>
+                          <div class="bar bar2"></div>
+                          <div class="bar bar3"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary pull-right update-permission-for-staff">Cập nhật</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script>
+  $(document).ready(() => {
+    $('.permissionUserAdminPage .update-permission-for-staff').on('click', e => {
+      $('.permissionUserAdminPage #show-message-delay-update-permission-user').show()
+      const staff = $('.permissionUserAdminPage #option-staffs').val()
+      const user = document.querySelector('.permissionUserAdminPage').dataset.user
+      const password = $('.permissionUserAdminPage #password').val()
+      let permission = []
+      // const staffs_permission = $('input[name="select_permission_user"]:checked').serialize()
+      $('input[name="select_permission_user"]:checked').each(function() {
+        permission.push(this.value)
+      });
+      const query = {
+        permission,
+        password,
+        user
+      }
+
+      if (!staff) {
+        $('.permissionUserAdminPage #show-message-delay-update-permission-user').hide()
+        $('.messsageAlertPage #message-alert-show .content').html('Vui lòng chọn nhân viên')
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      }
+      else {
+        fetch(`../admin/api/users/permission/${staff}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(query)
+        }).then(res => res.text())
+        .then(data => {
+          data = JSON.parse(data)
+          if (data.status) {
+            $('.permissionUserAdminPage #show-message-delay-update-permission-user').hide()
+            $('.messsageAlertPage #message-alert-show .content').html(data.message)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+                window.location.href = '../admin/staffs'
+            },3000)
+          }
+          else {
+            $('.permissionUserAdminPage #show-message-delay-update-permission-user').hide()
+            $('.messsageAlertPage #message-alert-show .content').html(data.error)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },500)
+          }
+        }).catch(e => {
+          $('.permissionUserAdminPage #show-message-delay-update-permission-user').hide()
+          $('.messsageAlertPage #message-alert-show .content').html(e.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        })
+      }
+    })
+  })
+</script>
+</html>

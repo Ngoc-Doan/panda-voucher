@@ -1,0 +1,63 @@
+<div class="recommended_items">
+    <!--recommended_items-->
+    <h2 class="title text-center">Khuyến nghị</h2>
+
+    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <% for (var i = 0; i < recommend.length; i++) { %>
+                <% if (i == 0) { %>
+                    <div class="item active">
+                        <% recommend[i].voucher.forEach(v => { %>
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="<%= v.image[0] %>" alt="" width="250px" height="150px"/>
+                                        <h2><%= v.price.toLocaleString() %></h2>
+                                        <a href="./detail?id=<%= v._id %>"><p style="height: 80px;"><%= v.name %></p></a>
+                                        <% if (locals.user !== undefined) { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-recommend" data-user="<%= user._id %>" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } else { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-recommend" data-user="" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } %>
+                                    </div>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                <% } else { %>
+                    <div class="item">
+                        <% recommend[i].voucher.forEach(v => { %>
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="<%= v.image[0] %>" alt="" width="250px" height="150px"/>
+                                        <h2><%= v.price.toLocaleString() %></h2>
+                                        <a href="./detail?id=<%= v._id %>"><p style="height: 80px;"><%= v.name %></p></a>
+                                        <% if (locals.user !== undefined) { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-recommend" data-user="<%= user._id %>" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } else { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-recommend" data-user="" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } %>
+                                    </div>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+        </a>
+        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+        </a>
+    </div>
+</div>
+<!--/recommended_items-->

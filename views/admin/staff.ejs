@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin staff | Pandas voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+</head>
+
+<body class="staffAdminPage">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Danh sách nhân viên</h4>
+                  <p class="card-category"> Thông tin cơ bản của nhân viên</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                            ID nhân viên
+                        </th>
+                        <th>
+                            Ảnh đại diện
+                        </th>
+                        <th>
+                            Tên nhân viên
+                        </th>
+                        <th>
+                            Số điện thoại
+                        </th>
+                        <th>
+                            Tên đăng nhập
+                        </th>
+                        <th>
+                            Địa chỉ email
+                        </th>
+                        <th>
+                            Địa chỉ thường trú
+                        </th>
+                        <th>
+                            Lương cơ bản
+                        </th>
+                        <th>
+                            Phân quyền
+                        </th>
+                        <th colspan="2">
+                            Thao tác
+                        </th>
+                      </thead>
+                      <tbody>
+                        <% staffs.forEach(s => { %>
+                          <% if (parseInt(s._id) != parseInt(user._id)) { %>
+                            <tr id="remove-staff-<%= s._id %>">
+                              <td><%= s._id %></td>
+                              <td>
+                                  <img src="<%= s.image %>" alt="" width="80px" height="80px">
+                              </td>
+                              <td><%= s.name %></td>
+                              <td>
+                                  <%= s.phone %>
+                              </td>
+                              <td>
+                                  <%= s.username %>
+                              </td>
+                              <td>
+                                  <%= s.email %>
+                              </td>
+                              <td>
+                                  <%= s.street %>, <%= s.district %>, <%= s.city %>
+                              </td>
+                              <td>
+                                  <%= s.salary.toLocaleString() %>
+                              </td>
+                              <td>
+                                <% if (s.permission.length == 0 || s.permission == undefined) { %>
+                                  <div style="margin-left: 40px;">
+                                    Nhân viên không có quyền hạn
+                                  </div>
+                                <% } else { %>
+                                  <ol>
+                                    <% s.permission.forEach(per => { %>
+                                      <li><%= per.name %></li>
+                                    <% }) %>
+                                  </ol>
+                                <% } %>
+                              </td>
+                              <td>
+                                <button type="button" rel="tooltip" title="Chỉnh sửa thông tin nhân viên" class="btn btn-primary btn-link btn-sm">
+                                  <a href="./edit-user?id=<%= s._id %>"><i class="material-icons">edit</i></a>
+                                </button>
+                                <button type="button" rel="tooltip" title="Xoá nhân viên" class="btn btn-primary btn-link btn-sm" onclick="handleDeleteStaffModal(this)" data-name="<%= s.name %>" data-staff="<%= s._id %>" data-toggle="modal" data-target="#deleteStaffModal">
+                                  <i class="material-icons">delete</i>
+                                </button>
+                              </td>
+                          </tr>
+                          <% } %>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteStaffModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn chắc chắn chứ <i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="btn-delete-staff-user-admin-modal">
+            <i class="fa fa-spinner fa-spin" style="display: none;"></i> Xoá
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script>
+  function handleDeleteStaffModal(element) {
+    const name = element.dataset.name
+    const staff = element.dataset.staff
+
+    $('.staffAdminPage #deleteStaffModal .modal-title').html(`Xoá nhân viên <b>${name}</b>`)
+    $('.staffAdminPage #deleteStaffModal').attr('data-staff', staff)
+  }
+
+  $(document).ready(e => {
+    $('.staffAdminPage #deleteStaffModal #btn-delete-staff-user-admin-modal').on('click', e => {
+
+      $('.staffAdminPage #btn-delete-staff-user-admin-modal i.fa-spinner').show()
+
+      const staff = $('.staffAdminPage #deleteStaffModal').attr('data-staff')
+
+      fetch(`../admin/api/users/${staff}`,{
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then(res => res.text())
+      .then(data => {
+          data = JSON.parse(data)
+          if (data.status) {
+            $('.staffAdminPage #btn-delete-staff-user-admin-modal i.fa-spinner').hide()
+
+            $(`.staffAdminPage #remove-staff-${staff}`).remove()
+
+            $('.staffAdminPage #deleteStaffModal').modal('hide')
+
+            $('.messsageAlertPage #message-alert-show .content').html(data.message)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+          else {
+            $('.staffAdminPage #btn-delete-staff-user-admin-modal i.fa-spinner').hide()
+            $('.messsageAlertPage #message-alert-show .content').html(data.error)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+      }).catch(e => {
+        $('.staffAdminPage #btn-delete-staff-user-admin-modal i.fa-spinner').hide()
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    })
+  })
+</script>

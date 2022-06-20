@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include component/cdn.ejs %>
+    <title>Profile | Pandas Voucher</title>
+
+    <style>
+        .profilePage #profile .account-settings .user-profile {
+            margin: 0 0 1rem 0;
+            padding-bottom: 1rem;
+            text-align: center;
+        }
+        .profilePage #profile .account-settings .user-profile .user-avatar {
+            margin: 0 0 1rem 0;
+        }
+        .profilePage #profile .account-settings .user-profile .user-avatar img {
+            width: 90px;
+            height: 90px;
+            -webkit-border-radius: 100px;
+            -moz-border-radius: 100px;
+            border-radius: 100px;
+        }
+        .profilePage #profile .account-settings .user-profile h5.user-name {
+            margin: 0 0 0.5rem 0;
+        }
+        .profilePage #profile .account-settings .user-profile h6.user-email {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+        .profilePage #profile .account-settings .about {
+            margin: 1rem 0 0 0;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        .profilePage #profile .card {
+            /* background: #dbdcdf; */
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            border: 0;
+            margin-bottom: 1rem;
+        }
+        .profilePage #profile .form-control {
+            border: 1px solid #9fa1a5;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+            font-size: 15px;
+            /* background: #b5b6b9; */
+            color: #070707;
+        }
+        .profilePage #profile .update-profile {
+            margin-bottom: 16px;
+        }
+        .profilePage #profile label {
+            font-size: 15px;
+        }
+        .profilePage #profile .main-title {
+            font-size: 18px;
+        }
+        .profilePage .edit-profile-form {
+            display: none;
+        }
+        .profilePage .description-profile {
+            background: white;
+            border:1px solid red;
+        }
+        .profilePage .show-error-message-edit-profile {
+        font-size: medium;
+        margin-top: 30px;
+        text-align: center;
+        color: rgb(253, 251, 251);
+        background-color: #dd8d81;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        display: none;
+        }
+        .profilePage #update-avatar-user-admin-modal .show-image-upload .edit-review-upload-block img.edit-review-upload {
+            width: 200px;
+            height: 200px;
+        }
+        .profilePage #update-avatar-user-admin-modal .show-image-upload .edit-review-upload-block {
+            display:inline-block;
+            margin:5px 20px;
+            padding:5px;
+            border:1px solid #CCC;
+        }
+        .profilePage #update-avatar-user-admin-modal .show-image-upload {
+            width: 100%;
+            text-align:center;
+        }
+        .profilePage #update-avatar-user-admin-modal .cancel-review-img-upload {
+            cursor: pointer;
+        }
+        .profilePage #update-avatar-user-admin-modal .label-for-img-upload-input {
+            display: inline-block;
+            background-color: #FE980F;
+            color: white;
+            padding: 0.5rem;
+            font-family: sans-serif;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <%- include component/header.ejs %>
+    <div class="profilePage">
+        <section id="profile">
+            <div class="container profile-show">
+                <div class="row gutters">
+                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="account-settings">
+                                    <div class="user-profile">
+                                        <div class="user-avatar">
+                                            <img src="<%= locals.user.image %>" alt="<%= locals.user.name %>">
+                                        </div>
+                                        <h5 class="user-name content-main-name"><%= locals.user.name %></h5>
+                                        <h6 class="user-email content-main-email"><%= locals.user.email %></h6>
+                                    </div>
+                                    <div class="about">
+                                        <h5 class="mb-2 text-primary">Mô tả</h5>
+                                        <p class="content-main-desc" style="word-break: break-word;"><%= locals.user.desc %></p>
+                                    </div>
+                                    <div class="about">
+                                        <h5 class="mb-2 text-primary" data-toggle="modal" onclick="handleDataIntoModal(this)" data-id="<%= user._id %>" data-target="#update-avatar-user-admin-modal" style="cursor: pointer;">Thay đổi ảnh đại diện</h5>
+                                    </div>
+                                    <div class="about">
+                                        <h5 class="mb-2 text-primary" data-toggle="modal" onclick="handleDataUpdatePassIntoModal(this)" data-id="<%= user._id %>" data-target="#update-password-user-modal" style="cursor: pointer;">Thay đổi mật khẩu</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h6 class="mb-3 text-primary main-title">Thông tin cá nhân</h6>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="fullName">Họ và tên</label>
+                                            <div class="content-profile content-profile-name">
+                                                <%= locals.user.name %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="eMail">Địa chỉ email</label>
+                                            <div class="content-profile content-profile-email">
+                                                <%= locals.user.email %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="phone">Số điện thoại</label>
+                                            <div class="content-profile content-profile-phone">
+                                                <%= locals.user.phone %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="website">Thông tin mạng xã hội</label>
+                                            <div class="content-profile content-profile-url">
+                                                <%= locals.user.url %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h6 class="mb-3 text-primary main-title">Địa chỉ</h6>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="Street">Số nhà - Đường</label>
+                                            <div class="content-profile content-profile-street">
+                                                <%= locals.user.street %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="ciTy">Thành phố</label>
+                                            <div class="content-profile content-profile-city">
+                                                <%= locals.user.city %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="sTate">Quận - Thị xã</label>
+                                            <div class="content-profile content-profile-district">
+                                                <%= locals.user.district %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="zIp">Mã bưu chính</label>
+                                            <div class="content-profile content-profile-code">
+                                                <%= locals.user.code %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="text-right">
+                                            <button type="button" id="submit" name="submit" class="btn btn-primary update-profile btn-edit-profile">Chỉnh sửa</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container edit-profile-form">
+                <div class="row gutters">
+                    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="account-settings">
+                                    <div class="user-profile">
+                                        <div class="user-avatar">
+                                            <img src="<%= locals.user.image %>" alt="<%= locals.user.name %>">
+                                        </div>
+                                        <h5 class="user-name"><%= locals.user.name %></h5>
+                                        <h6 class="user-email"><%= locals.user.email %></h6>
+                                    </div>
+                                    <div class="about">
+                                        <h5 class="mb-2 text-primary">Mô tả</h5>
+                                        <p class="content-main-desc" style="word-break: break-word;"><%= locals.user.desc %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                        <div class="card h-100">
+                            <form id="form-edit-profile">
+                                <div class="card-body">
+                                    <div class="row gutters">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <h6 class="mb-3 text-primary main-title">Thông tin cá nhân</h6>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="fullName">Họ và tên</label>
+                                                <input type="text" name="name" class="form-control" id="fullName" value="<%= locals.user.name %>" placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eMail">Địa chỉ email</label>
+                                                <input type="email" name="email" class="form-control" id="eMail" value="<%= locals.user.email %>" placeholder="Địa chỉ email">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="phone">Số điện thoại</label>
+                                                <input type="text" name="phone" class="form-control" id="phone" value="<%= locals.user.phone %>" placeholder="Số địa chỉ">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="website">Thông tin mạng xã hội</label>
+                                                <input type="url" name="url" class="form-control" id="website" value="<%= locals.user.url %>" placeholder="Thông tin mạng xã hội">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row gutters">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <h6 class="mb-3 text-primary main-title">Địa chỉ</h6>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="Street">Số nhà - Đường</label>
+                                                <input type="name" name="street" class="form-control" id="Street" value="<%= locals.user.street %>" placeholder="Số nhà - đường">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="ciTy">Thành phố</label>
+                                                <input type="name" name="city" class="form-control" id="ciTy" value="<%= locals.user.city %>" placeholder="Thành phố">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="sTate">Quận - Thị xã</label>
+                                                <input type="text" name="district" class="form-control" id="sTate" value="<%= locals.user.district %>" placeholder="Quận - thị xã">
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label for="zIp">Mã bưu chính</label>
+                                                <input type="text" name="code" class="form-control" id="zIp" value="<%= locals.user.code %>" placeholder="Mã bưu chính">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label for="zIp">Mô tả</label>
+                                                <textarea name="desc" cols="30" rows="10" class="description-profile" placeholder="Mô tả bản thân bạn ở đây..."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label for="zIp">Xác thực mật khẩu</label>
+                                                <input type="password" name="password" class="form-control" id="password" value="" placeholder="Mật khẩu">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row gutters">
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                            <div class="text-right">
+                                                <button type="button" class="btn btn-secondary btn-cancel-edit">Huỷ bỏ</button>
+                                                <button type="button" class="btn btn-primary update-profile btn-update-edit" data-id="<%= user._id %>">Cập nhật</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="show-error-message-edit-profile">
+
+        </div>
+
+        <div class="modal fade" id="update-avatar-user-admin-modal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Thay đổi ảnh đại diện người dùng</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Ảnh đại diện</label>
+                        <div>
+                          <input type="file" id="img-upload-input" hidden accept=".jpg, .jpeg, .png" onchange="readURL(this)" style="opacity: 1; position: initial; display: none;"/>
+                          <label for="img-upload-input" class="label-for-img-upload-input">Chọn hình ảnh đại diện</label>
+                        </div>
+                      </div>
+                      <div class="show-image-upload">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="handleCloseImgAvatar(this)">Đóng</button>
+                  <button type="button" class="btn btn-primary" id="btn-update-avatar-user-admin-modal" style="margin-bottom: 16px;">
+                    <i class="fa fa-spinner fa-spin" style="display: none;"></i> Cập nhật
+                  </button>
+                </div>
+              </div>
+              
+            </div>
+        </div>
+
+        <div class="modal fade" id="update-password-user-modal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Thay đổi mật khẩu</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="card h-100">
+                        <form id="form-edit-profile">
+                            <div class="card-body">
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h6 class="mb-3 text-primary main-title">Mật khẩu</h6>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="form-group">
+                                            <label for="phone">Mật khẩu cũ</label>
+                                            <input type="password" class="form-control" id="old_password" placeholder="Mật khẩu cũ">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="fullName">Mật khẩu mới</label>
+                                            <input type="password" class="form-control" id="new_password" placeholder="Mật khẩu mới">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="eMail">Nhập lại mật khẩu</label>
+                                            <input type="password" class="form-control" id="re_password" placeholder="Xác thực mật khẩu">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="handleBlockDataInputPass(this)">Đóng</button>
+                  <button type="button" class="btn btn-primary" id="btn-update-password-user-modal" style="margin-bottom: 16px;">
+                    <i class="fa fa-spinner fa-spin" style="display: none;"></i> Cập nhật
+                  </button>
+                </div>
+              </div>
+              
+            </div>
+        </div>
+    </div>
+
+    <%- include component/footer.ejs %>
+
+    <%- include component/message-alert.ejs %>
+</body>
+<script>
+    function handleDataIntoModal(element) {
+        const user = element.dataset.id
+        $('.profilePage #update-avatar-user-admin-modal').attr('data-user', user)
+    }
+    function handleDataUpdatePassIntoModal(element) {
+        const user = element.dataset.id
+        $('.profilePage #update-password-user-modal').attr('data-user', user)
+    }
+    function handleCloseImgAvatar(element) {
+        $('.profilePage .show-image-upload').html("")
+    }
+    function handleBlockDataInputPass(element) {
+        $('.profilePage #update-password-user-modal .modal-body #old_password').val("")
+        $('.profilePage #update-password-user-modal .modal-body #new_password').val("")
+        $('.profilePage #update-password-user-modal .modal-body #re_password').val("")
+    }
+    function readURL(input) {
+        if (input.files) {
+        var filesAmount = input.files.length
+        console.log(filesAmount)
+        for (var i = 0; i < filesAmount; i++) {
+            var reader = new FileReader();
+
+            reader.onload = (event) => {
+            $('.profilePage .show-image-upload').html(`
+            <div class="edit-review-upload-block" onclick="removeImg(this)">
+                <i class="fas fa-times"></i>
+                <img src="${event.target.result}" class="edit-review-upload">
+            </div>
+            `)
+            }
+            reader.readAsDataURL(input.files[i]);
+        }
+        }
+    }
+
+    function removeImg(element) {
+        element.remove()
+        $('#img-upload-input').val("")
+    }
+
+    $(document).ready(() => {
+
+        $('.profilePage #btn-update-password-user-modal').on('click', e => {
+            $('.profilePage #btn-update-password-user-modal i.fa-spinner').show()
+            const id = $('.profilePage #update-password-user-modal').attr('data-user')
+            const old_password = $('.profilePage #update-password-user-modal .modal-body #old_password').val()
+            const new_password = $('.profilePage #update-password-user-modal .modal-body #new_password').val()
+            const re_password = $('.profilePage #update-password-user-modal .modal-body #re_password').val()
+
+            const query = {
+                old_password,
+                new_password,
+                re_password
+            }
+
+            fetch(`./api/users/password/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(query)
+            }).then(res => res.text())
+            .then(data => {
+                data = JSON.parse(data)
+
+                if (data.status) {
+                    $('.profilePage #btn-update-password-user-modal i.fa-spinner').hide()
+
+                    $('.profilePage #update-password-user-modal .modal-body #old_password').val("")
+                    $('.profilePage #update-password-user-modal .modal-body #new_password').val("")
+                    $('.profilePage #update-password-user-modal .modal-body #re_password').val("")
+
+                    $('.profilePage #update-password-user-modal').modal('hide')
+                    $('.messsageAlertPage #message-alert-show .content').html(data.message)
+                    $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                    setTimeout(() => {
+                        $('.messsageAlertPage #message-alert-show').fadeOut();
+                    },1000)
+                }
+                else {
+                    $('.profilePage #btn-update-password-user-modal i.fa-spinner').hide()
+                    $('.messsageAlertPage #message-alert-show .content').html(data.error)
+                    $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                    setTimeout(() => {
+                        $('.messsageAlertPage #message-alert-show').fadeOut();
+                    },3000)
+                }
+            }).catch(e => {
+                $('.profilePage #btn-update-password-user-modal i.fa-spinner').hide()
+                $('.messsageAlertPage #message-alert-show .content').html(e.message)
+                $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                setTimeout(() => {
+                    $('.messsageAlertPage #message-alert-show').fadeOut();
+                },3000)
+            })
+        })
+
+        $('.profilePage #btn-update-avatar-user-admin-modal').on('click', e => {
+
+            $('.profilePage #btn-update-avatar-user-admin-modal i.fa-spinner').show()
+
+            const id =  $('.profilePage #update-avatar-user-admin-modal').attr('data-user')
+            const image = $('.profilePage .show-image-upload .edit-review-upload-block img').attr('src')
+
+            const query = {
+            image
+            }
+
+
+            fetch(`./api/users/image/${id}`,{
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(query)
+            }).then(res => res.text())
+            .then(data => {
+                data = JSON.parse(data)
+                if (data.status) {
+                $('.profilePage #btn-update-avatar-user-admin-modal i.fa-spinner').hide()
+                $('.profilePage #profile .account-settings .user-profile .user-avatar img').attr('src', data.image)
+                $('.profilePage #update-avatar-user-admin-modal').modal('hide')
+                $('.profilePage .show-image-upload').html("")
+
+                $('.messsageAlertPage #message-alert-show .content').html(data.message)
+                $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                setTimeout(() => {
+                    $('.messsageAlertPage #message-alert-show').fadeOut();
+                },700)
+                }
+                else {
+                $('.profilePage #btn-update-avatar-user-admin-modal i.fa-spinner').hide()
+                $('.messsageAlertPage #message-alert-show .content').html(data.error)
+                $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                setTimeout(() => {
+                    $('.messsageAlertPage #message-alert-show').fadeOut();
+                },3000)
+                }
+            }).catch(e => {
+            $('.profilePage #btn-update-avatar-user-admin-modal i.fa-spinner').hide()
+            $('.messsageAlertPage #message-alert-show .content').html(e.message)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+            })
+        })
+    })
+</script>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin Edit Staff profile | Pandas Voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+  <style>
+    .editUserAdminPage #show-message-delay-update-user-admin {
+      display: none;
+    }
+    .editUserAdminPage .loading-update-user-admin {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-around;
+    }
+    .editUserAdminPage .loading-update-user-admin .loader,
+    .editUserAdminPage .loading-update-user-admin .loader .bar {
+      width: 60px;
+      height: 20px;
+    }
+    .editUserAdminPage .loading-update-user-admin .loader .bar {
+      position: absolute;
+      display: flex;
+      align-items: center;
+    }
+    .editUserAdminPage .loading-update-user-admin .loader .bar::before,
+    .editUserAdminPage .loading-update-user-admin .loader .bar::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #9c27b0;
+      background: #9c27b0;
+      opacity: 0;
+      box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+      border-radius: 10px;
+      animation: slideleft 2s ease-in-out infinite;
+    }
+
+    .editUserAdminPage .loading-update-user-admin .loader .bar1::before { animation-delay: 0.00s }
+    .editUserAdminPage .loading-update-user-admin .loader .bar1::after  { animation-delay: 0.3s }
+    .editUserAdminPage .loading-update-user-admin .loader .bar2::before { animation-delay: 0.60s }
+    .editUserAdminPage .loading-update-user-admin .loader .bar2::after  { animation-delay: 0.90s }
+    .editUserAdminPage .loading-update-user-admin .loader .bar3::before { animation-delay: 1.20s }
+    .editUserAdminPage .loading-update-user-admin .loader .bar3::after  { animation-delay: 1.50s }
+
+    @keyframes slideleft {
+      10% { opacity: 0; transform: scale(0); right: 0 }
+      50% { opacity: 1; transform: scale(1) }
+      90% { opacity: 0; transform: scale(0); right: 100% }
+    }
+  </style>
+</head>
+
+<body class="editUserAdminPage" data-staff="<%= user._id %>" data-user="<%= mainUser._id %>">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Chỉnh sửa thông tin</h4>
+                  <p class="card-category">Chỉnh sửa thông tin nhân viên được chọn</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Công ty (disabled)</label>
+                          <input type="text" class="form-control" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-7">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Địa chỉ email</label>
+                          <input type="email" class="form-control" value="<%= user.email %>" id="email-admin">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Họ tên của bạn</label>
+                          <input type="text" class="form-control" value="<%= user.name %>" id="name-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Facebook, Instagram,...</label>
+                          <input type="text" class="form-control"  value="<%= user.url %>" id="url-admin">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Địa chỉ</label>
+                          <input type="text" class="form-control"  value="<%= user.street %>" id="address-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Mã bưu chính</label>
+                          <input type="number" class="form-control"  value="<%= user.code %>" id="code-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Lương cơ bản</label>
+                          <input type="number" class="form-control"  value="<%= user.salary %>" id="salary-admin">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Thành phố</label>
+                          <input type="text" class="form-control"  value="<%= user.city %>" id="city-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Quận / Thị xã</label>
+                          <input type="text" class="form-control"  value="<%= user.district %>" id="district-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Số điện thoại</label>
+                          <input type="text" class="form-control"  value="<%= user.phone %>" id="phone-admin">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Giới thiệu</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating"> giới thiệu về bản thân...</label>
+                            <textarea class="form-control" rows="5" id="desc-admin"><%= user.desc %></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Xác thực mật khẩu</label>
+                          <input type="password" class="form-control" id="password-admin">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" id="show-message-delay-update-user-admin">
+                      <div class="col-md-12 loading-update-user-admin">
+                        <label style="font-size:25px;">Đang xử lý</label>
+                      </div>
+                      <div class="col-md-12 loading-update-user-admin">
+                        <div class="loader">
+                          <div class="bar bar1"></div>
+                          <div class="bar bar2"></div>
+                          <div class="bar bar3"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary pull-right" id="btn-update-user-admin">Cập nhật thông tin</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="javascript:;">
+                    <img class="img follow-avatar-admin" src="<%= user.image %>" width="50px" height="50px"/>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-gray follow-email-admin"><%= user.email %></h6>
+                  <h4 class="card-title follow-name-admin"><%= user.name %></h4>
+                  <p class="card-description follow-desc-admin">
+                    <%= user.desc %>
+                  </p>
+                  <p>
+                    <a href="<%= user.url %>"><%= user.url %></a>
+                  </p>
+                  <a href="<%= user.url %>" target="_blank" class="btn btn-primary btn-round follow-url-admin">Follow Me</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+
+</html>
+<script>
+$(document).ready(() => {
+    $('.editUserAdminPage #btn-update-user-admin').on('click', e => {
+      $('.editUserAdminPage #show-message-delay-update-user-admin').show()
+      const mainUser = document.querySelector('.editUserAdminPage').dataset.user
+      const staff = document.querySelector('.editUserAdminPage').dataset.staff
+      const name = $('.editUserAdminPage #name-admin').val()
+      const salary = $('.editUserAdminPage #salary-admin').val()
+      const email = $('.editUserAdminPage #email-admin').val()
+      const street = $('.editUserAdminPage #address-admin').val()
+      const url = $('.editUserAdminPage #url-admin').val()
+      const district = $('.editUserAdminPage #district-admin').val()
+      const city = $('.editUserAdminPage #city-admin').val()
+      const phone = $('.editUserAdminPage #phone-admin').val()
+      const desc = $('.editUserAdminPage #desc-admin').val()
+      const password = $('.editUserAdminPage #password-admin').val()
+      const code = $('.editUserAdminPage #code-admin').val()
+      const query = {
+        mainUser,
+        salary,
+        name,
+        email,
+        street,
+        district,
+        city,
+        code,
+        phone,
+        desc,
+        url,
+        password
+      }
+
+      fetch(`../admin/api/users/staff/${staff}`, {
+      method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(query)
+      }).then(res => res.text())
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.status) {
+
+          $('.editUserAdminPage .follow-email-admin').html(data.user.email)
+          $('.editUserAdminPage .follow-name-admin').html(data.user.name)
+          $('.editUserAdminPage .follow-desc-admin').html(data.user.desc)
+          $('.editUserAdminPage .follow-url-admin').attr('href', data.user.url)
+
+          $('.messsageAlertPage #message-alert-show .content').html(data.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          $('.editUserAdminPage #name-admin').val("")
+          $('.editUserAdminPage #email-admin').val("")
+          $('.editUserAdminPage #address-admin').val("")
+          $('.editUserAdminPage #url-admin').val("")
+          $('.editUserAdminPage #district-admin').val("")
+          $('.editUserAdminPage #city-admin').val("")
+          $('.editUserAdminPage #phone-admin').val("")
+          $('.editUserAdminPage #desc-admin').val("")
+          $('.editUserAdminPage #password-admin').val("")
+          $('.editUserAdminPage #code-admin').val("")
+          $('.editUserAdminPage #salary-admin').val("")
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+              window.location.href = '../admin/staffs'
+          },1000)
+        }
+        else {
+          $('.messsageAlertPage #message-alert-show .content').html(data.error)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+        $('.editUserAdminPage #show-message-delay-update-user-admin').hide()
+      })
+      .catch(e => {
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+        
+        $('.editUserAdminPage #show-message-delay-update-user-admin').hide()
+      })
+    })
+  })
+</script>

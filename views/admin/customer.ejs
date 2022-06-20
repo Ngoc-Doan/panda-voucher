@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin customer | Pandas voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+</head>
+
+<body class="customerAdminPage">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title mt-0"> Danh sách tài khoản khách hàng</h4>
+                  <p class="card-category"> Tên, username, địa chỉ,...</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th width ="120px" >
+                          Ảnh đại diện
+                        </th>
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Họ và tên
+                        </th>
+                        <th>
+                          Tài khoản
+                        </th>
+                        <th>
+                          Địa chỉ
+                        </th>
+                        <th>
+                          Số điện thoại
+                        </th>
+                        <th>
+                          Email
+                        </th>
+                        <th style="width: 100px;">
+                          Thao tác
+                        </th>
+                      </thead>
+                      <tbody>
+                        <% users.forEach(u => { %>
+                          <tr id="remove-ajax-customer-tr-<%= u._id %>">
+                            <td>
+                              <% if (u.image) { %>
+                                <img src="<%= u.image %>" alt="" width="50px" height="50px">
+                              <% } else { %>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" width="50px" height="50px">
+                              <% } %>
+                            </td>
+                            <td>
+                              <a href="/admin/customer?id=<%= u._id %>"><%= u._id.toString().substring(0,9) %>...</a>
+                            </td>
+                            <td>
+                              <%= u.name %>
+                            </td>
+                            <td>
+                              <%= u.username %>
+                            </td>
+                            <td>
+                              <%= u.street %>, <%= u.district %>, <%= u.city %>
+                            </td>
+                            <td>
+                              <%= u.phone %>
+                            </td>
+                            <td>
+                              <%= u.email %>
+                            </td>
+                            <td>
+                              <a href="./edit-customer?id=<%= u._id %>">
+                                <button type="button" rel="tooltip" title="Chỉnh sửa" class="btn btn-primary btn-link btn-sm">
+                                  <i class="material-icons">edit</i>
+                                </button>
+                              </a>
+                              <button type="button" rel="tooltip" title="Xoá khách hàng" onclick="handleDataIntoModalDeleteCustomer(this)" data-name="<%= u.name %>" data-customer="<%= u._id %>" data-toggle="modal" data-target="#deleteUserCustomerAdminModal" class="btn btn-primary btn-link btn-sm">
+                                <i class="material-icons">delete</i>
+                              </button>
+                            </td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteUserCustomerAdminModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="btn-delete-user-customer-modal">
+            <i class="fa fa-spinner fa-spin" style="display: none;"></i> Xoá
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script>
+  function handleDataIntoModalDeleteCustomer(element) {
+    const customer = element.dataset.customer
+    const name = element.dataset.name
+    $('.customerAdminPage #deleteUserCustomerAdminModal').attr('data-customer', customer)
+    $('.customerAdminPage #deleteUserCustomerAdminModal .modal-title').html(`Xoá khách hàng <b>${name}</b>`)
+    $('.customerAdminPage #deleteUserCustomerAdminModal .modal-body').html(`<p>Bạn chắc chắn muốn xoá tài khoản <b>#${customer}</b> <i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i></p>`)
+  }
+
+  $(document).ready(() => {
+    $('.customerAdminPage #deleteUserCustomerAdminModal #btn-delete-user-customer-modal').on('click', e => {
+
+      $('.customerAdminPage #btn-delete-user-customer-modal i.fa-spinner').show()
+
+      const customer = $('.customerAdminPage #deleteUserCustomerAdminModal').attr('data-customer')
+
+      fetch(`../admin/api/users/customer/${customer}`,{
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then(res => res.text())
+      .then(data => {
+          data = JSON.parse(data)
+          if (data.status) {
+            $('.customerAdminPage #btn-delete-user-customer-modal i.fa-spinner').hide()
+
+            $(`.customerAdminPage #remove-ajax-customer-tr-${customer}`).remove()
+
+            $('.customerAdminPage #deleteUserCustomerAdminModal').modal('hide')
+
+            $('.messsageAlertPage #message-alert-show .content').html(data.message)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+          else {
+            $('.customerAdminPage #btn-delete-user-customer-modal i.fa-spinner').hide()
+            $('.messsageAlertPage #message-alert-show .content').html(data.error)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+      }).catch(e => {
+        $('.customerAdminPage #btn-delete-user-customer-modal i.fa-spinner').hide()
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    })
+  })
+</script>
+</html>

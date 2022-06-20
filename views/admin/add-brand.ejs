@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin add brand | Pandas Voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+  <style>
+    .addBrandAdmin #option-cities {
+      color: #AAAAAA;
+      height: 36px;
+      padding-left: 0;
+      padding-right: 0;
+      border-radius: 0;
+      font-size: 14px;
+      background-size: 0 100%, 100% 100%;
+      border: 0;
+      background-image: linear-gradient(to top, #9c27b0 2px, rgba(156, 39, 176, 0) 2px), linear-gradient(to top, #d2d2d2 1px, rgba(210, 210, 210, 0) 1px);
+    }
+    .addBrandAdmin #option-cities:focus {
+      background-size: 100% 100%, 100% 100%;
+      transition-duration: 0.3s;
+      box-shadow: none;
+    }
+    .addBrandAdmin #expired .is-focused .bmd-label-floating {
+      display: block !important;
+    }
+    /* loading for add brand */
+    .addBrandAdmin #show-message-delay-add-new-brand {
+      display: none;
+    }
+    .addBrandAdmin .loading-add-new-brand {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-around;
+    }
+    .addBrandAdmin .loading-add-new-brand .loader,
+    .addBrandAdmin .loading-add-new-brand .loader .bar {
+      width: 60px;
+      height: 20px;
+    }
+    .addBrandAdmin .loading-add-new-brand .loader .bar {
+      position: absolute;
+      display: flex;
+      align-items: center;
+    }
+    .addBrandAdmin .loading-add-new-brand .loader .bar::before,
+    .addBrandAdmin .loading-add-new-brand .loader .bar::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #9c27b0;
+      background: #9c27b0;
+      opacity: 0;
+      box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+      border-radius: 10px;
+      animation: slideleft 2s ease-in-out infinite;
+    }
+
+    .addBrandAdmin .loading-add-new-brand .loader .bar1::before { animation-delay: 0.00s }
+    .addBrandAdmin .loading-add-new-brand .loader .bar1::after  { animation-delay: 0.3s }
+    .addBrandAdmin .loading-add-new-brand .loader .bar2::before { animation-delay: 0.60s }
+    .addBrandAdmin .loading-add-new-brand .loader .bar2::after  { animation-delay: 0.90s }
+    .addBrandAdmin .loading-add-new-brand .loader .bar3::before { animation-delay: 1.20s }
+    .addBrandAdmin .loading-add-new-brand .loader .bar3::after  { animation-delay: 1.50s }
+
+    @keyframes slideleft {
+      10% { opacity: 0; transform: scale(0); right: 0 }
+      50% { opacity: 1; transform: scale(1) }
+      90% { opacity: 0; transform: scale(0); right: 100% }
+    }
+  </style>
+</head>
+
+<body class="addBrandAdmin">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Thêm thương hiệu mới</h4>
+                  <p class="card-category">Thêm thương hiệu của sản phẩm</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Tên thương hiệu</label>
+                          <input type="text" class="form-control" id="name-brand">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Địa chỉ</label>
+                          <input type="text" class="form-control" id="address-brand">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Số điện thoại</label>
+                          <input type="text" class="form-control" id="phone-brand">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <select id="option-cities" style="width: 100%;">
+                            <option value="">Tỉnh - Thành phố</option>
+                            <% cities.forEach(c => { %>
+                              <option value="<%= c._id %>"><%= c.name %></option>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" id="show-message-delay-add-new-brand">
+                      <div class="col-md-12 loading-add-new-brand">
+                        <label style="font-size:25px;">Đang xử lý dữ liệu</label>
+                      </div>
+                      <div class="col-md-12 loading-add-new-brand">
+                        <div class="loader">
+                          <div class="bar bar1"></div>
+                          <div class="bar bar2"></div>
+                          <div class="bar bar3"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary pull-right add-new-brand">Thêm Thương hiệu mới</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script>
+  $(document).ready(function() {
+    $('.addBrandAdmin .add-new-brand').on('click', e => {
+
+      $('.addBrandAdmin #show-message-delay-add-new-brand').show()
+
+      const name = $('.addBrandAdmin .main-panel .content #name-brand').val()
+      const address = $('.addBrandAdmin .main-panel .content #address-brand').val()
+      const phone = $('.addBrandAdmin .main-panel .content #phone-brand').val()
+      const city = $('.addBrandAdmin .main-panel .content #option-cities').val()
+      // console.log(`${name}-${address}-${phone}-${city}`)
+      const query = {
+        name,
+        address,
+        phone,
+        city
+      }
+      fetch('../admin/api/brands', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(query)
+      }).then(res => res.text())
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.status) {
+          $('.messsageAlertPage #message-alert-show .content').html(data.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+
+          $('.addBrandAdmin .main-panel .content #name-brand').val("")
+          $('.addBrandAdmin .main-panel .content #address-brand').val("")
+          $('.addBrandAdmin .main-panel .content #phone-brand').val("")
+        }
+        else {
+          $('.messsageAlertPage #message-alert-show .content').html(data.error)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+
+        $('.addBrandAdmin #show-message-delay-add-new-brand').hide()
+      }).catch(e => {
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+        
+        $('.addBrandAdmin #show-message-delay-add-new-brand').hide()
+      })
+    })
+  })
+</script>
+</html>

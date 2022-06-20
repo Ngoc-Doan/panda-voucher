@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Blog | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+</head>
+<!--/head-->
+
+<body>
+    <%- include component/header.ejs %>
+    <!--/header-->
+    <div class="blogPage">
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <%- include component/left-sidebar.ejs %>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="blog-post-area">
+                            <h2 class="title text-center">Các blog mới nhất</h2>
+                            <% blogs.forEach(b => { %>
+                                <div class="single-blog-post">
+                                    <h3><%= b.title %></h3>
+                                    <div class="post-meta">
+                                        <ul>
+                                            <li><i class="fa fa-user"></i> <%= b.user.name %></li>
+                                            <li><i class="far fa-clock"></i> <%= moment(b.createDate).format('HH:mm') %></li>
+                                            <li><i class="fa fa-calendar"></i> <%= moment(b.createDate).format('DD/MM/YYYY') %></li>
+                                        </ul>
+                                        <span>
+                                            <% for(var i = 0; i < b.star; i++) { %>
+                                                <i class="fa fa-star"></i>
+                                            <% } %>
+                                        </span>
+                                    </div>
+                                    <a href="">
+                                        <img src="<%= b.image %>" alt="">
+                                    </a>
+                                    <% b.parentContent.forEach(c => { %>
+                                        <p>
+                                            <%= c %>
+                                        </p>
+                                    <% }) %>
+                                    <a class="btn btn-primary" href="./blog-single?id=<%= b._id %>">Đọc thêm</a>
+                                </div>
+                            <% }) %>
+                            
+                            <% if (blogs.length >= 12) { %>
+                                <div class="pagination-area">
+                                    <ul class="pagination">
+                                        <li><a href="" class="active">1</a></li>
+                                        <li><a href="">2</a></li>
+                                        <li><a href="">3</a></li>
+                                        <li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
+                                    </ul>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <%- include component/footer.ejs %>
+    <!--/Footer-->
+
+    <%- include component/message-alert.ejs %>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<style>
+    .messsageAlertPage #message-alert-show .popup {
+        margin: 20px;
+        padding: 20px;
+        width: 300px;
+        background: rgb(243, 240, 240);
+        border-radius: 5px;
+        position: relative;
+    }
+    .messsageAlertPage #message-alert-show .popup .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+    }
+    .messsageAlertPage #message-alert-show {
+        position: fixed;
+        bottom: 0;
+        z-index: 7;
+        display: none;
+    }
+</style>
+<div class="messsageAlertPage">
+    <div id="message-alert-show">
+        <div id="popup1" class="overlay">
+            <div class="popup">
+                <h2 class="main-title" style="font-family: 'Roboto', sans-serif;">Thông báo</h2>
+                <a class="close">×</a>
+                <div class="content" style="font-family: 'Roboto', sans-serif;">
+                    Thank to pop me out of that button
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.messsageAlertPage #message-alert-show .close').click(e => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        })
+    })
+</script>

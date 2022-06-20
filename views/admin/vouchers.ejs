@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin voucher | Pandas voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+
+  <style>
+    .voucherAdminPage th {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body class="voucherAdminPage">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Danh sách đơn hàng</h4>
+                  <p class="card-category"> đơn hàng chưa xác thực & đơn hàng hoàn thành</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Ảnh sản phẩm
+                        </th>
+                        <th>
+                          Tên sản phẩm
+                        </th>
+                        <th>
+                          Giá sản phẩm
+                        </th>
+                        <th>
+                          Mô tả
+                        </th>
+                        <th>
+                          Thương hiệu
+                        </th>
+                        <th>
+                          Phân loại
+                        </th>
+                        <th>
+                          Ngày hết hạn
+                        </th>
+                        <th>
+                          Còn hàng
+                        </th>
+                        <th>
+                          Thao tác
+                        </th>
+                      </thead>
+                      <tbody>
+                        <% vouchers.forEach(v => { %>
+                          <tr id="remove-vouchers-<%= v._id %>">
+                            <td>
+                              <img src="<%= v.image[0] %>" alt="<%= v.name %>" width="100px" height="100px">
+                            </td>
+                            <td>
+                                <i><b><a href="../detail?id=<%= v._id %>" target="_blank"><%= v.name %></a></b></i>
+                            </td>
+                            <td>
+                              <%= v.price.toLocaleString() %>
+                            </td>
+                            <td>
+                              <%= v.desc[0] %>...
+                            </td>
+                            <td>
+                              <%= v.brand.name %>
+                            </td>
+                            <td>
+                              <%= v.category.name %>
+                            </td>
+                            <td>
+                              <%= moment(v.expirationDate).format('HH:mm DD/MM/YYYY') %>
+                            </td>
+                            <td>
+                              <%= v.Availability %>
+                            </td>
+                            <td>
+                              <a href="../admin/edit-product?id=<%= v._id %>">
+                                <button type="button" rel="tooltip" title="Chỉnh sửa" class="btn btn-primary btn-link btn-sm">
+                                  <i class="material-icons">edit</i>
+                                </button>
+                              </a>
+                              <button type="button" rel="tooltip" title="Xoá" class="btn btn-primary btn-link btn-sm" data-name="<%= v.name %>" data-voucher="<%= v._id %>" onclick="handleDeleteProductModel(this)" data-toggle="modal" data-target="#deleteProductAdminModal">
+                                <i class="material-icons">delete</i>
+                              </button>
+                              <a href="../detail?id=<%= v._id %>" target="_blank">
+                                <button type="button" rel="tooltip" title="Chi tiết" class="btn btn-primary btn-link btn-sm">
+                                  <i class="material-icons">preview</i>
+                                </button>
+                              </a>
+                            </td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteProductAdminModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="btn-delete-product-user-admin">
+            <i class="fa fa-spinner fa-spin" style="display: none;"></i> Xoá
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script>
+  function handleDeleteProductModel(element) {
+    const voucher = element.dataset.voucher
+    const name = element.dataset.name
+    $('.voucherAdminPage #deleteProductAdminModal').attr('data-voucher', voucher)
+    $('.voucherAdminPage #deleteProductAdminModal .modal-title').html(`Xoá sản phẩm <b>#${voucher}</b>`)
+    $('.voucherAdminPage #deleteProductAdminModal .modal-body').html(`<p>Bạn chắc chắn muốn xoá sản phẩm <b> ${name} </b> <i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i></p>`)
+  }
+
+  $(document).ready(() => {
+    $('.voucherAdminPage #btn-delete-product-user-admin').on('click', e => {
+      $('.voucherAdminPage #btn-delete-product-user-admin i.fa-spinner').show()
+      const voucher = $('.voucherAdminPage #deleteProductAdminModal').attr('data-voucher')
+
+      fetch(`../admin/api/vouchers/${voucher}`,{
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then(res => res.text())
+      .then(data => {
+          data = JSON.parse(data)
+          if (data.status) {
+            $('.voucherAdminPage #btn-delete-product-user-admin i.fa-spinner').hide()
+
+            $(`.voucherAdminPage #remove-vouchers-${voucher}`).remove()
+
+            $('.voucherAdminPage #deleteProductAdminModal').modal('hide')
+
+            $('.messsageAlertPage #message-alert-show .content').html(data.message)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+          else {
+            $('.voucherAdminPage #btn-delete-product-user-admin i.fa-spinner').hide()
+            $('.messsageAlertPage #message-alert-show .content').html(data.error)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+      }).catch(e => {
+        $('.voucherAdminPage #btn-delete-product-user-admin i.fa-spinner').hide()
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    })
+  })
+</script>
+</html>

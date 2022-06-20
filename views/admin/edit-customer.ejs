@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin edit customer | Pandas Voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+  <style>
+    .editCustomerAdminPage #update-avatar-user-admin-modal .show-image-upload .edit-review-upload-block img.edit-review-upload {
+      width: 200px;
+      height: 200px;
+    }
+    .editCustomerAdminPage #update-avatar-user-admin-modal .show-image-upload .edit-review-upload-block {
+      display:inline-block;
+      margin:5px 20px;
+      padding:5px;
+      border:1px solid #CCC;
+    }
+    .editCustomerAdminPage #update-avatar-user-admin-modal .show-image-upload {
+      width: 100%;
+      text-align:center;
+    }
+    .editCustomerAdminPage #update-avatar-user-admin-modal .cancel-review-img-upload {
+      cursor: pointer;
+    }
+    .editCustomerAdminPage #update-avatar-user-admin-modal .label-for-img-upload-input {
+      display: inline-block;
+      background-color: #A13BB6;
+      color: white;
+      padding: 0.5rem;
+      font-family: sans-serif;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .editCustomerAdminPage #show-message-delay-update-user-admin {
+      display: none;
+    }
+    .editCustomerAdminPage .loading-update-user-admin {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-around;
+    }
+    .editCustomerAdminPage .loading-update-user-admin .loader,
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar {
+      width: 60px;
+      height: 20px;
+    }
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar {
+      position: absolute;
+      display: flex;
+      align-items: center;
+    }
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar::before,
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: #9c27b0;
+      background: #9c27b0;
+      opacity: 0;
+      box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+      border-radius: 10px;
+      animation: slideleft 2s ease-in-out infinite;
+    }
+
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar1::before { animation-delay: 0.00s }
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar1::after  { animation-delay: 0.3s }
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar2::before { animation-delay: 0.60s }
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar2::after  { animation-delay: 0.90s }
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar3::before { animation-delay: 1.20s }
+    .editCustomerAdminPage .loading-update-user-admin .loader .bar3::after  { animation-delay: 1.50s }
+
+    @keyframes slideleft {
+      10% { opacity: 0; transform: scale(0); right: 0 }
+      50% { opacity: 1; transform: scale(1) }
+      90% { opacity: 0; transform: scale(0); right: 100% }
+    }
+  </style>
+</head>
+
+<body class="editCustomerAdminPage" data-mainUser="<%= mainUser._id %>">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Chỉnh sửa thông tin cơ bản của khách hàng <b><%= user.name %></b></h4>
+                  <p class="card-category">Mã khách hàng #<%= user._id %></p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Họ tên khách hàng</label>
+                          <input type="text" class="form-control" value="<%= user.name %>" id="name-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Địa chỉ email</label>
+                          <input type="email" class="form-control" value="<%= user.email %>" id="email-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Số điện thoại</label>
+                          <input type="text" class="form-control"  value="<%= user.phone %>" id="phone-admin">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Địa chỉ</label>
+                          <input type="text" class="form-control"  value="<%= user.street %>" id="address-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Quận / Thị xã</label>
+                          <input type="text" class="form-control"  value="<%= user.district %>" id="district-admin">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Thành phố</label>
+                          <input type="text" class="form-control"  value="<%= user.city %>" id="city-admin">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Xác thực mật khẩu</label>
+                          <input type="password" class="form-control" id="password-admin">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" id="show-message-delay-update-user-admin">
+                      <div class="col-md-12 loading-update-user-admin">
+                        <label style="font-size:25px;">Đang xử lý...</label>
+                      </div>
+                      <div class="col-md-12 loading-update-user-admin">
+                        <div class="loader">
+                          <div class="bar bar1"></div>
+                          <div class="bar bar2"></div>
+                          <div class="bar bar3"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary pull-right" data-customer="<%= user._id %>" id="btn-update-user-admin">Cập nhật thông tin khách hàng</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script>
+  $(document).ready(()=> {
+    $('.editCustomerAdminPage #btn-update-user-admin').on('click', e => {
+
+      $('.editCustomerAdminPage #show-message-delay-update-user-admin').show()
+
+      const mainUser = $('.editCustomerAdminPage').attr('data-mainUser')
+      const name = $('.editCustomerAdminPage .card-body #name-admin').val()
+      const phone = $('.editCustomerAdminPage .card-body #phone-admin').val()
+      const email = $('.editCustomerAdminPage .card-body #email-admin').val()
+      const street = $('.editCustomerAdminPage .card-body #address-admin').val()
+      const district = $('.editCustomerAdminPage .card-body #district-admin').val()
+      const city = $('.editCustomerAdminPage .card-body #name-admin').val()
+      const password = $('.editCustomerAdminPage #password-admin').val()
+
+      const customer = e.target.dataset.customer
+      const query = {
+        mainUser,
+        name,
+        phone,
+        email,
+        street,
+        district,
+        city,
+        password
+      }
+
+      fetch(`../admin/api/users/customer/${customer}`, {
+      method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(query)
+      }).then(res => res.text())
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.status) {
+
+          $('.messsageAlertPage #message-alert-show .content').html(data.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+              window.location.href = '../admin/customers'
+          },1000)
+        }
+        else {
+          $('.messsageAlertPage #message-alert-show .content').html(data.error)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+        $('.editCustomerAdminPage #show-message-delay-update-user-admin').hide()
+      })
+      .catch(e => {
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+        
+        $('.editCustomerAdminPage #show-message-delay-update-user-admin').hide()
+      })
+    })
+  })
+</script>
+</html>

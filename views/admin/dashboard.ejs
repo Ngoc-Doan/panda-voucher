@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../admin/image/apple-icon.png">
+  <link rel="icon" type="image/png" href="../admin/image/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin dashboard | Pandas Voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+</head>
+
+<body class="dashboardPageAdmin">
+  <%- include ../component/admin/sidebar.ejs %>
+  <div class="wrapper ">
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">content_copy</i>
+                  </div>
+                  <p class="card-category">Số lượng sản phẩm</p>
+                  <h3 class="card-title"> <%= vouchers_count %>
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons text-danger">warning</i>
+                    <a href="./add-product">Thêm sản phẩm mới...</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">store</i>
+                  </div>
+                  <p class="card-category">Tổng doanh thu</p>
+                  <h3 class="card-title"> <%= sum_price.toLocaleString() %></h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">date_range</i> Tất cả
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">info_outline</i>
+                  </div>
+                  <p class="card-category">Đang xác thực</p>
+                  <h3 class="card-title"><%= not_valid_buy %></h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">local_offer</i> Đơn hàng
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">done_outline</i>
+                  </div>
+                  <p class="card-category">Đã hoàn thành</p>
+                  <h3 class="card-title"><%= valid_buy %></h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">local_offer</i> Đơn hàng
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card card-chart">
+                <div class="card-header card-header-success">
+                  <div class="ct-chart" id="dailySalesChart"></div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Thống kê doanh thu</h4>
+                  <p class="card-category">
+                    <span class="text-success"><i class="fa fa-long-arrow-up"></i></span> Doanh thu hàng tuần.</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-chart">
+                <div class="card-header card-header-warning">
+                  <div class="ct-chart" id="websiteViewsChart"></div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Thống kê thương hiệu</h4>
+                  <p class="card-category">Số lượng thương hiệu trên các thành phố trọng điểm</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-chart">
+                <div class="card-header card-header-danger">
+                  <div class="ct-chart" id="completedTasksChart"></div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Thống kê đơn hàng</h4>
+                  <p class="card-category">Số lượng đơn hàng trong tuần.</p>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">access_time</i> 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-tabs card-header-primary">
+                  <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                      <span class="nav-tabs-title">Thống kê:</span>
+                      <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#profile" data-toggle="tab">
+                            <i class="material-icons">remove_shopping_cart</i> Chưa xác thực
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#messages" data-toggle="tab">
+                            <i class="material-icons">price_check</i> Doanh thu
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#settings" data-toggle="tab">
+                            <i class="material-icons">production_quantity_limits</i> Đơn hàng bị huỷ
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#receives" data-toggle="tab">
+                            <i class="material-icons">local_shipping</i> Đang giao hàng
+                            <div class="ripple-container"></div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="profile">
+                      <table class="table">
+                        <tbody>
+                          <% if (buys_not_valid.length != 0) { %>
+                            <% buys_not_valid.forEach(n => { %>
+                              <tr class="not-valid-<%= n._id %>">
+                                <td>Đơn hàng <%= n._id.toString().substring(0,12) %></td>
+                                <td><%= (n.totalPrice + n.shipper.price).toLocaleString() %>đ</td>
+                                <td>
+                                  Đặt hàng vào ngày <%= moment(n.orderDate).format('HH:mm - DD/MM/YYYY') %>
+                                </td>
+                                <td class="td-actions text-right">
+                                  <button type="button" rel="tooltip" title="Chi tiết" class="btn btn-primary btn-link btn-sm">
+                                    <a href="./buys?id=<%= n._id %>" target="_blank"><i class="material-icons">preview</i></a>
+                                  </button>
+                                  <button type="button" rel="tooltip" title="Chỉnh sửa" class="btn btn-primary btn-link btn-sm">
+                                    <i class="material-icons">edit</i>
+                                  </button>
+                                  <button type="button" rel="tooltip" title="Xác thực" onclick="checkPurchaseForUser(this)" data-buy="<%= n._id %>" class="btn btn-danger btn-link btn-sm">
+                                    <i class="material-icons">done</i>
+                                  </button>
+                                </td>
+                              </tr>
+                            <% }) %>
+                          <% } else { %>
+                            <tr>
+                              <td>Không có đơn hàng nào !!!</td>
+                            </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="messages">
+                      <table class="table">
+                        <tbody class="table-tbody-revenue">
+                          <% if (revenues.length != 0) { %>
+                            <% revenues.forEach(n => { %>
+                              <tr class="revenue-<%= n._id %>">
+                                <td>
+                                  Đơn hàng <%= n._id.toString().substring(0,12) %>
+                                </td>
+                                <td>
+                                  <%= (n.totalPrice + n.shipper.price).toLocaleString() %>đ
+                                </td>
+                                <td>
+                                  Nhận hàng vào <%= moment(n.receive.date).format('HH:mm - DD/MM/YYYY') %>
+                                </td>
+                                <td class="td-actions text-right">
+                                  <button type="button" rel="tooltip" title="Chi tiết" class="btn btn-danger btn-link btn-sm">
+                                    <a href="./buys?id=<%= n._id %>" target="_blank"><i class="material-icons">preview</i></a>
+                                  </button>
+                                </td>
+                              </tr>
+                            <% }) %>
+                          <% } else { %>
+                            <tr>
+                              <td class="not-found-revenue">Không có đơn hàng nào !!!</td>
+                            </tr>
+                          <% } %>
+
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="settings">
+                      <table class="table">
+                        <tbody>
+                          <% if (buys_cancel.length != 0) { %>
+                            <% buys_cancel.forEach(p => { %>
+                              <tr class="purchase-cancel-<%= p._id %>">
+                                <td>Đơn hàng <%= p._id.toString().substring(0,12) %> </td>
+                                <td><%= (p.totalPrice + p.shipper.price).toLocaleString() %>đ</td>
+                                <td>
+                                  Huỷ vào <%= moment(p.cancel.date).format('HH:mm - DD/MM/YYYY') %>
+                                </td>
+                                <td class="td-actions text-right">
+                                  <button type="button" rel="tooltip" title="Chi tiết" class="btn btn-primary btn-link btn-sm">
+                                    <a href="./buys?id=<%= p._id %>" target="_blank"><i class="material-icons">preview</i></a>
+                                  </button>
+                                </td>
+                              </tr>
+                            <% }) %>
+                          <% } else { %>
+                            <tr>
+                              <td>Không có đơn hàng nào !!!</td>
+                            </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="receives">
+                      <table class="table">
+                        <tbody class="table-tbody-receive">
+                          <% if (buys_receive.length != 0) { %>
+                            <% buys_receive.forEach(p => { %>
+                              <tr class="purchase-receive-<%= p._id %>">
+                                <td>Đơn hàng <%= p._id.toString().substring(0,12) %> </td>
+                                <td><%= (p.totalPrice + p.shipper.price).toLocaleString() %>đ</td>
+                                <td class="td-actions text-right">
+                                  <button type="button" rel="tooltip" title="Chi tiết" class="btn btn-primary btn-link btn-sm">
+                                    <a href="./buys?id=<%= p._id %>" target="_blank"><i class="material-icons">preview</i></a>
+                                  </button>
+                                </td>
+                              </tr>
+                            <% }) %>
+                          <% } else { %>
+                            <tr>
+                              <td class="not-found-receive">Không có đơn hàng nào !!!</td>
+                            </tr>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-warning">
+                  <h4 class="card-title">Nhân viên</h4>
+                  <p class="card-category">Số lượng nhân viên</p>
+                </div>
+                <div class="card-body table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-warning">
+                      <th>ID</th>
+                      <th>Họ và tên</th>
+                      <th>Lương</th>
+                      <th>Số điện thoại</th>
+                    </thead>
+                    <tbody>
+                      <% users.forEach(u => { %>
+                        <tr>
+                          <td><%= u._id.toString().substring(0,8) %></td>
+                          <td><%= u.name %></td>
+                          <td><%= u.salary.toLocaleString() %></td>
+                          <td><%= u.phone %></td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+  
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+  <script>
+    function checkPurchaseForUser(element) {
+      const id = element.dataset.buy
+      fetch('../admin/api/buys/validation', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+      }).then(res => res.text())
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.status) {
+          $(`.dashboardPageAdmin .not-valid-${id}`).remove()
+
+          const checkTemp = $(`.dashboardPageAdmin .table .table-tbody-receive .not-found-receive`).html()
+          var temString = `
+          <tr class="purchase-receive-${id}">
+            <td>
+              Đơn hàng ${data.Buy._id.toString().substring(0,12)}
+            </td>
+            <td>
+              ${data.Buy.totalPrice.toLocaleString()}đ
+            </td>
+            <td class="td-actions text-right">
+              <button type="button" rel="tooltip" title="Chi tiết" class="btn btn-danger btn-link btn-sm">
+                <i class="material-icons">preview</i>
+              </button>
+            </td>
+          </tr>
+          `
+          if (checkTemp == 'Không có đơn hàng nào !!!') {
+            $(`.dashboardPageAdmin .table .table-tbody-receive`).html(temString)
+          }
+          else {
+            $(`.dashboardPageAdmin .table .table-tbody-receive`).append(temString)
+          }
+
+          $('.messsageAlertPage #message-alert-show .content').html(data.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+        else {
+          $('.messsageAlertPage #message-alert-show .content').html(data.error)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+      }).catch(e => {
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    }
+
+    $(document).ready(function() {
+      // Javascript method's body can be found in ../admin/js/demos.js
+      md.initDashboardPageCharts();
+    });
+  </script>
+</body>
+
+</html>

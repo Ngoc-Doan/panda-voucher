@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+</head>
+<!--/head-->
+<style>
+    .loginPage .file-upload {
+    background-color: #ffffff;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    }
+
+    .loginPage .file-upload-btn {
+    width: 100%;
+    margin: 0;
+    color: #fff;
+    background: #1FB264;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #15824B;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    }
+
+    .loginPage .file-upload-btn:hover {
+    background: #1AA059;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+    }
+
+    .loginPage .file-upload-btn:active {
+    border: 0;
+    transition: all .2s ease;
+    }
+
+    .loginPage .file-upload-content {
+    display: none;
+    text-align: center;
+    }
+
+    .loginPage .file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+    }
+
+    .loginPage .image-upload-wrap {
+    margin-top: 20px;
+    border: 4px dashed #1FB264;
+    position: relative;
+    }
+
+    .loginPage .image-dropping,
+    .loginPage .image-upload-wrap:hover {
+    background-color: #1FB264;
+    border: 4px dashed #ffffff;
+    }
+
+    .loginPage .image-title-wrap {
+    padding: 0 15px 15px 15px;
+    color: #222;
+    }
+
+    .loginPage .drag-text {
+    text-align: center;
+    }
+
+    .loginPage .drag-text h3 {
+    font-weight: 100;
+    text-transform: uppercase;
+    color: #15824B;
+    padding: 60px 0;
+    }
+
+    .loginPage .file-upload-image {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+    }
+
+    .loginPage .remove-image {
+    width: 200px;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #b02818;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    }
+
+    .loginPage .remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer;
+    }
+
+    .loginPage .remove-image:active {
+    border: 0;
+    transition: all .2s ease;
+    }
+    .loginPage .show-error-message-signup {
+        font-size: medium;
+        margin-top: 30px;
+        text-align: center;
+        color: rgb(253, 251, 251);
+        background-color: #dd8d81;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        display: none;
+    }
+
+    /* LOADER 1 */
+    .loginPage .div-loader {
+        margin-top: 30px;
+        display: none;
+    }
+    .loginPage .div-loader .loader{
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        position: relative;
+        margin: 0 auto;
+    }
+    .loginPage .div-loader #loader-1:before, #loader-1:after{
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        border: 8px solid transparent;
+        border-top-color: #66945d;
+    }
+
+    .loginPage .div-loader #loader-1:before{
+        z-index: 100;
+        animation: spin 1s infinite;
+    }
+
+    .loginPage .div-loader #loader-1:after{
+        border: 8px solid #ccc;
+    }
+
+    @keyframes spin{
+        0%{
+            -webkit-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100%{
+            -webkit-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+</style>
+<body>
+    <div class="loginPage">
+        <%- include component/header.ejs %>
+        <!--/header-->
+    
+        <section id="form">
+            <!--form-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-1">
+                        <div class="login-form">
+                            <!--login form-->
+                            <h2>Đăng nhập</h2>
+                            <form method="POST" id="login_form">
+                                <input type="text" name="username" placeholder="Username" />
+                                <input type="password" name="password" placeholder="Mật khẩu" />
+                                <span>
+                                    <input type="checkbox" class="checkbox"> 
+                                    Ghi nhớ đăng nhập
+                                </span>
+                                <button type="button" class="btn btn-default" id="login-button">Đăng nhập</button>
+                            </form>
+                        </div>
+                        <!--/login form-->
+                    </div>
+                    <div class="col-sm-1">
+                        <h2 class="or">OR</h2>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="signup-form">
+                            <!--sign up form-->
+                            <h2>Đăng ký thành viên mới</h2>
+                            <form id="signup_form" enctype="multipart/form-data" method="POST">
+                                <input type="text" id="name" name="name" placeholder="Họ và tên" />
+                                <input type="text" id="username" name="username" placeholder="Username" />
+                                <input type="email" id="email" name="email" placeholder="Địa chỉ email" />
+                                <input type="password" id="password" name="password" placeholder="Mật khẩu" />
+                                <input type="password" id="re_password" name="re_password" placeholder="Xác thực mật khẩu" />
+
+
+                                <div class="file-upload">
+                                    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Thêm avatar</button>
+                                  
+                                    <div class="image-upload-wrap">
+                                      <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                      <div class="drag-text">
+                                        <h3>Kéo và thả tệp hoặc chọn hình ảnh</h3>
+                                      </div>
+                                    </div>
+                                    <div class="file-upload-content">
+                                      <img class="file-upload-image" src="undefined" alt="your image" />
+                                      <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload()" class="remove-image">Xoá <span class="image-title">Uploaded Image</span></button>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                <button type="button" class="btn btn-default" id="register">Đăng ký</button>
+                            </form>
+                        </div>
+                        <!--/sign up form-->
+                    </div>
+                </div>
+                <div class="col-md-12 bg div-loader">
+                    <div class="loader" id="loader-1"></div>
+                </div>
+                <div class="row">
+                    <div class="show-error-message-signup">
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--/form-->
+        
+        <%- include component/footer.ejs %>
+        <!--/Footer-->
+    </div>
+
+</body>
+
+</html>

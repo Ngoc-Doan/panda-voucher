@@ -1,0 +1,65 @@
+{
+  "register":
+  [
+    {
+      "name": "Ha Ngoc My",
+      "username": "hangocmy",
+      "email": "hangocmy00@gmail.com",
+      "password": "M@123456",
+      "re_password": "M@123456"
+    },
+  
+    {
+      "name": "Ha Ngoc My",
+      "username": "hangocmy1",
+      "email": "hangocmy00@gmail.com",
+      "password": "M@123456",
+      "re_password": "M@123456"
+    },
+  
+    {
+      "name": "Ha Ngoc My",
+      "username": "hangocmy1",
+      "email": "hangocmy00@gmail.com",
+      "password": "M@12",
+      "re_password": "M@12"
+    },
+  
+    {
+      "name": "Ha Ngoc My",
+      "username": "hangocmy1",
+      "email": "ctrls.hangocmy@gmail.com",
+      "password": "M@123456789",
+      "re_password": "M@12234"
+    }
+  ],
+
+  "login":
+  [
+    {
+      "username": "",
+      "password": "M@123456"
+    },
+    {
+      "username": "hangocmy",
+      "password": ""
+    },
+    {
+      "username": "",
+      "password": ""
+    },
+    {
+      "username": "wrongUser",
+      "password": "M@123456"
+    },
+    {
+      "username": "hangocmy",
+      "password": "wrongPass"
+    },
+    {
+      "username": "wrongUser",
+      "password": "wrongPass"
+    }
+  ]
+  
+}

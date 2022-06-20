@@ -1,0 +1,43 @@
+{
+  "name": "source",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "mocha --timeout 150000"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "cloudinary": "^1.25.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "debug": "^2.6.9",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.10.0",
+    "http-errors": "^1.6.3",
+    "is-valid-username": "0.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^8.3.2",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.4",
+    "mongoose-double": "0.0.1",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0",
+    "cypress-real-events": "^1.7.0"
+  },
+  "devDependencies": {
+    "cypress": "^10.1.0",
+    "cypress-xpath": "^1.6.2"
+  }
+}

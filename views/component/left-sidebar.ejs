@@ -1,0 +1,179 @@
+<style>
+    .left-sidebar .brands_products .more-brands-view {
+        cursor: pointer;
+        border-bottom: none;
+        background-color: white;
+    }
+    .left-sidebar .brands_products .more-brands-view:hover {
+        background-color: rgb(242, 242, 247);
+    }
+    .left-sidebar .category-products .more-cate-view {
+        cursor: pointer;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .left-sidebar .category-products .more-cate-view:hover {
+        background-color: rgb(242, 242, 247);
+    }
+    .left-sidebar .brands_products .show-hide-left-sidebar {
+        display: none;
+    }
+    .active-panel-left-sidebar {
+        display: none;
+    }
+    .left-sidebar .search-price-range-product {
+        text-align: center;
+        color: #FE980F;
+        width: 100%;
+        margin-top: 10px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        font-family: 'Roboto', sans-serif;
+        cursor: pointer;
+    }
+    .left-sidebar .search-price-range-product:hover {
+        background-color: rgb(242, 242, 247);
+    }
+</style>
+<div class="left-sidebar">
+    <h2>Danh mục</h2>
+    <div class="panel-group category-products" id="accordian">
+        <!--category-productsr-->
+        <% locals.categories.forEach(cate => { %>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#<%= cate._id %>">
+                            <span class="badge pull-right"><i class="fa fa-plus"></i></span> <%= cate.name %>
+                        </a>
+                    </h4>
+                </div>
+                <div id="<%= cate._id %>" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            <% cate.category.forEach(b => { %>
+                                <li><a href="/products?type=cate&id=<%= b._id %>"><%= b.name %> </a></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+        <% if (locals.categories.length >= 7) { %>
+            <div class="panel panel-default">
+                <div class="panel-heading more-cate-view">
+                    <h4 class="panel-title" style="color: rgb(133, 99, 99); text-align: center;">Xem thêm <i class="fas fa-angle-double-up"></i></h4>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    <!--/category-products-->
+
+    <div class="brands_products">
+        <!--brands_products-->
+        <h2>Tỉnh - Thành phố</h2>
+        <div class="brands-name">
+            <ul class="nav nav-pills nav-stacked">
+                <% if (locals.brands.length > 7) { %>
+                    <% for (var i = 0; i < 7; i++) { %>
+                        <li class="li-left-sidebar" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordian" href="#<%= locals.brands[i]._id %>">
+                            <a> <span class="pull-right">(<%= locals.brands[i].amount %>)</span><%= locals.brands[i].name %></a>
+                        </li>
+                        <div id="<%= locals.brands[i]._id %>" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <ul>
+                                    <% locals.brands[i].brand.forEach(b => { %>
+                                        <li style="padding: 5px 15px; list-style: outside;"><a href="./products?type=brand&id=<%= b._id %>"><%= b.name %></a></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    <% } %>
+    
+                    <% for (var i = 7; i < locals.brands.length; i++) { %>
+                        <li class="show-hide-left-sidebar" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordian" href="#<%= locals.brands[i]._id %>">
+                            <a> <span class="pull-right">(<%= locals.brands[i].amount %>)</span><%= locals.brands[i].name %></a>
+                        </li>
+                        <div id="<%= locals.brands[i]._id %>" class="panel-collapse collapse show-hide-left-sidebar-panel">
+                            <div class="panel-body">
+                                <ul>
+                                    <% locals.brands[i].brand.forEach(b => { %>
+                                        <li style="padding: 5px 15px; list-style: outside;"><a href="./products?type=brand&id=<%= b._id %>"><%= b.name %></a></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } else { %>
+                    <% for (var i = 0; i < locals.brands.length; i++) { %>
+                        <li class="li-left-sidebar" style="cursor: pointer;" data-toggle="collapse" data-parent="#accordian" href="#<%= locals.brands[i]._id %>">
+                            <a> <span class="pull-right">(<%= locals.brands[i].amount %>)</span><%= locals.brands[i].name %></a>
+                        </li>
+                        <div id="<%= locals.brands[i]._id %>" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <ul>
+                                    <% locals.brands[i].brand.forEach(b => { %>
+                                        <li style="padding: 5px 15px; list-style: outside;"><a href="./products?type=brand&id=<%= b._id %>"><%= b.name %></a></li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            </ul>
+        </div>
+        <% if (locals.brands.length > 7) { %>
+            <div class="panel panel-default" style="border: none;">
+                <div class="panel-heading more-brands-view">
+                    <h4 class="panel-title" style="color: rgb(133, 99, 99); text-align: center;">Xem thêm <i class="fas fa-angle-double-down icon-arrow"></i></h4>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    <!--/brands_products-->
+
+    <div class="price-range">
+        <!--price-range-->
+        <p>
+            <!-- <label >Price range:</label> -->
+            <h2 for="amount">Mức giá</h2>
+            <h2 id="amount" style="text-align: center;">0 VNĐ</h2>
+            <input type="hidden" id="amount_range">
+            <!-- <input type="text"  readonly style="border:0; color:#f6931f; font-weight:bold;"> -->
+        </p>
+        
+        <div id="slider-range"></div>
+    </div>
+
+    <a onclick="getLinkHrefPrice(this)">
+        <div class="search-price-range-product">
+            <h4>Tìm kiếm</h4>
+        </div>
+    </a>
+
+    <!--/price-range-->
+
+    <div class="shipping text-center">
+        <!--shipping-->
+        <img src="images/home/shipping.jpg" alt="" />
+        <img src="images/home/shipping1.jpg" alt="" />
+        <img src="images/home/shipping2.jpg" alt="" />
+    </div>
+    <!--/shipping-->
+
+</div>
+
+<script>
+    $( function() {
+        $(".left-sidebar .price-range #slider-range" ).slider({
+            range: true,
+            min: 0,
+            max: 50000000
+        }).on('slide', function(ev){
+            // console.log(ev.value)
+            $('.left-sidebar .price-range #amount').html(`${ev.value.toLocaleString()} VNĐ`)
+            $('.left-sidebar .price-range #amount_range').val(ev.value)
+        });
+    });
+
+</script>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+    <style>
+        .pagination li a {
+            cursor: pointer;
+        }
+        .indexPage .pagination-data .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 20px solid #71797e;
+            width: 250px;
+            height: 250px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 0.5s linear infinite;
+        }
+
+        /* Safari */
+            @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .indexPage .pagination-data .loader-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 1487px;
+        }
+        @media only screen and (max-width: 989px) {
+            .indexPage .pagination-data .loader-center {
+                height: 2478px;
+            }
+        }
+    </style>
+</head>
+<!--/head-->
+<body>
+    <div class="indexPage">
+        <%- include component/header.ejs %>
+        <!--/header-->
+    
+        <%- include component/slider.ejs %>
+        <!--/slider-->
+    
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <%- include component/left-sidebar.ejs %>
+                    </div>
+    
+                    <div class="col-sm-9 padding-right">
+                        <div class="features_items">
+                            <!--features_items-->
+                            <h2 class="title text-center">Sản phẩm</h2>
+                            <div class="pagination-data">
+                                <% vouchers.forEach(v => { %>
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <img src="<%= v.image[0] %>" alt="" width="200px" height="220px"/>
+                                                    <h2><%= v.price.toLocaleString() %>đ </h2>
+                                                    <p style="height: 80px;"><i><%= v.name %></i></p>
+                                                    <a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                                </div>
+                                                <a href="/detail?id=<%= v._id %>">
+                                                    <div class="product-overlay">
+                                                        <div class="overlay-content">
+                                                            <h2><%= v.price.toLocaleString() %>đ</h2>
+                                                            <p style="height: 80px;"><i><%= v.name %></i></p>
+                                                            <% if (locals.user !== undefined) { %>
+                                                                <a class="btn btn-default add-to-cart add-to-cart-show-hover-main" data-user="<%= user._id %>" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                                            <% } else { %>
+                                                                <a class="btn btn-default add-to-cart add-to-cart-show-hover-main" data-user="" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="choose">
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <% if (locals.user !== undefined) { %>
+                                                        <li style="cursor: pointer;" onclick="addProductIntoFavorite(this)" data-user="<%= user._id %>" data-product="<%= v._id %>"><a><i class="fa fa-plus-square"></i>Ưa thích</a></li>
+                                                    <% } else { %>
+                                                        <li style="cursor: pointer;" onclick="addProductIntoFavorite(this)" data-user="" data-product="<%= v._id %>"><a><i class="fa fa-plus-square"></i>Ưa thích</a></li>
+                                                    <% } %>
+                                                    <li style="cursor: pointer;"><a><i class="fa fa-plus-square"></i>So sánh</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        </div>
+                        <!--features_items-->
+                        <% if (pages > 0 && locals.user !== undefined) { %>
+                            <ul class="pagination" data-pages="<%= pages %>">
+                                <li><a href="">&laquo;</a></li>
+                                <% for (var i = 1; i <= pages; i++) { %>
+                                    <% if(i == 1) { %>
+                                        <li class="active page-<%= i %>"><a data-user="<%= user._id %>" data-page="<%= i %>" onclick="paginationIndex(this)"><%= i %></a></li>
+                                    <% } else { %>
+                                        <li class="page-<%= i %>"><a data-user="<%= user._id %>" data-page="<%= i %>" onclick="paginationIndex(this)"><%= i %></a></li>
+                                    <% } %>
+                                <% } %>
+                                <li><a href="">&raquo;</a></li>
+                            </ul>
+                            <!-- pagination -->
+                        <% } else if (pages > 0 && locals.user == undefined) { %>
+                            <ul class="pagination" data-pages="<%= pages %>">
+                                <li><a href="">&laquo;</a></li>
+                                <% for (var i = 1; i <= pages; i++) { %>
+                                    <% if(i == 1) { %>
+                                        <li class="active page-<%= i %>"><a data-user="" data-page="<%= i %>" onclick="paginationIndex(this)"><%= i %></a></li>
+                                    <% } else { %>
+                                        <li class="page-<%= i %>"><a data-user="" data-page="<%= i %>" onclick="paginationIndex(this)"><%= i %></a></li>
+                                    <% } %>
+                                <% } %>
+                                <li><a href="">&raquo;</a></li>
+                            </ul>
+                            <!-- pagination -->
+                        <% } %>
+    
+                        <%- include component/category-tab.ejs %>
+    
+                        <%- include component/recommend-item.ejs %>
+    
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <%- include component/footer.ejs %>
+        <!--/Footer-->
+    </div>
+    <%- include component/message-alert.ejs %>
+
+</body>
+</html>

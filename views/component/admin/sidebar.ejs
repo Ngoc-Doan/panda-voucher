@@ -1,0 +1,151 @@
+<style>
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(189, 187, 187);
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(230, 227, 227); 
+  }
+</style>
+<div class="sidebar" data-color="purple" data-background-color="white" data-image="../admin/image/sidebar-1.jpg">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+    <div class="logo"><a href="./dashboard" class="simple-text logo-normal">
+        Pandas Voucher
+      </a></div>
+    <div class="sidebar-wrapper" data-title="<%= name_title %>">
+      <ul class="nav">
+        <% if (permissions.length != 0) { %>
+          <% permissions.permission.forEach(p => { %>
+            <% if (p.type == 'dashboard_permission') { %>
+              <li class="nav-item " data-title="dashboard">
+                <a class="nav-link" href="./dashboard">
+                  <i class="material-icons">dashboard</i>
+                  <p>Bảng điều khiển</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'buys_permission') { %>
+              <li class="nav-item " data-title="table">
+                <a class="nav-link" href="./table">
+                  <i class="material-icons">content_paste</i>
+                  <p>Danh sách đơn hàng</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'staffs_permission') { %>
+              <li class="nav-item " data-title="staffs">
+                <a class="nav-link" href="./staffs">
+                  <i class="material-icons">person</i>
+                  <p>Danh sách nhân viên</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'products_permission') { %>
+              <li class="nav-item " data-title="vouchers">
+                <a class="nav-link" href="./vouchers">
+                  <i class="material-icons">inventory_2</i>
+                  <p>Danh sách sản phẩm</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'reviews_permission') { %>
+              <li class="nav-item " data-title="reviews">
+                <a class="nav-link" href="./reviews">
+                  <i class="material-icons">reviews</i>
+                  <p>Danh sách đánh giá</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'add_new_products_permission') { %>
+              <li class="nav-item " data-title="add-product">
+                <a class="nav-link" href="./add-product">
+                  <i class="material-icons">add_shopping_cart</i>
+                  <p>Thêm sản phẩm</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'add_new_brands_permission') { %>
+              <li class="nav-item " data-title="add-brand">
+                <a class="nav-link" href="./add-brand">
+                  <i class="material-icons">storefront</i>
+                  <p>Thêm thương hiệu</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'add_new_category_permission') { %>
+              <li class="nav-item " data-title="add-category">
+                <a class="nav-link" href="./add-category">
+                  <i class="material-icons">category</i>
+                  <p>Thêm nhóm phân loại</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'select_each_permission') { %>
+              <li class="nav-item " data-title="permissions">
+                <a class="nav-link" href="./permissions">
+                  <i class="material-icons">accessibility</i>
+                  <p>Phân quyền nhân viên</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'questions_permission') { %>
+              <li class="nav-item " data-title="questions">
+                <a class="nav-link" href="./questions">
+                  <i class="material-icons">help_outline</i>
+                  <p>Danh sách hỏi đáp</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'customers_permission') { %>
+              <li class="nav-item " data-title="customers">
+                <a class="nav-link" href="./customers">
+                  <i class="material-icons">recent_actors</i>
+                  <p>Danh sách khách hàng</p>
+                </a>
+              </li>
+            <% } else if (p.type == 'add_new_staff_permission') { %>
+              <li class="nav-item " data-title="add-staff">
+                <a class="nav-link" href="./add-staff">
+                  <i class="material-icons">person_add</i>
+                  <p>Thêm nhân viên</p>
+                </a>
+              </li>
+            <% } %>
+          <% }) %>
+        <% } %>
+        <li class="nav-item " data-title="user">
+          <a class="nav-link" href="./user">
+            <i class="material-icons">reduce_capacity</i>
+            <p>Chỉnh sửa thông tin</p>
+          </a>
+        </li>
+        <li class="nav-item " data-title="passwords">
+          <a class="nav-link" href="./passwords">
+            <i class="material-icons">lock</i>
+            <p>Thay đổi mật khẩu</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+</div>
+<script>
+  $(document).ready(function() {
+    const arrayLi = $('.sidebar .sidebar-wrapper .nav').find('li')
+    const nameTitle = $('.sidebar .sidebar-wrapper').attr("data-title")
+    for (let index = 0; index < arrayLi.length; index++) {
+      const element = arrayLi[index];
+      if (element.dataset.title == nameTitle) {
+        element.classList.add('active')
+      }
+      else {
+        element.classList.remove('active')
+      }
+    }
+  })
+</script>

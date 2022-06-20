@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Contact | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+</head>
+<!--/head-->
+
+<body>
+    <%- include component/header.ejs %>
+    <!--/header-->
+
+    <div id="contact-page" class="container">
+        <div class="bg">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="title text-center">Liên <strong>Hệ</strong></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="contact-form">
+                        <h2 class="title text-center">Thông tin của bạn</h2>
+                        <div class="status alert alert-success" style="display: none"></div>
+                        <form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+                            <div class="form-group col-md-6">
+                                <input type="text" name="name" id="name-contact" class="form-control" required="required" placeholder="Họ và tên">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="email" name="email" id="email-contact" class="form-control" required="required" placeholder="Email">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="text" name="subject" id="title-contact" class="form-control" required="required" placeholder="Tiêu đề">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <textarea name="message" id="message" required="required" class="form-control message-contact" rows="8" placeholder="Tin nhắn của bạn..."></textarea>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="button" id="btn-submit-contact-form" class="btn btn-primary pull-right" value="Gửi">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="contact-info">
+                        <h2 class="title text-center">Thông tin liên hệ</h2>
+                        <address>
+	    					<p>PANDAS-VOUCHER SHOP Inc.</p>
+							<p>19 Đ.Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Thành phố Hồ Chí Minh</p>
+							<p>Phone: +849 72 71 58 56</p>
+							<p>Email: loihuynh.it@gmail.com</p>
+	    				</address>
+                        <div class="social-networks">
+                            <h2 class="title text-center">Mạng xã hội</h2>
+                            <ul>
+                                <li>
+                                    <a href="https://www.facebook.com/a.tun262/"><i class="fab fa-facebook-f"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.linkedin.com/in/loihuynh262/"><i class="fab fa-linkedin-in"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://github.com/caoboiloi"><i class="fab fa-github"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/#contact-page-->
+
+    <%- include component/footer.ejs %>
+    <!--/Footer-->
+
+    <%- include component/message-alert.ejs %>
+</body>
+<script>
+    $(document).ready(() => {
+        $('#contact-page #btn-submit-contact-form').on('click', e => {
+            const name = $('#contact-page #name-contact').val()
+            const email = $('#contact-page #email-contact').val()
+            const title = $('#contact-page #title-contact').val()
+            const message = $('#contact-page .message-contact').val()
+
+            const query = {
+                name,
+                email,
+                title,
+                message
+            }
+
+            fetch('./api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(query)
+            }).then(res => res.text())
+            .then(data => {
+                data = JSON.parse(data)
+                if (data.status) {
+                    $('.messsageAlertPage #message-alert-show .content').html(data.message)
+                    $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                    setTimeout(() => {
+                        $('.messsageAlertPage #message-alert-show').fadeOut();
+                    },3000)
+
+                    $('#contact-page #name-contact').val("")
+                    $('#contact-page #email-contact').val("")
+                    $('#contact-page #title-contact').val("")
+                    $('#contact-page .message-contact').val("")
+                }
+                else {
+                    $('.messsageAlertPage #message-alert-show .content').html(data.error)
+                    $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                    setTimeout(() => {
+                        $('.messsageAlertPage #message-alert-show').fadeOut();
+                    },3000)
+                }
+            }).catch(e => {
+                $('.messsageAlertPage #message-alert-show .content').html(e.message)
+                $('.messsageAlertPage #message-alert-show').fadeIn();
+
+                setTimeout(() => {
+                    $('.messsageAlertPage #message-alert-show').fadeOut();
+                },3000)
+            })
+        })
+    })
+</script>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Checkout | Pandas Voucher</title>
+    <%- include component/cdn.ejs %>
+</head>
+<!--/head-->
+<style>
+    .checkoutPage label {
+        color: rgb(120, 122, 124);
+    }
+    .checkoutPage .cart_info .cart_menu {
+    text-align: center;
+    }
+    @import url(https://fonts.googleapis.com/css?family=BenchNine:700);
+    .checkoutPage .snip1582 {
+        background-color: #c47135;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'BenchNine', Arial, sans-serif;
+        font-size: 1em;
+        font-size: 22px;
+        line-height: 1em;
+        margin: 15px 40px;
+        outline: none;
+        padding: 12px 40px 10px;
+        position: relative;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .checkoutPage .snip1582:before,
+    .checkoutPage .snip1582:after {
+        border-color: transparent;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+        border-style: solid;
+        border-width: 0;
+        content: "";
+        height: 24px;
+        position: absolute;
+        width: 24px;
+    }
+
+    .checkoutPage .snip1582:before {
+        border-color: #c47135;
+        border-top-width: 2px;
+        left: 0px;
+        top: -5px;
+    }
+
+    .checkoutPage .snip1582:after {
+        border-bottom-width: 2px;
+        border-color: #c47135;
+        bottom: -5px;
+        right: 0px;
+    }
+
+    .checkoutPage .snip1582:hover,
+    .checkoutPage .snip1582.hover {
+        background-color: #c47135;
+    }
+
+    .checkoutPage .snip1582:hover:before,
+    .checkoutPage .snip1582.hover:before,
+    .checkoutPage .snip1582:hover:after,
+    .checkoutPage .snip1582.hover:after {
+        height: 100%;
+        width: 100%;
+    }
+    .checkoutPage .checkout-options .cancel {
+        border: 1px solid #ccc;
+        color: red;
+        padding: 10px;
+        border-radius: 16px;
+    }
+    .checkoutPage .checkout-options .cancel:hover {
+        background-color: rgb(241, 232, 232);
+    }
+    .checkoutPage .breadcrumbs .breadcrumb li a.cart-checkout-link:after {
+        content: "";
+        height: auto;
+        width: auto;
+        border-width: 8px;
+        border-style: solid;
+        border-color: transparent transparent transparent #FE980F;
+        position: absolute;
+        top: 11px;
+        left: 164px;
+    }
+</style>
+<body>
+    <%- include component/header.ejs %>
+    <!--/header-->
+
+    <div class="checkoutPage">
+        <section id="cart_items">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <li><a href="./">Trang chủ</a></li>
+                        <li><a href="./cart" class="cart-checkout-link">Giỏ hàng</a></li>
+                        <li class="active">Thủ tục thanh toán</li>
+                    </ol>
+                </div>
+                <!--/breadcrums-->
+    
+                <div class="step-one">
+                    <h2 class="heading">Bước 1: Điền đầy đủ thông tin</h2>
+                </div>
+                <div class="checkout-options">
+                    <h3></h3>
+                    <ul class="nav">
+                        <li>
+                            <a href="./cart" class="cancel"><i class="fas fa-ban"></i>Huỷ bỏ</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/checkout-options-->
+    
+                <div class="register-req">
+                    <p>Vui lòng kiểm tra lại thông tin nhận hàng, chi phí và điền các thông tin liên quan</p>
+                </div>
+                <!--/register-req-->
+    
+                <div class="shopper-informations">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="shopper-info">
+                                <p>Thông tin nhận hàng</p>
+                                <form>
+                                    <label for="">Họ và tên</label>
+                                    <input type="text" placeholder="Họ và tên*" class="name-checkout">
+                                    <label for="">Số điện thoại</label>
+                                    <input type="text" placeholder="Số điện thoại*" class="phone-checkout">
+                                    <label for="">Xác thực mật khẩu</label>
+                                    <input type="password" placeholder="Mật khẩu*" class="password-checkout">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 clearfix">
+                            <div class="bill-to">
+                                <p>Thông tin hoá đơn</p>
+                                <div class="form-one">
+                                    <form>
+                                        <label for="">Email</label>
+                                        <input type="text" placeholder="Email*" class="email-checkout">
+                                        <label for="">Tỉnh thành</label>
+                                        <input type="text" placeholder="Tỉnh thành*" class="city-checkout" data-id="<%= city_id %>" value="<%= city %>" disabled>
+                                        <label for="">Quận / Thị xã</label>
+                                        <input type="text" placeholder="Quận / Thị xã" value="<%= district %>" class="district-checkout" disabled>
+                                        <label for="">Địa chỉ</label>
+                                        <input type="text" placeholder="Địa chỉ" value="<%= address %>" class="address-checkout" disabled>
+                                    </form>
+                                </div>
+                                <div class="form-two">
+                                    <form>
+                                        <label for="">Nhà vận chuyển</label>
+                                        <select id="select-shipper-checkout">
+                                            <option value="undefined">-- Nhà vận chuyển --</option>
+                                            <% shippers.forEach(shipper => { %>
+                                                <option value="<%= shipper._id %>"><%= shipper.name %></option>
+                                            <% }) %>
+                                        </select>
+                                        <label for="">Phí vận chuyển</label>
+                                        <input type="text" placeholder="Phí vận chuyển" class="price-ship" data-price = "0" value="0" disabled>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="order-message">
+                                <p>Thông tin vận chuyển</p>
+                                <textarea name="message" class="note-ship" placeholder="Ghi chú về đơn đặt hàng của bạn." rows="16"></textarea>
+                                <!-- <label><input type="checkbox"> Vận chuyển đến địa chỉ thanh toán</label> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-payment">
+                    <h2>Review & thanh toán</h2>
+                </div>
+    
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="image" colspan="2">Sản phẩm</td>
+                                <td class="price">Giá</td>
+                                <td class="quantity" width="40px">Số lượng</td>
+                                <td class="total">Tổng giá</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% carts.products.forEach(c => { %>
+                                <tr>
+                                    <td class="cart_product">
+                                        <a href=""><img src="<%= c.voucher.image[0] %>" alt="<%= c.voucher.name %>" width="100px" height="100px"></a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <h4><a href="/detail?id=<%= c.voucher._id %>"><%= c.voucher.name %></a></h4>
+                                        <p>Web ID: <%= c._id.toString().substring(0,6) %></p>
+                                    </td>
+                                    <td class="cart_price" style="text-align: center;">
+                                        <p><%= c.voucher.price.toLocaleString() %></p>
+                                    </td>
+                                    <td class="cart_quantity" style="text-align: center;">
+                                        <div class="cart_quantity_button">
+                                            <input class="cart_quantity_input" type="text" name="quantity" value="<%= c.amount %>" autocomplete="off" size="2" disabled>
+                                        </div>
+                                    </td>
+                                    <td class="cart_total" style="text-align: center;">
+                                        <p class="cart_total_price"><%= (c.voucher.price * c.amount).toLocaleString() %></p>
+                                    </td>
+                                </tr>
+                            <% }) %>
+
+                            <tr>
+                                <tr colspan="4">&nbsp;</tr>
+                                <td colspan="3">
+                                    <table class="table table-condensed total-result">
+                                        <tr>
+                                            <td>Tổng giá giỏ hàng</td>
+                                            <td class="all-price" data-price="<%= carts.totalPrice %>"><%= carts.totalPrice.toLocaleString() %></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nhà vận chuyển</td>
+                                            <td class="name-shipper">Vui lòng chọn nhà vận chuyển</td>
+                                        </tr>
+                                        <tr class="shipping-cost">
+                                            <td>Phí vận chuyển</td>
+                                            <td class="price-ship">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tổng cộng</td>
+                                            <td><span class="all-price-total"><%= carts.totalPrice.toLocaleString() %></span></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="payment-options">
+                    <span>
+                        <label><b><input type="checkbox" id="check-payment-after"><span style="font-size:large;"> Kiểm tra sau khi nhận hàng</span></b></label>
+                    </span>
+                </div>
+                <div class="payment-button">
+                    <button class="snip1582" data-cart="<%= carts._id %>" data-user="<%= user._id %>">Thanh toán</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!--/#cart_items-->
+
+    <%- include component/message-alert.ejs %>
+
+    <%- include component/footer.ejs %>
+    <!--/Footer-->
+</body>
+
+</html>

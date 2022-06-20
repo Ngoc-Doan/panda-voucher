@@ -1,0 +1,14 @@
+# dependencies
+/node_modules
+.env
+
+#cypress dashboard
+/cypress/videos/
+
+/cypress/screenshots/
+
+#download file
+/cypress/downloads/
+
+#test all specs
+#/cypress/e2e/all/all.cy.js

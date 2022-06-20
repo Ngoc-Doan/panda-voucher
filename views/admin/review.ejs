@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Admin review | Pandas voucher
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <%- include ../component/admin/cdn.ejs %>
+</head>
+
+<body class="reviewAdminPage">
+  <div class="wrapper ">
+    <%- include ../component/admin/sidebar.ejs %>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <%- include ../component/admin/narbar.ejs %>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title mt-0"> Danh sách đánh giá của khách hàng</h4>
+                  <p class="card-category"> Tên, địa chỉ email, sao đánh giá, nội dung.</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th width ="120px" colspan="2">
+                          Sản phẩm
+                        </th>
+                        <th>
+                          Khách hàng
+                        </th>
+                        <th>
+                          Email
+                        </th>
+                        <th>
+                          Thời gian
+                        </th>
+                        <th>
+                          Sao đánh giá
+                        </th>
+                        <th>
+                          Nội dung đánh giá
+                        </th>
+                        <th>
+                          Trạng thái
+                        </th>
+                        <th>
+                          Thao tác
+                        </th>
+                      </thead>
+                      <tbody>
+                        <% reviews.forEach(r => { %>
+                          <tr id="remove-ajax-delete-review-<%= r._id %>">
+                            <td>
+                              <a href=""><img src="<%= r.voucher.image[0] %>" alt="" width="50px" height="50px"></a>
+                            </td>
+                            <td>
+                              <a href="../detail?id=<%= r.voucher._id %>"><%= r.voucher.name %></a>
+                            </td>
+                            <td>
+                              <%= r.name %>
+                            </td>
+                            <td>
+                              <%= r.email %>
+                            </td>
+                            <td>
+                              Đăng vào <%= moment(r.date).format('HH:ss - DD:MM:YYYY') %>
+                            </td>
+                            <td>
+                              <%= r.star %> sao
+                            </td>
+                            <td>
+                              <%= r.review %>
+                            </td>
+                            <% if (r.validation) { %>
+                              <td>
+                                Đã xác thực
+                              </td>
+                              <td>
+                                <button type="button" rel="tooltip" title="Xoá đánh giá" class="btn btn-primary btn-link btn-sm" data-name="<%= r.name %>" data-review="<%= r._id %>" onclick="handleDataDeleteReview(this)" data-toggle="modal" data-target="#deleteReviewProductModal">
+                                  <i class="material-icons">delete</i>
+                                </button>
+                              </td>
+                            <% } else { %>
+                              <td>
+                                Chưa xác thực
+                              </td>
+                              <td>
+                                <button type="button" rel="tooltip" title="Xác thực đánh giá" class="btn btn-primary btn-link btn-sm btn-validation-review" data-review="<%= r._id %>">
+                                  <i class="material-icons">check</i>
+                                </button>
+                                <button type="button" rel="tooltip" title="Xoá đánh giá" class="btn btn-primary btn-link btn-sm" data-name="<%= r.name %>" data-review="<%= r._id %>" onclick="handleDataDeleteReview(this)" data-toggle="modal" data-target="#deleteReviewProductModal">
+                                  <i class="material-icons">delete</i>
+                                </button>
+                              </td>
+                            <% } %>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include ../component/admin/footer.ejs %>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteReviewProductModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="btn-delete-review-user-admin">
+            <i class="fa fa-spinner fa-spin" style="display: none;"></i> Xoá
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <%- include ../component/admin/fixed-plugin.ejs %>
+
+  <%- include ../component/message-alert.ejs %>
+
+  <%- include ../component/admin/scripts-fixed-plugin.ejs %>
+</body>
+<script>
+
+  function handleDataDeleteReview(element) {
+    const review = element.dataset.review
+    const name = element.dataset.name
+    $('.reviewAdminPage #deleteReviewProductModal').attr('data-review', review)
+    $('.reviewAdminPage #deleteReviewProductModal .modal-title').html(`Xoá đánh giá khách hàng <b>${name}</b>`)
+    $('.reviewAdminPage #deleteReviewProductModal .modal-body').html(`<p> Bạn chắc chắn muốn xoá đánh giá #${review} <i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i><i class="fa fa-exclamation"></i></p>`)
+  }
+
+  $(document).ready(() => {
+
+    $('.reviewAdminPage #deleteReviewProductModal #btn-delete-review-user-admin').on('click', e => {
+      $('.reviewAdminPage #btn-delete-review-user-admin i.fa-spinner').show()
+      const review = $('.reviewAdminPage #deleteReviewProductModal').attr('data-review')
+      fetch(`../admin/api/reviews/${review}`,{
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then(res => res.text())
+      .then(data => {
+          data = JSON.parse(data)
+          if (data.status) {
+            $('.reviewAdminPage #btn-delete-review-user-admin i.fa-spinner').hide()
+
+            $(`.reviewAdminPage #remove-ajax-delete-review-${review}`).remove()
+
+            $('.reviewAdminPage #deleteReviewProductModal').modal('hide')
+
+            $('.messsageAlertPage #message-alert-show .content').html(data.message)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+          else {
+            $('.reviewAdminPage #btn-delete-review-user-admin i.fa-spinner').hide()
+            $('.messsageAlertPage #message-alert-show .content').html(data.error)
+            $('.messsageAlertPage #message-alert-show').fadeIn();
+
+            setTimeout(() => {
+                $('.messsageAlertPage #message-alert-show').fadeOut();
+            },3000)
+          }
+      }).catch(e => {
+        $('.reviewAdminPage #btn-delete-review-user-admin i.fa-spinner').hide()
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    })
+
+    $('.reviewAdminPage button.btn-validation-review').on('click', e => {
+      const id = $('.reviewAdminPage button.btn-validation-review').attr('data-review')
+      fetch('../admin/api/reviews/validation', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id})
+      }).then(res => res.text())
+      .then(data => {
+        data = JSON.parse(data)
+        if (data.status) {
+          $('.messsageAlertPage #message-alert-show .content').html(data.message)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+              location.reload();
+          },1000)
+        }
+        else {
+          $('.messsageAlertPage #message-alert-show .content').html(data.error)
+          $('.messsageAlertPage #message-alert-show').fadeIn();
+
+          setTimeout(() => {
+              $('.messsageAlertPage #message-alert-show').fadeOut();
+          },3000)
+        }
+      }).catch(e => {
+        $('.messsageAlertPage #message-alert-show .content').html(e.message)
+        $('.messsageAlertPage #message-alert-show').fadeIn();
+
+        setTimeout(() => {
+            $('.messsageAlertPage #message-alert-show').fadeOut();
+        },3000)
+      })
+    })
+  })
+</script>
+</html>

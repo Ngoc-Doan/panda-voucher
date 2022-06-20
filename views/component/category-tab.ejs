@@ -1,0 +1,63 @@
+<div class="category-tab">
+    <!--category-tab-->
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs">
+            <% for(var i = 0; i < tab.length; i++) { %>
+                <% if (i == 0) { %>
+                    <li class="active"><a href="#<%= tab[i].category._id %>" data-toggle="tab"><%= tab[i].category.name %></a></li>
+                <% } else { %>
+                    <li><a href="#<%= tab[i].category._id %>" data-toggle="tab"><%= tab[i].category.name %></a></li>
+                <% } %>
+            <% } %>
+        </ul>
+    </div>
+    <div class="tab-content">
+
+        <% for(var i = 0; i < tab.length; i++) { %>
+            <% if (i == 0) { %>
+                <div class="tab-pane fade active in" id="<%= tab[i].category._id %>">
+                    <% tab[i].voucher.forEach(v => { %>
+                        <div class="col-sm-3">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="<%= v.image[0] %>" alt="" style="width: 180px; height: 170px;"/>
+                                        <h2><%= v.price.toLocaleString() %></h2>
+                                        <a href="./detail?id=<%= v._id %>"><p style="height: 120px;"><%= v.name %></p></a>
+                                        <% if (locals.user !== undefined) { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-category-tab" data-user="<%= user._id %>" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } else { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-category-tab" data-user="" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="tab-pane fade" id="<%= tab[i].category._id %>">
+                    <% tab[i].voucher.forEach(v => { %>
+                        <div class="col-sm-3">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="<%= v.image[0] %>" alt="" style="width: 180px; height: 170px;"/>
+                                        <h2><%= v.price.toLocaleString() %></h2>
+                                        <a href="./detail?id=<%= v._id %>"><p style="height: 120px;"><%= v.name %></p></a>
+                                        <% if (locals.user !== undefined) { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-category-tab" data-user="<%= user._id %>" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } else { %>
+                                            <a class="btn btn-default add-to-cart add-to-cart-show-hover-category-tab" data-user="" data-voucher="<%= v._id %>"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        <% } %>
+    </div>
+</div>
+<!--/category-tab-->
