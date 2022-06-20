@@ -21,4 +21,4 @@ or
   `npx cypress run --e2e --browser chrome`
 
 - Run specs with GUI - Dashboard Cypress:
-  `npx cypress run --record --key a9faa678-4a36-43b5-beee-fe57e802c763`
+  `npx cypress run --record --key f470d3b8-7c7a-4cc4-9df9-5f929483615c`
