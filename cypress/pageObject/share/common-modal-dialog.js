@@ -1,20 +1,29 @@
 export const modalDialog = {
+
+  HDR_LOGOUT: "//a[contains(text(),'Đăng xuất')]",
+
+  TXT_USERNAME: '#login_form > [type="text"]',
+  TXT_PASSWORD: '#login_form > [type="password"]',
+
+  BTN_LOGIN: '#login-button',
+
   clickLogout(){
-    cy.xpath("//a[contains(text(),'Đăng xuất')]").click();
+    cy.xpath(this.HDR_LOGOUT).click();
+    return this;
   },
   
   typeUsername(username) {
-    cy.get('#login_form > [type="text"]').type(username);
+    cy.get(this.TXT_USERNAME).type(username);
     return this;
   },
 
   typePassword(password) {
-    cy.get('#login_form > [type="password"]').type(password);
+    cy.get(this.TXT_PASSWORD).type(password);
     return this;
   },
 
   clickLogin() {
-    cy.get('#login-button').click();
+    cy.get(this.BTN_LOGIN).click();
     return this;
   },
 

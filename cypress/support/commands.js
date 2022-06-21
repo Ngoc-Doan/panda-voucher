@@ -25,11 +25,18 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import { modalDialog } from '../../cypress/pageObject/share/common-modal-dialog';
 
+
 Cypress.Commands.add('logout', () => {
-  modalDialog.clickLogout();
+  modalDialog
+    .clickLogout();
 });
 
+
 Cypress.Commands.add('login', () => {
+
+  const ENDPOINT = Cypress.env('login');
+  cy.visit(ENDPOINT);
+
   modalDialog
     .typeUsername(Cypress.env('user_customer'))
     .typePassword(Cypress.env('pass_customer'))

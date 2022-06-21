@@ -3,22 +3,19 @@ require("cypress-xpath");
 
 describe('Add to cart', () => {
   beforeEach(() => {
-    cy.visit(Cypress.env('login'));
-
     cy.login();
   });
 
   it('Add to cart', () => {
-    cy.visit('/');
-
     mainPage
+      .clickVoucher()
       .clickAddToCart()
-      //.shouldShowErrorMessage('Thêm sản phẩm vào giỏ hàng thành công')
+      .shouldShowErrorMessage('Thêm sản phẩm vào giỏ hàng thành công')
     
   });
 
-  //afterEach(() => {
-  //  cy.logout();
-  //});
+  afterEach(() => {
+    cy.logout();
+  });
 });
 

@@ -1,24 +1,29 @@
 import { blogPage } from "../../pageObject/blogPage";
 require("cypress-xpath");
 
-describe('Update account', () => {
+describe('MODULE BLOG', () => {
+  
   beforeEach(() => {
-    cy.fixture('update.json').as('update');
-
-    cy.visit(Cypress.env('login'));
-
     cy.login();
   });
+
+
+  it('Visit blog', () => {
+    blogPage
+      .clickBlog();
+  });
+
 
   it('View blog', () => {
     blogPage
       .clickBlog()
-      //.clickListBlog()
+      .clickDetailBlog();
   });
 
-  afterEach(() => {
-    cy.logout();
-  });
+
+  //afterEach(() => {
+  //  cy.logout();
+  //});
 
 });
 
