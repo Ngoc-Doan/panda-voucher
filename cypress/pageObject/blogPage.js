@@ -1,23 +1,16 @@
 export const blogPage = {
 
+  BTN_DETAIL: "(//a[@class='btn btn-primary'][contains(text(),'Đọc thêm')])[1]",
+
   clickBlog(){
-    cy.get('.mainmenu > .nav > :nth-child(3) > [href="#"]').trigger('mouseover', 20, 20).click();
-
-    //cy.contains('Danh sách Blog').click()
-    //cy.xpath("//a[normalize-space()='Danh sách Blog']").click();  
+    cy.get('.sub-menu').invoke('show').contains('a', 'Danh sách Blog').should('have.attr', 'href', './blog');
+    cy.visit('/blog');
     return this;
   },
 
-  clickListBlog(){
-    cy.get('.sub-menu').click();
+  clickDetailBlog(){
+    cy.xpath(this.BTN_DETAIL).click();
     return this;
   },
-
-  shouldShowErrorMessage(msg){
-    cy.wait(400);
-    let LBL_ERROR= `//div[@class='show-error-message-edit-profile']`;
-    cy.xpath(LBL_ERROR).should('have.text', msg);
-    return this;
-  }
 
 }

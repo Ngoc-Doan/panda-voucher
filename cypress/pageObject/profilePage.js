@@ -1,72 +1,88 @@
 export const profilePage = {
+
+  HDR_PROFILE: "//ul[@class='nav navbar-nav']//a[contains(text(),'Tài khoản')]",
+
+  BTN_EDIT: '#submit',
+  BTN_UPDATE: "//button[@class='btn btn-primary update-profile btn-update-edit']",
+  
+  TXT_PHONE: '#phone',
+  TXT_EMAIL: '#eMail',
+  TXT_WEBSITE: '#website',
+  TXT_STREET: '#Street',
+  TXT_CITY: '#ciTy',
+  TXT_STATE: '#sTate',
+  TXT_ZIP: '#zIp',
+  TXT_DESCRIPTION: '.description-profile',
+  TXT_PASSWORD: '#password',
+
   clickProfile(){
-    cy.xpath("//ul[@class='nav navbar-nav']//a[contains(text(),'Tài khoản')]").click();
+    cy.xpath(this.HDR_PROFILE).click();
     return this;
   },
 
   clickEdit(){
-    cy.get('#submit').click();
+    cy.get(this.BTN_EDIT).click();
     return this;
   },
 
   typePhone(phone){
-    cy.get('#phone').clear();
-    cy.get('#phone').type(phone);
+    cy.get(this.TXT_PHONE).clear();
+    cy.get(this.TXT_PHONE).type(phone);
     return this;
   },
 
   typeEmail(email){
-    cy.get('#eMail').clear();
-    cy.get('#eMail').type(email);
+    cy.get(this.TXT_EMAIL).clear();
+    cy.get(this.TXT_EMAIL).type(email);
     return this;
   },
 
   typeWebsite(website){
-    cy.get('#website').clear();
-    cy.get('#website').type(website);
+    cy.get(this.TXT_WEBSITE).clear();
+    cy.get(this.TXT_WEBSITE).type(website);
     return this;
   },
 
   typeStreet(street){
-    cy.get('#Street').clear();
-    cy.get('#Street').type(street);
+    cy.get(this.TXT_STREET).clear();
+    cy.get(this.TXT_STREET).type(street);
     return this;
   },
 
   typeCity(city){
-    cy.get('#ciTy').clear();
-    cy.get('#ciTy').type(city);
+    cy.get(this.TXT_CITY).clear();
+    cy.get(this.TXT_CITY).type(city);
     return this;
   },
 
   typeState(state){
-    cy.get('#sTate').clear();
-    cy.get('#sTate').type(state);
+    cy.get(this.TXT_STATE).clear();
+    cy.get(this.TXT_STATE).type(state);
     return this;
   },
 
   typeZip(zip){
-    cy.get('#zIp').clear();
-    cy.get('#zIp').type(zip);
+    cy.get(this.TXT_ZIP).clear();
+    cy.get(this.TXT_ZIP).type(zip);
     return this;
   },
 
   typeDescription(description){
-    cy.get('.description-profile').clear();
-    cy.get('.description-profile').type(description);
+    cy.get(this.TXT_DESCRIPTION).clear();
+    cy.get(this.TXT_DESCRIPTION).type(description);
     return this;
   },
 
   typePassword(password){
-    cy.get('#password').type(password);
+    cy.get(this.TXT_PASSWORD).type(password);
     return this;
   },
 
   clickUpdate(){
-    cy.get(':nth-child(4) > .col-xl-12 > .text-right > .btn-primary').click();
+    cy.xpath(this.BTN_UPDATE).click();
     return this;
   },
-
+  
   shouldShowErrorMessage(msg){
     cy.wait(400);
     let LBL_ERROR= `//div[@class='show-error-message-edit-profile']`;
