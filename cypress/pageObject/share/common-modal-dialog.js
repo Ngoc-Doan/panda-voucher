@@ -1,6 +1,7 @@
 export const modalDialog = {
 
   HDR_LOGOUT: "//a[contains(text(),'Đăng xuất')]",
+  HDR_MAIN: "//a[contains(text(),'Trang chủ')]",
 
   TXT_USERNAME: '#login_form > [type="text"]',
   TXT_PASSWORD: '#login_form > [type="password"]',
@@ -12,6 +13,11 @@ export const modalDialog = {
     return this;
   },
   
+  clickMainPage(){
+    cy.xpath(this.HDR_MAIN).click();
+    return this;
+  },
+
   typeUsername(username) {
     cy.get(this.TXT_USERNAME).type(username);
     return this;

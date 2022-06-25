@@ -3,11 +3,11 @@ import { mainPage } from "../../pageObject/mainPage";
 require("cypress-xpath");
 
 
-describe('Add to cart', () => {
+describe('Add to favorite list', () => {
   beforeEach(() => {
     cy.login();
   });
-
+  
 
   it('View main page', () => {
     cy.logout();
@@ -16,24 +16,23 @@ describe('Add to cart', () => {
   });
 
 
-  it('Add to cart without login', () => {
+  it('Add to favorite without login', () => {
     cy.logout();
     modalDialog
       .clickMainPage();
     
     mainPage
-      .clickVoucher()
-      .clickAddToCart()
+      .clickAddToFavorite()
       .shouldShowMessageAddToCart('Vui lòng đăng nhập');
   });
 
 
-  it('Add to cart successfully', () => {
+  it('Add to favorite list', () => {
     mainPage
-      .clickVoucher()
-      .clickAddToCart()
-      .shouldShowMessageAddToCart('Thêm sản phẩm vào giỏ hàng thành công');
+      .clickAddToFavorite()
+      .shouldShowMessageAddToFavorite('Thêm sản phẩm vào mục ưu thích thành công');
   });
+
 
   afterEach(() => {
     cy.logout();
