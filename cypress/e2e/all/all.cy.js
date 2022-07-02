@@ -11,4 +11,6 @@ import '../cart/cart.cy'
 
 import '../payment/payment.cy'
 
+import '../contact/contact.cy'
+
 import '../profile/profile.cy'
