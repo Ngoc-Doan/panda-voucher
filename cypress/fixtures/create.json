@@ -1,0 +1,22 @@
+{
+  "checkout":
+  [
+    {
+      "district": "Quận 7",
+      "address": "Lotte Mart"
+    }
+  ],
+
+  "payment": 
+  [
+    {
+      "name": "Ha Ngoc My",
+      "phone": "0888745255",
+      "password": "",
+      "email": "hangocmy00@gmail.com",
+      "ship": "DHL Express",
+      "note": "Giao giờ hành chính"
+    }
+  ]
+
+}

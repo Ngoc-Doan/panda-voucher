@@ -3,7 +3,7 @@ import { mainPage } from "../../pageObject/mainPage";
 require("cypress-xpath");
 
 
-describe('Add to cart', () => {
+describe('MODULE MAIN PAGE - ADD TO CART', () => {
   beforeEach(() => {
     cy.login();
   });
