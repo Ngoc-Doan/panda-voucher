@@ -3,7 +3,7 @@ import { mainPage } from "../../pageObject/mainPage";
 require("cypress-xpath");
 
 
-describe('Add to favorite list', () => {
+describe('MODULE MAIN PAGE - ADD TO FAVORITE LIST', () => {
   beforeEach(() => {
     cy.login();
   });

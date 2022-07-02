@@ -2,7 +2,7 @@ import { modalDialog } from "../../pageObject/share/common-modal-dialog";
 import { mainPage } from "../../pageObject/mainPage";
 require("cypress-xpath");
 
-describe('Add to compare voucher', () => {
+describe('MODULE MAIN PAGE - ADD TO COMPARE VOUCHER', () => {
   beforeEach(() => {
     cy.login();
   });
