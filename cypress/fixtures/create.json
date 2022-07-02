@@ -17,6 +17,22 @@
       "ship": "DHL Express",
       "note": "Giao giờ hành chính"
     }
+  ],
+
+  "contact":
+  [
+    {
+      "name": "Hà Ngọc Mỹ",
+      "email": "hangocmy00@gmail.com",
+      "title": "Message Title",
+      "message": "Message"
+    },
+    {
+      "name": "Ngoc Doan",
+      "email": "doanhongphuongngoc@tdtu.edu.vn",
+      "title": "Gift",
+      "message": "Voucher message"
+    }
   ]
 
 }

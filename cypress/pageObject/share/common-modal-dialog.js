@@ -4,6 +4,7 @@ export const modalDialog = {
   HDR_MAIN: "//a[contains(text(),'Trang chủ')]",
   HDR_CART: "(//a[contains(text(),'Giỏ hàng')])[1]",
   HDR_PAYMENT: "(//a[contains(text(),'Thanh toán')])[1]",
+  HDR_CONTACT: "//a[@href='./contact']",
 
   TXT_USERNAME: '#login_form > [type="text"]',
   TXT_PASSWORD: '#login_form > [type="password"]',
@@ -42,6 +43,11 @@ export const modalDialog = {
 
   clickPaymentPage(){
     cy.xpath(this.HDR_PAYMENT).click();
+    return this;
+  },
+
+  clickContactPage(){
+    cy.xpath(this.HDR_CONTACT).click();
     return this;
   }
 
