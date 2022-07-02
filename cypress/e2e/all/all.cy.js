@@ -9,4 +9,6 @@ import '../main/add-to-compare.cy'
 
 import '../cart/cart.cy'
 
+import '../payment/payment.cy'
+
 import '../profile/profile.cy'
