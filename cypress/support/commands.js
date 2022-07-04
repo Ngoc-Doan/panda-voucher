@@ -23,22 +23,31 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import { modalDialog } from '../../cypress/pageObject/share/common-modal-dialog';
+import { modalDialog } from "../../cypress/pageObject/share/common-modal-dialog";
+import { adminLoginPage } from "../../cypress/pageObject/admin/adminLoginPage";
 
-
-Cypress.Commands.add('logout', () => {
-  modalDialog
-    .clickLogout();
+Cypress.Commands.add("logout", () => {
+  modalDialog.clickLogout();
 });
 
-
-Cypress.Commands.add('login', () => {
-
-  const ENDPOINT = Cypress.env('login');
+Cypress.Commands.add("login", () => {
+  const ENDPOINT = Cypress.env("login");
   cy.visit(ENDPOINT);
 
   modalDialog
-    .typeUsername(Cypress.env('user_customer'))
-    .typePassword(Cypress.env('pass_customer'))
+    .typeUsername(Cypress.env("user_customer"))
+    .typePassword(Cypress.env("pass_customer"))
     .clickLogin();
-})
+});
+
+Cypress.Commands.add("login", (username, password) => {
+  const ENDPOINT = Cypress.env("admin_login");
+  cy.visit(ENDPOINT);
+
+  adminLoginPage.typeUsername(username).typePassword(password).clickLogin();
+});
+
+Cypress.Commands.add("shouldShow", (value) => {
+  let TXT_MESSAGE = `//*[contains(text(),'${value}')]`;
+  cy.xpath(TXT_MESSAGE).should("be.visible");
+});

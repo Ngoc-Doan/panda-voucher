@@ -1,6 +1,5 @@
 {
-  "register":
-  [
+  "register": [
     {
       "name": "Ha Ngoc My",
       "username": "hangocmy",
@@ -8,7 +7,7 @@
       "password": "M@123456",
       "re_password": "M@123456"
     },
-  
+
     {
       "name": "Ha Ngoc My",
       "username": "hangocmy1",
@@ -16,7 +15,7 @@
       "password": "M@123456",
       "re_password": "M@123456"
     },
-  
+
     {
       "name": "Ha Ngoc My",
       "username": "hangocmy1",
@@ -24,7 +23,7 @@
       "password": "M@12",
       "re_password": "M@12"
     },
-  
+
     {
       "name": "Ha Ngoc My",
       "username": "hangocmy1",
@@ -34,8 +33,7 @@
     }
   ],
 
-  "login":
-  [
+  "login": [
     {
       "username": "",
       "password": "M@123456"
@@ -60,6 +58,33 @@
       "username": "wrongUser",
       "password": "wrongPass"
     }
+  ],
+
+  "authentication": [
+    {
+      "username": "adminHR",
+      "password": "123123",
+      "name": "Đoàn Văn Dũng"
+    },
+    {
+      "username": "adminVoucher",
+      "password": "123123",
+      "name": "Vinh Tiến Lâm"
+    },
+    {
+      "username": "seller",
+      "password": "123123",
+      "name": "Sung Lương Ánh"
+    },
+    {
+      "username": "adminSeller",
+      "password": "123123",
+      "name": "Sâm Trùng Khang"
+    },
+    {
+      "username": "adminAgent",
+      "password": "123123",
+      "name": "An Sương"
+    }
   ]
-  
 }
