@@ -64,27 +64,36 @@
     {
       "username": "adminHR",
       "password": "123123",
-      "name": "Đoàn Văn Dũng"
+      "name": "Đoàn Văn Dũng",
+      "email": "doanvandung@gmail.com",
+      "phone": "1234567891"
     },
     {
       "username": "adminVoucher",
       "password": "123123",
-      "name": "Vinh Tiến Lâm"
+      "name": "Vinh Tiến Lâm",
+      "email": "vinhtienlam@gmail.com",
+      "phone": "1111111111"
     },
     {
       "username": "seller",
       "password": "123123",
-      "name": "Sung Lương Ánh"
+      "name": "Sung Lương Ánh",
+      "email": "sungluonganh@gmail.com",
+      "phone": "5555555555"
     },
     {
       "username": "adminSeller",
       "password": "123123",
-      "name": "Sâm Trùng Khang"
+      "name": "Sâm Trùng Khang",
+      "email": "samtrungkhang@gmail.comqq"
     },
     {
       "username": "adminAgent",
       "password": "123123",
-      "name": "An Sương"
+      "name": "An Sương",
+      "email": "ansuong@gmail.com",
+      "phone": "3333333333"
     }
   ]
 }

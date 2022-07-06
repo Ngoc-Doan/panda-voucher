@@ -1,0 +1,72 @@
+{
+  "add": [
+    {
+      "name": "Ha Ngoc My",
+      "email": "hangocmy001@gmail.com",
+      "username": "adminHR01",
+      "phone": "1234567891",
+      "salary": "12000000",
+      "avatar": "adminHR.png",
+      "password": "123123",
+      "re_password": "123123",
+      "right": [
+        "Quyền truy cập danh sách nhân viên (xoá, sửa nhân viên)",
+        "Quyền truy cập danh sách khách hàng (xoá, sửa khách hàng)"
+      ]
+    },
+    {
+      "name": "Mi Doan",
+      "email": "midoan@gmail.com",
+      "username": "adminVoucher01",
+      "phone": "1234567891",
+      "salary": "12000000",
+      "avatar": "adminVoucher.png",
+      "password": "123123",
+      "re_password": "123123"
+    },
+    {
+      "name": "Nguyễn Tiến Lâm",
+      "email": "nguyentienlam@gmail.com",
+      "username": "seller01",
+      "phone": "1234567891",
+      "salary": "12000000",
+      "avatar": "seller.png",
+      "password": "123123",
+      "re_password": "123123"
+    },
+    {
+      "name": "Phạm Duy",
+      "email": "phamduy@gmail.com",
+      "username": "adminSeller01",
+      "phone": "1234567891",
+      "salary": "12000000",
+      "avatar": "adminSeller.png",
+      "password": "123123",
+      "re_password": "123123"
+    },
+    {
+      "name": "Kỷ Hắc",
+      "email": "kyhac@gmail.com",
+      "username": "agent01",
+      "phone": "1234567891",
+      "salary": "12000000",
+      "avatar": "adminHR.png",
+      "password": "123123",
+      "re_password": "123123"
+    },
+    {
+      "name": "An Sương",
+      "email": "hangocmy001@gmail.com",
+      "username": "adminHR01",
+      "phone": "1234567891",
+      "salary": "12000000",
+      "avatar": "adminHR.png",
+      "password": "123123",
+      "re_password": "123123",
+      "right": [
+        "Quyền truy cập danh sách hỏi đáp (xác thực hỏi đáp)",
+        "Quyền truy cập danh sách đánh giá (xác thực, xoá đánh giá)"
+      ]
+    }
+  ]
+}

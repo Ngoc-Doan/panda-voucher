@@ -18,9 +18,9 @@ export const adminLoginPage = {
     return this;
   },
 
-  shouldShowErrorMessage(msg) {
-    let LBL_ERROR = `//div[@class='show-error-message-signup']`;
-    cy.xpath(LBL_ERROR).should("have.text", msg);
-    return this;
-  },
+  // shouldShowErrorMessage(msg) {
+  //   let LBL_ERROR = `//div[@class='show-error-message-signup']`;
+  //   cy.xpath(LBL_ERROR).should("have.text", msg);
+  //   return this;
+  // },
 };

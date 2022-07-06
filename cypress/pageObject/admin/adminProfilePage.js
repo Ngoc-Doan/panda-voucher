@@ -82,10 +82,10 @@ export const adminProfilePage = {
     return this;
   },
 
-  shouldShowErrorMessage(msg) {
-    cy.wait(400);
-    let LBL_ERROR = `//div[@class='show-error-message-edit-profile']`;
-    cy.xpath(LBL_ERROR).should("have.text", msg);
-    return this;
-  },
+  // shouldShowErrorMessage(msg) {
+  //   cy.wait(400);
+  //   let LBL_ERROR = `//div[@class='show-error-message-edit-profile']`;
+  //   cy.xpath(LBL_ERROR).should("have.text", msg);
+  //   return this;
+  // },
 };
