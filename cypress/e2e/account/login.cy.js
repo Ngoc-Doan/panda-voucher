@@ -84,7 +84,9 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (full-control) user logins successfully when entering the correct Username and Password", () => {
     cy.get("@user").then((user) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(
+        500
+      );
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_EDIT_USER).wait(200);
@@ -118,7 +120,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (manage staff-client) user logins successfully when entering the correct Username and Password", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[0].username,
         user.authentication[0].password
       ).wait(500);
@@ -131,11 +133,11 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (manage voucher) user logins successfully when entering the correct Username and Password", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[1].username,
         user.authentication[1].password
       ).wait(500);
-      cy.url().should("include", "/admin/dashboard");
+      cy.url().should("include", "/admin/user");
 
       cy.visit(common.LNK_EDIT_USER).wait(200);
       cy.contains(user.authentication[1].name).should("be.visible");
@@ -144,7 +146,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Seller user logins successfully when entering the correct Username and Password", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[2].username,
         user.authentication[2].password
       ).wait(500);
@@ -157,11 +159,11 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (manage orders) user logins successfully when entering the correct Username and Password", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[3].username,
         user.authentication[3].password
       ).wait(500);
-      cy.url().should("include", "/admin/user");
+      cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_EDIT_USER).wait(200);
       cy.contains(user.authentication[3].name).should("be.visible");
@@ -170,7 +172,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Agent user logins successfully when entering the correct Username and Password", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[4].username,
         user.authentication[4].password
       ).wait(500);
@@ -183,7 +185,9 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (full-control) user logout successfully when clicking logout", () => {
     cy.get("@user").then((user) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(
+        500
+      );
       common.clickProfile().clickLogout();
 
       cy.url().should("include", "/login");
@@ -193,7 +197,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (manage staff-client) user logout successfully when clicking logout", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[0].username,
         user.authentication[0].password
       ).wait(500);
@@ -206,7 +210,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (manage voucher) user logout successfully when clicking logout", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[1].username,
         user.authentication[1].password
       ).wait(500);
@@ -219,7 +223,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Seller user logout successfully when clicking logout", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[2].username,
         user.authentication[2].password
       ).wait(500);
@@ -232,7 +236,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Admin (manage orders) user logout successfully when clicking logout", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[3].username,
         user.authentication[3].password
       ).wait(500);
@@ -245,7 +249,7 @@ describe("Admin - Authentication", () => {
 
   it("Verify that Agent user logout successfully when clicking logout", () => {
     cy.get("@user").then((user) => {
-      cy.login(
+      cy.adminLogin(
         user.authentication[4].username,
         user.authentication[4].password
       ).wait(500);
