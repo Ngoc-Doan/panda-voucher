@@ -135,7 +135,7 @@ describe("Admin - Authentication", () => {
         user.authentication[1].username,
         user.authentication[1].password
       ).wait(500);
-      cy.url().should("include", "/admin/dashboard");
+      cy.url().should("include", "/admin/user");
 
       cy.visit(common.LNK_EDIT_USER).wait(200);
       cy.contains(user.authentication[1].name).should("be.visible");
@@ -161,7 +161,7 @@ describe("Admin - Authentication", () => {
         user.authentication[3].username,
         user.authentication[3].password
       ).wait(500);
-      cy.url().should("include", "/admin/user");
+      cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_EDIT_USER).wait(200);
       cy.contains(user.authentication[3].name).should("be.visible");
