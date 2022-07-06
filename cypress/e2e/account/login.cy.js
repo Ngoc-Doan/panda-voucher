@@ -16,6 +16,7 @@ describe("Login with created account", () => {
       .typeUsername(Cypress.env("user_customer"))
       .typePassword(Cypress.env("pass_customer"))
       .clickLogin();
+    cy.url('/');
   });
 
   it("Should show error message when missing username", () => {
