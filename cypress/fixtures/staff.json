@@ -11,7 +11,9 @@
       "re_password": "123123",
       "right": [
         "Quyền truy cập danh sách nhân viên (xoá, sửa nhân viên)",
-        "Quyền truy cập danh sách khách hàng (xoá, sửa khách hàng)"
+        "Quyền truy cập danh sách khách hàng (xoá, sửa khách hàng)",
+        "Quyền phân quyền cho nhân viên (phân quyền)",
+        "Quyền thêm nhân viên mới (thêm nhân viên)"
       ]
     },
     {
@@ -22,7 +24,15 @@
       "salary": "12000000",
       "avatar": "adminVoucher.png",
       "password": "123123",
-      "re_password": "123123"
+      "re_password": "123123",
+      "right": [
+        "Quyền truy cập danh sách nhân viên (xoá, sửa nhân viên)",
+        "Quyền truy cập danh sách khách hàng (xoá, sửa khách hàng)",
+        "Quyền thêm thương hiệu mới (thêm thương hiệu)",
+        "Quyền truy cập danh sách sản phẩm (xoá, sửa sản phẩm)",
+        "Quyền thêm danh mục mới (thêm danh mục)",
+        "Quyền thêm sản phẩm mới (thêm sản phẩm)"
+      ]
     },
     {
       "name": "Nguyễn Tiến Lâm",
@@ -32,7 +42,11 @@
       "salary": "12000000",
       "avatar": "seller.png",
       "password": "123123",
-      "re_password": "123123"
+      "re_password": "123123",
+      "right": [
+        "Quyền truy cập bảng điều khiển (xác thực đơn hàng)",
+        "Quyền truy cập danh sách đơn hàng (xác thực, huỷ đơn hàng, xuất hoá đơn)"
+      ]
     },
     {
       "name": "Phạm Duy",
@@ -42,7 +56,14 @@
       "salary": "12000000",
       "avatar": "adminSeller.png",
       "password": "123123",
-      "re_password": "123123"
+      "re_password": "123123",
+      "right": [
+        "Quyền truy cập danh sách nhân viên (xoá, sửa nhân viên)",
+        "Quyền truy cập danh sách khách hàng (xoá, sửa khách hàng)",
+        "Quyền truy cập bảng điều khiển (xác thực đơn hàng)",
+        "Quyền truy cập danh sách sản phẩm (xoá, sửa sản phẩm)",
+        "Quyền truy cập danh sách đơn hàng (xác thực, huỷ đơn hàng, xuất hoá đơn)"
+      ]
     },
     {
       "name": "Kỷ Hắc",
@@ -52,7 +73,11 @@
       "salary": "12000000",
       "avatar": "adminHR.png",
       "password": "123123",
-      "re_password": "123123"
+      "re_password": "123123",
+      "right": [
+        "Quyền truy cập danh sách hỏi đáp (xác thực hỏi đáp)",
+        "Quyền truy cập danh sách đánh giá (xác thực, xoá đánh giá)"
+      ]
     },
     {
       "name": "An Sương",

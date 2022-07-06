@@ -12,7 +12,9 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that Admin (full-control) add new staff successfully", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(
+        500
+      );
       cy.url().should("include", "/admin/dashboard");
 
       cy.addStaff(staff.add[0]);
@@ -39,7 +41,9 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Name", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(
+        500
+      );
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -60,7 +64,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Username", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -82,7 +86,7 @@ describe("Admin - Add new staff", () => {
   it("Verify that warning message is shown when entering duplicate staff Username", () => {
     cy.get("@user").then((user) => {
       cy.get("@staff").then((staff) => {
-        cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+        cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
         cy.url().should("include", "/admin/dashboard");
 
         cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -104,7 +108,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Email", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -126,7 +130,7 @@ describe("Admin - Add new staff", () => {
   it("Verify that warning message is shown when entering duplicate staff Email", () => {
     cy.get("@user").then((user) => {
       cy.get("@staff").then((staff) => {
-        cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+        cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
         cy.url().should("include", "/admin/dashboard");
 
         cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -148,7 +152,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Phone number ", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -173,7 +177,7 @@ describe("Admin - Add new staff", () => {
     );
     cy.get("@user").then((user) => {
       cy.get("@staff").then((staff) => {
-        cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+        cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
         cy.url().should("include", "/admin/dashboard");
 
         cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -197,7 +201,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Salary", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -218,7 +222,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Avatar", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -239,7 +243,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Password", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -260,7 +264,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing staff Re-enter password", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);
@@ -281,7 +285,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when missing admin's confirmation Password", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
       cy.url().should("include", "/admin/dashboard");
 
       cy.visit(common.LNK_ADD_STAFF).wait(200);

@@ -11,7 +11,9 @@ describe("Admin - Authorize staff", () => {
 
   it("Verify that Admin (full-control) add new staff successfully", () => {
     cy.get("@staff").then((staff) => {
-      cy.login(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+      cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(
+        500
+      );
       cy.url().should("include", "/admin/dashboard");
 
       cy.authorizeStaff(staff.add[5]);

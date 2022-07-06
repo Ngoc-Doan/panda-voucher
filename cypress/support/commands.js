@@ -44,7 +44,7 @@ Cypress.Commands.add("login", () => {
     .clickLogin();
 });
 
-Cypress.Commands.add("login", (username, password) => {
+Cypress.Commands.add("adminLogin", (username, password) => {
   const ENDPOINT = Cypress.env("admin_login");
   cy.visit(ENDPOINT);
 
