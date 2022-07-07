@@ -31,6 +31,7 @@
       "password": "M@123456789",
       "re_password": "M@12234"
     }
+    
   ],
 
   "login": [
@@ -57,6 +58,14 @@
     {
       "username": "wrongUser",
       "password": "wrongPass"
+    }
+  ],
+
+  "customer": [
+    {
+      "address": "Vivo City",
+      "district": "Quan 7",
+      "city": "Ho Chi Minh City"
     }
   ],
 

@@ -13,6 +13,7 @@ export const common = {
   LNK_ADD_BRAND: "/admin/add-brand",
   LNK_EDIT_USER: "/admin/user",
   LNK_CHANGE_PASSWORD: "/admin/passwords",
+  LNK_CUSTOMER: "/admin/customers",
 
   LNK_LOGOUT: "/22012000/login/logout",
 
