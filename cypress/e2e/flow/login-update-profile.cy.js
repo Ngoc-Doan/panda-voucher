@@ -1,30 +1,21 @@
+import { loginPage } from "../../pageObject/loginPage";
 import { profilePage } from "../../pageObject/profilePage";
 require("cypress-xpath");
 
-describe('Update account', () => {
+describe("FLOW PROFILE: LOGIN - UPDATE ACCOUNT SUCCESSFULLY", () => {
   beforeEach(() => {
-    cy.fixture('update.json').as('update');
+    cy.fixture("user.json").as("user");
 
-    cy.login();
+    cy.visit(Cypress.env("login"));
+    cy.wait(3000);
   });
 
-  it('Should show error message when updating password does not match', () => {
-    cy.get('@update').then((update) => {
-      profilePage
-        .clickProfile()
-        .clickEdit()
-        .typePhone(update.profile[0].phone)
-        .typeEmail(update.profile[0].email)
-        .typeWebsite(update.profile[0].website)
-        .typeStreet(update.profile[0].street)
-        .typeCity(update.profile[0].city)
-        .typeState(update.profile[0].state)
-        .typeZip(update.profile[0].zip)
-        .typeDescription(update.profile[0].description)
-        .typePassword(update.profile[0].password)
-        .clickUpdate()
-        .shouldShowErrorMessage('Email đã tồn tại hoặc bạn chưa đổi email');
-    });
+  it("Should redirect to main page when login successfully", () => {
+    loginPage
+      .typeUsername(Cypress.env("user_customer"))
+      .typePassword(Cypress.env("pass_customer"))
+      .clickLogin();
+    cy.url('/');
   });
 
   /*=== ISSUE ===*/
@@ -50,5 +41,5 @@ describe('Update account', () => {
   afterEach(() => {
     cy.logout();
   });
+  
 });
-
