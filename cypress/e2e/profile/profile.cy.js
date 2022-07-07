@@ -27,6 +27,7 @@ describe('Update account', () => {
     });
   });
 
+  /*=== ISSUE ===*/
   //it('Update profile successfully', () => {
   //  cy.get('@update').then((update) => {
   //    profilePage
