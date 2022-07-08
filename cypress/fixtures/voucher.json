@@ -1,0 +1,14 @@
+{
+  "voucher": 
+  [
+    {
+      "name": "Khách sạn 5 sao Vũng Tàu",
+      "price": "1000000",
+      "branch": "Oscar Saigon Hotel",
+      "category": "Hotel & Resort",
+      "image": "voucher.png",
+      "description": "Bao gồm hai phòng, 2wc, điều hòa, bếp, máy giặt"
+    }
+  ]
+
+}
