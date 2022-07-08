@@ -12,5 +12,6 @@ import '../main/add-to-compare.cy'
 import '../cart/cart.cy'
 
 import '../payment/payment.cy'
+import '../payment/received.cy'
 
 import '../contact/contact.cy'
