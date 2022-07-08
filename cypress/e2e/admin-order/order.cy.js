@@ -57,12 +57,12 @@ describe('CONFIRM ORDER', () => {
   });
 
 
-  it('Click detail order status cancel', () => {
-    cy.visit(common.LNK_ORDER).wait(500);
+  //it('Click detail order', () => {
+  //  cy.visit(common.LNK_ORDER).wait(500);
 
-    adminOrderPage
-      .clickDetail()
-  });
+  //  adminOrderPage
+  //    .clickDetail()
+  //});
 
 
   it('Confirmed order', () => {
