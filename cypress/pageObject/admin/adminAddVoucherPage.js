@@ -14,12 +14,12 @@ export const adminAddVoucherPage = {
   BTN_UPLOAD_IMAGE: '.label-for-img-upload-input',
   
   typeName(name) {
-    cy.get(this.TXT_NAME).type(name);
+    cy.get(this.TXT_NAME).clear().type(name);
     return this;
   },
 
   typePrice(price) {
-    cy.get(this.TXT_PRICE).type(price);
+    cy.get(this.TXT_PRICE).clear().type(price);
     return this;
   },
 
@@ -44,7 +44,7 @@ export const adminAddVoucherPage = {
   },
 
   typeDescription(description){
-    cy.get(this.TXT_DESCRIPTION).type(description);
+    cy.get(this.TXT_DESCRIPTION).clear().type(description);
     return this;
   },
 

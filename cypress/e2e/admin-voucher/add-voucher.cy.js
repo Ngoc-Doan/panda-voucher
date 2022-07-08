@@ -5,7 +5,7 @@ import addDays from 'date-fns/addDays';
 require("cypress-xpath");
 
 let todayDate = new Date();
-let modifyDate = addDays(todayDate, 1);
+let modifyDate = addDays(todayDate, 15);
 
 describe('MODULE ADD VOUCHER', () => {
   beforeEach(() => {
