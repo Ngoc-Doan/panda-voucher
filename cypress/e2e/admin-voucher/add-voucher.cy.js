@@ -17,8 +17,6 @@ describe('MODULE ADD VOUCHER', () => {
 
 
   it('Add voucher successfully', () => {
-    let todayDate = new Date();
-    let modifyDate = addDays(todayDate, 1);
     cy.visit(common.LNK_ADD_VOUCHER).wait(500);
 
     cy.get('@voucher').then((voucher) => {

@@ -7,7 +7,7 @@ require("cypress-xpath");
 let todayDate = new Date();
 let modifyDate = addDays(todayDate, 1);
 
-describe('MODULE ADD VOUCHER', () => {
+describe('CHECK ADD VOUCHER', () => {
   beforeEach(() => {
     cy.fixture('voucher.json').as('voucher');
 
