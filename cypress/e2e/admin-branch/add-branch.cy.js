@@ -22,7 +22,7 @@ describe('MODULE ADMIN BRANCH', () => {
         .typePhoneBranch(branch.branch[0].phone)
         .selectCityBranch(branch.branch[0].city)
         //.clickAddBranch()
-        //.shouldShowErrorMessage('Thêm thương hiệu thành công');
+        //.shouldShowMessage('Thêm thương hiệu thành công');
 
     });
   });
@@ -37,7 +37,7 @@ describe('MODULE ADMIN BRANCH', () => {
         .typePhoneBranch(branch.branch[0].phone)
         .selectCityBranch(branch.branch[0].city)
         .clickAddBranch()
-        .shouldShowErrorMessage('Vui lòng cung cấp tên thương hiệu');
+        .shouldShowMessage('Vui lòng cung cấp tên thương hiệu');
     });
   });
 
@@ -51,7 +51,7 @@ describe('MODULE ADMIN BRANCH', () => {
         .typePhoneBranch(branch.branch[0].phone)
         .selectCityBranch(branch.branch[0].city)
         .clickAddBranch()
-        .shouldShowErrorMessage('Vui lòng cung cấp địa chỉ');
+        .shouldShowMessage('Vui lòng cung cấp địa chỉ');
     });
   });
 
@@ -65,7 +65,7 @@ describe('MODULE ADMIN BRANCH', () => {
         .typeAddressBranch(branch.branch[0].address)
         .selectCityBranch(branch.branch[0].city)
         .clickAddBranch()
-        .shouldShowErrorMessage('Vui lòng cung cấp số điện thoại');
+        .shouldShowMessage('Vui lòng cung cấp số điện thoại');
     });
   });
 
@@ -79,7 +79,7 @@ describe('MODULE ADMIN BRANCH', () => {
         .typeAddressBranch(branch.branch[0].address)
         .typePhoneBranch(branch.branch[0].phone)
         .clickAddBranch()
-        .shouldShowErrorMessage('Vui lòng chọn tỉnh thành');
+        .shouldShowMessage('Vui lòng chọn tỉnh thành');
     });
   });
 
@@ -95,7 +95,7 @@ describe('MODULE ADMIN BRANCH', () => {
   //      .selectCityBranch(branch.branch[0].city)
   //      .typePhoneBranch('0888')
   //      .clickAddBranch()
-  //      .shouldShowErrorMessage('Vui lòng nhập số điện thoại hợp lệ');
+  //      .shouldShowMessage('Vui lòng nhập số điện thoại hợp lệ');
   //  });
   //});
 

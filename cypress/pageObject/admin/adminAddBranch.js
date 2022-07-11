@@ -32,9 +32,9 @@ export const adminAddBranch = {
     return this;
   },
 
-  shouldShowErrorMessage(msg){
-    let LBL_ERROR = "//div[@class='popup']//div[1]";
-    cy.xpath(LBL_ERROR).should('have.text', msg);
+  shouldShowMessage(msg){
+    let LBL_MSG = "//div[@class='popup']//div[1]";
+    cy.xpath(LBL_MSG).should('have.text', msg);
     return this;
   },
 
