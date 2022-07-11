@@ -1,7 +1,8 @@
 import { modalDialog } from "../../pageObject/share/common-modal-dialog";
 import { mainPage } from "../../pageObject/mainPage";
 import { cartPage } from "../../pageObject/cartPage";
-import { paymentPage } from "../../pageObject/paymentPage";
+import { common } from "../../pageObject/admin/common";
+import { adminOrderPage } from "../../pageObject/admin/adminOrderPage";
 require("cypress-xpath");
 
 
@@ -46,43 +47,31 @@ describe('ADD TO CART AND PURCHASE', () => {
         .clickPayment();
     })
   });
-})
-
-
-describe('MODULE PAYMENT', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-
-  it('Access to payment successfully', () => {
-    modalDialog
-      .clickPaymentPage();
-  });
-
-
-  it('Click last order code, cancel purchase order and confirm no', () => {
-    modalDialog.clickPaymentPage();
-    
-    paymentPage
-      .clickLastOrder()
-      .clickCancel()
-      .clickConfirmNo();
-  });
-
-
-  it('Click last order code, cancel purchase order and confirm yes', () => {
-    modalDialog.clickPaymentPage();
-    
-    paymentPage
-      .clickLastOrder()
-      .clickCancel()
-      .clickConfirmYes()
-      .shouldShowMessageSuccess('Hủy đơn hàng thành công');
-  });
-
-
-  afterEach(() => {
-    cy.logout();
-  });
 });
+
+
+describe('CONFIRM ORDER', () => {
+  beforeEach(() => {
+    cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+    cy.url().should("include", common.LNK_DASHBOARD);
+  });
+
+
+  //it('Click detail order', () => {
+  //  cy.visit(common.LNK_ORDER).wait(500);
+
+  //  adminOrderPage
+  //    .clickDetail()
+  //});
+
+
+  it('Confirmed order', () => {
+    cy.visit(common.LNK_ORDER).wait(500);
+
+    adminOrderPage
+      .clickConfirmOrder();
+  });
+
+});
+
+

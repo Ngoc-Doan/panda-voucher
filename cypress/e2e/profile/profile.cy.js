@@ -27,7 +27,9 @@ describe('Update account', () => {
     });
   });
 
+  /*=== ISSUE ===*/
   //it('Update profile successfully', () => {
+  //  let r = (Math.random() + 1).toString(36).substring(7);
   //  cy.get('@update').then((update) => {
   //    profilePage
   //      .clickProfile()
@@ -35,7 +37,7 @@ describe('Update account', () => {
   //      .typePhone(update.profile[1].phone)
   //      .typeEmail(update.profile[1].email)
   //      .typeWebsite(update.profile[1].website)
-  //      .typeStreet(update.profile[1].street)
+  //      .typeStreet(`District ${r}${Math.floor(Math.random() * 100) + 1}`)
   //      .typeCity(update.profile[1].city)
   //      .typeState(update.profile[1].state)
   //      .typeZip(update.profile[1].zip)

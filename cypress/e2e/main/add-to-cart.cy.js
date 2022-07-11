@@ -29,11 +29,20 @@ describe('MODULE MAIN PAGE - ADD TO CART', () => {
 
 
   it('Add to cart successfully', () => {
+      mainPage
+        .clickVoucher()
+        .clickAddToCart()
+        .shouldShowMessageAddToCart('Thêm sản phẩm vào giỏ hàng thành công');
+  });
+
+
+  it('Add to cart successfully - loop 2', () => {
     mainPage
       .clickVoucher()
       .clickAddToCart()
       .shouldShowMessageAddToCart('Thêm sản phẩm vào giỏ hàng thành công');
   });
+
 
   afterEach(() => {
     cy.logout();

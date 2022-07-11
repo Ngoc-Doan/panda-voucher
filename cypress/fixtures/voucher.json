@@ -1,0 +1,22 @@
+{
+  "voucher": 
+  [
+    {
+      "name": "Khách sạn 5 sao Vũng Tàu",
+      "price": "1000000",
+      "branch": "Oscar Saigon Hotel",
+      "category": "Hotel & Resort",
+      "image": "voucher.png",
+      "description": "Bao gồm hai phòng, 2wc, điều hòa, bếp, máy giặt."
+    },
+    {
+      "name": "Nhà hàng Ha Long Bay",
+      "price": "2000000",
+      "branch": "Liberty Central Sài Gòn Centre",
+      "category": "Buffet Chay",
+      "image": "voucher.png",
+      "description": "Nhà hàng view trung tâm."
+    }
+  ]
+
+}

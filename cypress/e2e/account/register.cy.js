@@ -8,6 +8,31 @@ describe('Register account', () => {
     cy.visit(Cypress.env('login'));
   });
 
+
+  it('Register account successfully', () => {
+    cy.get('@user').then((user) => {
+      registerPage
+        .typeName('Mỹ Hà')
+        .typeUsername(user.register[0].username+`${Math.floor(Math.random() * 100) + 1}`)
+        .typeEmail(`hangocmy${Math.floor(Math.random() * 100) + 1}@gmail.com`)
+        .typePassword(user.register[0].password)
+        .typeRe_Password(user.register[0].re_password)
+        .clickRegister()
+        .shouldShowErrorMessage('Đăng ký người dùng mới thành công');
+    });
+
+    //cy.wait(500);
+    //cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+    //cy.url().should("include", "/admin/dashboard");
+    //cy.wait(500);
+    //cy.visit('/admin/customers');
+    //cy.wait(500);
+    //cy.xpath("(//i[@class='material-icons'][normalize-space()='delete'])").last().click();
+    //cy.wait(500);
+    //cy.get('#btn-delete-user-customer-modal').click()
+  });
+
+
   it('Should show error message when registering an already existing username', () => {
     cy.get('@user').then((user) => {
       registerPage
@@ -59,6 +84,7 @@ describe('Register account', () => {
         .shouldShowErrorMessage('Xác thực password không giống với password vừa nhập');
     });
   });
+
 
 });
 

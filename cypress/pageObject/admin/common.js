@@ -13,7 +13,12 @@ export const common = {
   LNK_ADD_BRAND: "/admin/add-brand",
   LNK_EDIT_USER: "/admin/user",
   LNK_CHANGE_PASSWORD: "/admin/passwords",
-
+  LNK_CUSTOMER: "/admin/customers",
+  LNK_ORDER: "/admin/table",
+  LNK_VOUCHERS: "/admin/vouchers",
+  LNK_ADD_VOUCHER: "/admin/add-product",
+  LNK_ADD_BRANCH: "/admin/add-brand",
+  LNK_ADD_CATEGORY: "/admin/add-category",
   LNK_LOGOUT: "/22012000/login/logout",
 
   DDL_PROFILE: "#navbarDropdownProfile",
