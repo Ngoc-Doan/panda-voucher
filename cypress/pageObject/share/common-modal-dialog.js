@@ -1,5 +1,4 @@
 export const modalDialog = {
-
   HDR_LOGOUT: "//a[contains(text(),'Đăng xuất')]",
   HDR_MAIN: "//a[contains(text(),'Trang chủ')]",
   HDR_CART: "(//a[contains(text(),'Giỏ hàng')])[1]",
@@ -9,7 +8,7 @@ export const modalDialog = {
   TXT_USERNAME: '#login_form > [type="text"]',
   TXT_PASSWORD: '#login_form > [type="password"]',
 
-  BTN_LOGIN: '#login-button',
+  BTN_LOGIN: "#login-button",
 
   typeUsername(username) {
     cy.get(this.TXT_USERNAME).type(username);
@@ -21,8 +20,8 @@ export const modalDialog = {
     return this;
   },
 
-  clickLogout(){
-    cy.xpath(this.HDR_LOGOUT).click();
+  clickLogout() {
+    cy.xpath(this.HDR_LOGOUT).scrollIntoView().click({ force: true });
     return this;
   },
 
@@ -30,25 +29,24 @@ export const modalDialog = {
     cy.get(this.BTN_LOGIN).click();
     return this;
   },
-  
-  clickMainPage(){
+
+  clickMainPage() {
     cy.xpath(this.HDR_MAIN).click();
     return this;
   },
-  
-  clickCartPage(){
+
+  clickCartPage() {
     cy.xpath(this.HDR_CART).click();
     return this;
   },
 
-  clickPaymentPage(){
+  clickPaymentPage() {
     cy.xpath(this.HDR_PAYMENT).click();
     return this;
   },
 
-  clickContactPage(){
+  clickContactPage() {
     cy.xpath(this.HDR_CONTACT).click();
     return this;
-  }
-
-}
+  },
+};

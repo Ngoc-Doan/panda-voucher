@@ -10,9 +10,20 @@ export const adminStaffsListPage = {
   },
 
   clickEditStaff(staff) {
-    let BTN_EDIT = `//td[contains(text(),'${staff.name}')]//following-sibling::*//button[@data-original-title="Chỉnh sửa thông tin nhân viên']`;
-    cy.xpath(BTN_EDIT).click({ force: true }).wait(200);
+    let BTN_EDIT = `//td[contains(text(),'${staff.name}')]`;
+    cy.xpath(BTN_EDIT)
+      .parent()
+      .find(
+        "button[title][data-original-title='Chỉnh sửa thông tin nhân viên'] > a"
+      )
+      .click({ force: true })
+      .wait(500);
     return this;
+  },
+
+  shouldNotExist(staff) {
+    let TXT_STAFF_NAME = `//td[contains(text(),'${staff.name}')]`;
+    cy.xpath(TXT_STAFF_NAME).should("not.exist");
   },
 
   clickConfirmDetele() {

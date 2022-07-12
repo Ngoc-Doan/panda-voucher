@@ -28,10 +28,16 @@ import { adminLoginPage } from "../../cypress/pageObject/admin/adminLoginPage";
 import { adminAddStaffPage } from "../../cypress/pageObject/admin/adminAddStaffPage";
 import { adminAuthorizeUserPage } from "../../cypress/pageObject/admin/adminAuthorizeUserPage";
 import { adminStaffsListPage } from "../../cypress/pageObject/admin/adminStaffsListPage";
+import { adminEditStaffPage } from "../../cypress/pageObject/admin/adminEditStaffPage";
 import { common } from "../../cypress/pageObject/admin/common";
 
 Cypress.Commands.add("logout", () => {
   modalDialog.clickLogout();
+});
+
+Cypress.Commands.add("logoutByLink", () => {
+  cy.visit(common.LNK_LOGOUT);
+  cy.url().should("include", Cypress.env("admin_login"));
 });
 
 Cypress.Commands.add("login", () => {
@@ -70,15 +76,42 @@ Cypress.Commands.add("addStaff", (staff) => {
 Cypress.Commands.add("deleteStaff", (staff) => {
   cy.contains(staff.name).scrollIntoView();
   adminStaffsListPage.clickDeleteStaff(staff).clickConfirmDetele();
-  cy.wait(500);
+  cy.wait(1000);
+});
+
+Cypress.Commands.add("editStaff", (oldStaff, newStaff) => {
+  cy.contains(oldStaff.name).scrollIntoView();
+  adminStaffsListPage.clickEditStaff(oldStaff);
+  cy.url().should("include", "/edit-user");
+
+  adminEditStaffPage
+    .typeEmail(newStaff.email)
+    .typeName(newStaff.name)
+    .typeURL(newStaff.url)
+    .typeAddress(newStaff.address)
+    .typePostalCode(newStaff.postalCode)
+    .typeSalary(newStaff.salary)
+    .typeCity(newStaff.city)
+    .typeDistrict(newStaff.district)
+    .typePhone(newStaff.phone)
+    .typeDescription(newStaff.description)
+    .typeAdminPassword(Cypress.env("pass_admin"))
+    .clickUpdateStaff();
+  cy.wait(1000);
 });
 
 Cypress.Commands.add("authorizeStaff", (staff) => {
   cy.visit(common.LNK_AUTHORIZATION);
-  adminAuthorizeUserPage
-    .selectStaff(staff)
-    .authorizeMultipleRightFor(staff)
-    .typePassword(Cypress.env("pass_admin"))
-    .clickUpdate();
-  cy.wait(500);
+
+  if (staff.right.length == 0) {
+    cy.log("Không có quyển nào hết");
+    cy.visit(common.LNK_STAFF);
+  } else {
+    adminAuthorizeUserPage
+      .selectStaff(staff)
+      .authorizeMultipleRightFor(staff)
+      .typePassword(Cypress.env("pass_admin"))
+      .clickUpdate();
+    cy.wait(500);
+  }
 });
