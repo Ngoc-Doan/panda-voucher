@@ -7,8 +7,7 @@ require("cypress-xpath");
 
 
 //run test case add voucher
-import "../admin-voucher/add-voucher.cy"
-
+import "./add-voucher.cy";
 
 let todayDate = new Date();
 let modifyDate = addDays(todayDate, 25);
@@ -20,14 +19,6 @@ describe('MODULE VOUCHERS LIST', () => {
 
     cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
     cy.url().should("include", common.LNK_DASHBOARD);
-  });
-
-
-  it('Detail voucher', () => {
-    cy.visit(common.LNK_VOUCHERS).wait(500);
-    
-    adminVouchersListPage
-      .clickDetail();
   });
 
 

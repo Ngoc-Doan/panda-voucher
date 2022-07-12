@@ -6,7 +6,7 @@ import "../admin-order/order.cy"
 
 describe('RECEIVED ORDER', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login().wait(500);
   });
 
 

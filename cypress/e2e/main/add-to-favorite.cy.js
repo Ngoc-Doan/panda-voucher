@@ -7,23 +7,17 @@ describe('MODULE MAIN PAGE - ADD TO FAVORITE LIST', () => {
   beforeEach(() => {
     cy.login();
   });
-  
-
-  it('View main page', () => {
-    cy.logout();
-    modalDialog
-      .clickMainPage();
-  });
 
 
   it('Add to favorite without login', () => {
-    cy.logout();
+    cy.logout().wait(500);
+
     modalDialog
       .clickMainPage();
     
     mainPage
       .clickAddToFavorite()
-      .shouldShowMessageAddToCart('Vui lòng đăng nhập');
+      .shouldShowMessageAddToFavorite('Vui lòng đăng nhập');
   });
 
 
@@ -31,11 +25,9 @@ describe('MODULE MAIN PAGE - ADD TO FAVORITE LIST', () => {
     mainPage
       .clickAddToFavorite()
       .shouldShowMessageAddToFavorite('Thêm sản phẩm vào mục ưu thích thành công');
+
+    cy.logout().wait(500);
   });
 
-
-  afterEach(() => {
-    cy.logout();
-  });
 });
 

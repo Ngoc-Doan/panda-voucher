@@ -1,3 +1,5 @@
+import { common } from "../../pageObject/admin/common";
+import { adminCustomerPage } from "../../pageObject/admin/adminCustomerPage";
 import { registerPage } from "../../pageObject/registerPage";
 require("cypress-xpath");
 
@@ -13,24 +15,14 @@ describe('Register account', () => {
     cy.get('@user').then((user) => {
       registerPage
         .typeName('Mỹ Hà')
-        .typeUsername(user.register[0].username+`${Math.floor(Math.random() * 100) + 1}`)
-        .typeEmail(`hangocmy${Math.floor(Math.random() * 100) + 1}@gmail.com`)
+        .typeUsername(user.register[0].username+`${Math.floor(Math.random() * 1000) + 1}`)
+        .typeEmail(`hangocmy${Math.floor(Math.random() * 1000) + 1}@gmail.com`)
         .typePassword(user.register[0].password)
         .typeRe_Password(user.register[0].re_password)
         .clickRegister()
         .shouldShowErrorMessage('Đăng ký người dùng mới thành công');
     });
-
-    //cy.wait(500);
-    //cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
-    //cy.url().should("include", "/admin/dashboard");
-    //cy.wait(500);
-    //cy.visit('/admin/customers');
-    //cy.wait(500);
-    //cy.xpath("(//i[@class='material-icons'][normalize-space()='delete'])").last().click();
-    //cy.wait(500);
-    //cy.get('#btn-delete-user-customer-modal').click()
-  });
+});
 
 
   it('Should show error message when registering an already existing username', () => {
@@ -46,6 +38,7 @@ describe('Register account', () => {
     });
   });
 
+
   it('Should show error message when registering an already existing email', () => {
     cy.get('@user').then((user) => {
       registerPage
@@ -58,6 +51,7 @@ describe('Register account', () => {
         .shouldShowErrorMessage('Username người dùng đăng ký đã tồn tại');
     });
   });
+
 
   it('Should show error message when registering a password shorter than 6 characters', () => {
     cy.get('@user').then((user) => {
@@ -72,6 +66,7 @@ describe('Register account', () => {
     });
   });
 
+
   it('Should show error message when registering a password does not match', () => {
     cy.get('@user').then((user) => {
       registerPage
@@ -84,7 +79,20 @@ describe('Register account', () => {
         .shouldShowErrorMessage('Xác thực password không giống với password vừa nhập');
     });
   });
-
-
 });
 
+
+describe('MODULE ADMIN CUSTOMER', () => {
+  beforeEach(() => {
+    cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin")).wait(500);
+    cy.url().should("include", common.LNK_DASHBOARD);
+  });
+
+
+  it('Delete customer successfully', () => {
+    cy.visit(common.LNK_CUSTOMER).wait(500);
+    adminCustomerPage
+      .clickDelete()
+      .clickConfirmDetele();
+  });
+});

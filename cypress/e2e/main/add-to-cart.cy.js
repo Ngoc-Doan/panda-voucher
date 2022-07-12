@@ -5,19 +5,21 @@ require("cypress-xpath");
 
 describe('MODULE MAIN PAGE - ADD TO CART', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login().wait(500);
   });
 
 
   it('View main page', () => {
-    cy.logout();
+    cy.logout().wait(500);
+
     modalDialog
       .clickMainPage();
   });
 
 
   it('Add to cart without login', () => {
-    cy.logout();
+    cy.logout().wait(500);
+
     modalDialog
       .clickMainPage();
     
@@ -29,10 +31,12 @@ describe('MODULE MAIN PAGE - ADD TO CART', () => {
 
 
   it('Add to cart successfully', () => {
-      mainPage
-        .clickVoucher()
-        .clickAddToCart()
-        .shouldShowMessageAddToCart('Thêm sản phẩm vào giỏ hàng thành công');
+    mainPage
+      .clickVoucher()
+      .clickAddToCart()
+      .shouldShowMessageAddToCart('Thêm sản phẩm vào giỏ hàng thành công');
+
+    cy.logout().wait(500);
   });
 
 
@@ -41,11 +45,9 @@ describe('MODULE MAIN PAGE - ADD TO CART', () => {
       .clickVoucher()
       .clickAddToCart()
       .shouldShowMessageAddToCart('Thêm sản phẩm vào giỏ hàng thành công');
+
+    cy.logout().wait(500);
   });
 
-
-  afterEach(() => {
-    cy.logout();
-  });
 });
 

@@ -8,7 +8,7 @@ require("cypress-xpath");
 describe('ADD TO CART AND PURCHASE', () => {
   beforeEach(() => {
     cy.fixture('create.json').as('create');
-    cy.login();
+    cy.login().wait(500);
   });
 
 
@@ -21,7 +21,8 @@ describe('ADD TO CART AND PURCHASE', () => {
 
 
   it('Type address information and payment', () => {
-    modalDialog.clickCartPage();
+    modalDialog
+      .clickCartPage();
 
     cy.get('@create').then((create) => {
       cartPage
@@ -51,7 +52,7 @@ describe('ADD TO CART AND PURCHASE', () => {
 
 describe('MODULE PAYMENT', () => {
   beforeEach(() => {
-    cy.login();
+    cy.login().wait(500);
   });
 
 
@@ -62,7 +63,8 @@ describe('MODULE PAYMENT', () => {
 
 
   it('Click last order code, cancel purchase order and confirm no', () => {
-    modalDialog.clickPaymentPage();
+    modalDialog
+      .clickPaymentPage();
     
     paymentPage
       .clickLastOrder()
@@ -72,17 +74,17 @@ describe('MODULE PAYMENT', () => {
 
 
   it('Click last order code, cancel purchase order and confirm yes', () => {
-    modalDialog.clickPaymentPage();
+    modalDialog
+      .clickPaymentPage();
     
     paymentPage
       .clickLastOrder()
       .clickCancel()
-      .clickConfirmYes()
-      .shouldShowMessageSuccess('Hủy đơn hàng thành công');
+      .clickConfirmYes();
   });
 
 
   afterEach(() => {
-    cy.logout();
+    cy.logout().wait(500);
   });
 });
