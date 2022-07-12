@@ -100,30 +100,7 @@ describe("Admin - Authentication", () => {
 
       cy.visit(common.LNK_EDIT_USER).wait(200);
       cy.contains("Đinh Thức").should("be.visible");
-      // .visit(common.LNK_AUTHORIZATION)
-      // .shouldShow("Phân quyền nhân viên")
-      // .visit(common.LNK_STAFF)
-      // .shouldShow("Thông tin cơ bản của nhân viên")
-      // .visit(common.LNK_CUSTOMER)
-      // .shouldShow("Danh sách tài khoản khách hàng")
-      // .visit(common.LNK_ORDER)
-      // .url()
-      // .should("include", common.LNK_ORDER)
-      // .visit(common.LNK_VOUCHER)
-      // .url()
-      // .should("include", common.LNK_VOUCHER)
-      // .visit(common.LNK_SUPPORT)
-      // .shouldShow("Thông tin cơ bản, hỏi đáp của khách hàng")
-      // .visit(common.LNK_REVIEWS)
-      // .shouldShow("Danh sách đánh giá của khách hàng")
-      // .visit(common.LNK_ADD_STAFF)
-      // .shouldShow("Thêm nhân viên mới")
-      // .visit(common.LNK_ADD_CATEGORY)
-      // .shouldShow("Thêm các danh mục mới của sản phẩm")
-      // .visit(common.LNK_ADD_BRAND)
-      // .shouldShow("Thêm thương hiệu của sản phẩm")
-      // .visit(common.LNK_CHANGE_PASSWORD)
-      // .shouldShow("Thay đổi mật khẩu người dùng");
+
     });
   });
 
