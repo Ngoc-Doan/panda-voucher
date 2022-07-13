@@ -4,7 +4,7 @@ require("cypress-xpath");
 describe('MODULE BLOG', () => {
   
   beforeEach(() => {
-    cy.login();
+    cy.login().wait(500);
   });
 
 
@@ -19,11 +19,5 @@ describe('MODULE BLOG', () => {
       .clickBlog()
       .clickDetailBlog();
   });
-
-
-  //afterEach(() => {
-  //  cy.logout();
-  //});
-
 });
 
