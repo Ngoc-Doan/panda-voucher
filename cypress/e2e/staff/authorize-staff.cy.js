@@ -44,7 +44,8 @@ describe("Admin - Authorize staff", () => {
   it("Verify that Admin HR (manage staff-client) user is authorized to manage user ", () => {
     cy.get("@staff").then((staff) => {
       //prepare test data
-      cy.addStaff(staff.add[0]).url().should("include", common.LNK_STAFF);
+      cy.addStaff(staff.add[0]);
+      cy.url().should("include", common.LNK_STAFF);
 
       // steps
       cy.contains(staff.add[0].name)
@@ -101,7 +102,8 @@ describe("Admin - Authorize staff", () => {
   it("Verify that Admin (manage voucher) user is authorized to manage voucher ", () => {
     cy.get("@staff").then((staff) => {
       //prepare test data
-      cy.addStaff(staff.add[1]).url().should("include", common.LNK_STAFF);
+      cy.addStaff(staff.add[1]);
+      cy.url().should("include", common.LNK_STAFF);
 
       // steps
       cy.contains(staff.add[1].name)
@@ -160,7 +162,8 @@ describe("Admin - Authorize staff", () => {
   it("Verify that Seller user is authorized to access orders ", () => {
     cy.get("@staff").then((staff) => {
       //prepare test data
-      cy.addStaff(staff.add[2]).url().should("include", common.LNK_STAFF);
+      cy.addStaff(staff.add[2]);
+      cy.url().should("include", common.LNK_STAFF);
 
       // steps
       cy.contains(staff.add[2].name)
@@ -220,7 +223,8 @@ describe("Admin - Authorize staff", () => {
   it("Verify that Admin Seller (manage orders) user is authorized to manage orders ", () => {
     cy.get("@staff").then((staff) => {
       //prepare test data
-      cy.addStaff(staff.add[3]).url().should("include", common.LNK_STAFF);
+      cy.addStaff(staff.add[3]);
+      cy.url().should("include", common.LNK_STAFF);
 
       // steps
       cy.contains(staff.add[3].name)
@@ -280,7 +284,8 @@ describe("Admin - Authorize staff", () => {
   it("Verify that Agent (Contact Center) user is authorized to take care customer's request ", () => {
     cy.get("@staff").then((staff) => {
       //prepare test data
-      cy.addStaff(staff.add[4]).url().should("include", common.LNK_STAFF);
+      cy.addStaff(staff.add[4]);
+      cy.url().should("include", common.LNK_STAFF);
 
       // steps
       cy.contains(staff.add[4].name)

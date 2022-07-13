@@ -27,8 +27,18 @@ export const adminEditStaffPage = {
     return this;
   },
 
+  clearEmail() {
+    cy.get(this.TXT_EMAIL).clear();
+    return this;
+  },
+
   typeName(name) {
     cy.get(this.TXT_NAME).clear().type(name);
+    return this;
+  },
+
+  clearName() {
+    cy.get(this.TXT_NAME).clear();
     return this;
   },
 
@@ -37,8 +47,18 @@ export const adminEditStaffPage = {
     return this;
   },
 
+  clearURL() {
+    cy.get(this.TXT_URL).clear();
+    return this;
+  },
+
   typeAddress(address) {
     cy.get(this.TXT_ADDRESS).clear().type(address);
+    return this;
+  },
+
+  clearAddress() {
+    cy.get(this.TXT_ADDRESS).clear();
     return this;
   },
 
@@ -47,8 +67,18 @@ export const adminEditStaffPage = {
     return this;
   },
 
+  clearPostalCode() {
+    cy.get(this.TXT_POSTCODE).clear();
+    return this;
+  },
+
   typeCity(city) {
     cy.get(this.TXT_CITY).clear().type(city);
+    return this;
+  },
+
+  clearCity() {
+    cy.get(this.TXT_CITY).clear();
     return this;
   },
 
@@ -57,13 +87,28 @@ export const adminEditStaffPage = {
     return this;
   },
 
+  clearDistrict() {
+    cy.get(this.TXT_DISTRICT).clear();
+    return this;
+  },
+
   typePhone(phone) {
     cy.get(this.TXT_PHONE).clear().type(phone);
     return this;
   },
 
+  clearPhone() {
+    cy.get(this.TXT_PHONE).clear();
+    return this;
+  },
+
   typeSalary(number) {
     cy.get(this.TXT_SALARY).clear().type(number);
+    return this;
+  },
+
+  clearSalary() {
+    cy.get(this.TXT_SALARY).clear();
     return this;
   },
 

@@ -7,42 +7,42 @@ require("cypress-xpath");
 describe("Admin - Delete staff", () => {
   beforeEach(() => {
     cy.fixture("staff.json").as("staff");
+    cy.fixture("user.json").as("user");
 
-    cy.log("LOGIN");
     cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
     cy.url().should("include", "/admin/dashboard");
-
-    cy.log("ADD NEW STAFF");
-    cy.get("@staff").then((staff) => {
-      cy.addStaff(staff.delete[0]);
-      cy.url().should("include", common.LNK_STAFF);
-    });
   });
 
-  it.only("Verify that Admin (full-control) edit staff successfully", () => {
+  it("Verify that Admin (full-control) edit staff successfully", () => {
     cy.get("@staff").then((staff) => {
       cy.visit(common.LNK_STAFF).wait(200);
+
+      cy.addStaff(staff.delete[0]);
+      cy.url().should("include", common.LNK_STAFF);
 
       cy.contains(staff.delete[0].name).scrollIntoView();
       adminStaffsListPage
         .clickDeleteStaff(staff.delete[0])
-        .clickConfirmDetele();
-      cy.wait(1000);
+        .clickConfirmDetele()
+        .shouldNotExist(staff.delete[0].name);
 
-      adminStaffsListPage.shouldNotExist(staff.delete[0].name);
+      cy.logoutByLink()
+        .adminLogin(staff.delete[0].username, staff.delete[0].password)
+        .then(() => {
+          cy.get("a.message-alert-error").should("be.visible");
+          cy.url().should("include", Cypress.env("admin_login"));
+        });
     });
   });
 
-  it("Verify that warning message is shown when missing staff Name ", () => {});
-  it("Verify that warning message is shown when missing staff Social media url", () => {});
-  it("Verify that warning message is shown when missing staff Email ", () => {});
-  it("Verify that warning message is shown when entering duplicate staff Email", () => {});
-  it("Verify that warning message is shown when missing staff Phone number ", () => {});
-  it("Verify that warning message is shown when entering duplicate staff Phone number ", () => {});
-  it("Verify that warning message is shown when missing staff Salary ", () => {});
-  it("Verify that warning message is shown when missing staff Postcode", () => {});
-  it("Verify that warning message is shown when missing staff Address", () => {});
-  it("Verify that warning message is shown when missing staff City", () => {});
-  it("Verify that warning message is shown when missing staff District", () => {});
-  it("Verify that warning message is shown when missing staff confirm password", () => {});
+  it("Verify that deleting staft unsuccessfully when confirming to cancel", () => {
+    cy.get("@user").then((user) => {
+      //steps
+      cy.visit(common.LNK_STAFF).wait(200);
+      cy.contains(user.authentication[2].name).scrollIntoView();
+      adminStaffsListPage.clickDeleteStaff(staff.delete[0]).clickClose();
+      //verify
+      cy.contains(user.authentication[2].name).should("be.visible");
+    });
+  });
 });

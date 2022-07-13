@@ -93,15 +93,15 @@
 
   "edit": [
     {
-      "name": "U La Troi",
-      "email": "hangocmy002@gmail.com",
-      "username": "adminHR02",
+      "name": "Lạc Nhân Nghĩa",
+      "email": "nhannghi@gmail.com",
+      "username": "lacnghia223",
       "avatar": "adminHR.png",
       "password": "123123",
       "re_password": "123123",
-      "phone": "1234567891",
-      "salary": "12000000",
-      "url": "https://google.com",
+      "phone": "0937429402",
+      "salary": "13450000",
+      "url": "http://localhost:3000/admin/edit-user?id=60a61d9e9337c04e003f398f",
       "address": "123 ABC",
       "city": "HCM",
       "district": "7",
@@ -124,6 +124,22 @@
       "district": "7",
       "postalCode": "70000",
       "description": "Non-existed staff"
+    },
+    {
+      "name": "Đào Văn Vân",
+      "email": "daovanvan@gmail.com",
+      "username": "seller002",
+      "avatar": "seller.png",
+      "password": "123123",
+      "re_password": "123123",
+      "phone": "1987654321",
+      "salary": "12000000",
+      "url": "https://aws.com",
+      "address": "123 ABC",
+      "city": "HCM",
+      "district": "7",
+      "postalCode": "70000",
+      "description": "Create this for successfull screnario"
     }
   ],
 
