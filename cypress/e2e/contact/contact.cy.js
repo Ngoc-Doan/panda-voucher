@@ -6,17 +6,18 @@ require("cypress-xpath");
 describe('MODULE CONTACT', () => {
   beforeEach(() => {
     cy.fixture('create.json').as('create');
-    cy.login();
-    cy.wait(1000);
+    cy.login().wait(1000);
   });
 
 
-  it('Send message without login', () => {
-    cy.logout();
+  it('Send message', () => {
+    cy.logout().wait(1000);
 
     modalDialog
       .clickContactPage();
     
+    cy.wait(1000);
+
     cy.get('@create').then((create) => {
       contactPage
         .typeName(create.contact[0].name)
@@ -29,25 +30,13 @@ describe('MODULE CONTACT', () => {
   });
 
 
-  it('Send message', () => {
-    modalDialog
-      .clickContactPage();
-    
-    cy.get('@create').then((create) => {
-      contactPage
-        .typeName(create.contact[1].name)
-        .typeEmail(create.contact[1].email)
-        .typeTitle(create.contact[1].title)
-        .typeMessage(create.contact[1].message)
-        .clickSubmit()
-        .shouldShowMessage('Gửi yêu cầu thành công');
-    });
-  });
-
-
   it('Should show error message when missing add field', () => {
+    cy.logout().wait(1000);
+
     modalDialog
       .clickContactPage();
+
+    cy.wait(1000);
     
     contactPage
       .clickSubmit()
@@ -56,8 +45,12 @@ describe('MODULE CONTACT', () => {
 
 
   it('Should show error message when missing name', () => {
+    cy.logout().wait(1000);
+
     modalDialog
       .clickContactPage();
+
+    cy.wait(1000);
     
     cy.get('@create').then((create) => {
       contactPage
@@ -71,8 +64,12 @@ describe('MODULE CONTACT', () => {
 
 
   it('Should show error message when missing email', () => {
+    cy.logout().wait(1000);
+
     modalDialog
       .clickContactPage();
+
+    cy.wait(1000);
     
     cy.get('@create').then((create) => {
       contactPage
@@ -86,8 +83,12 @@ describe('MODULE CONTACT', () => {
 
 
   it('Should show error message when missing title', () => {
+    cy.logout().wait(1000);
+
     modalDialog
       .clickContactPage();
+
+    cy.wait(1000);
     
     cy.get('@create').then((create) => {
       contactPage
@@ -101,8 +102,12 @@ describe('MODULE CONTACT', () => {
 
 
   it('Should show error message when missing message', () => {
+    cy.logout().wait(1000);
+
     modalDialog
       .clickContactPage();
+
+    cy.wait(1000);
     
     cy.get('@create').then((create) => {
       contactPage

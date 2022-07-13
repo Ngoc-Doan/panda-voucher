@@ -8,27 +8,27 @@ export const contactPage = {
   BTN_SUBMIT: '#btn-submit-contact-form',
 
   typeName(name){
-    cy.xpath(this.TXT_NAME).type(name);
+    cy.xpath(this.TXT_NAME).type(name).wait(500);
     return this;
   },
 
   typeEmail(email){
-    cy.xpath(this.TXT_EMAIL).type(email);
+    cy.xpath(this.TXT_EMAIL).type(email).wait(500);
     return this;
   },
 
   typeTitle(title){
-    cy.xpath(this.TXT_TITLE).type(title);
+    cy.xpath(this.TXT_TITLE).type(title).wait(500);
     return this;
   },
 
   typeMessage(message){
-    cy.xpath(this.TXT_MESSAGE).type(message);
+    cy.xpath(this.TXT_MESSAGE).type(message).wait(500);
     return this;
   },
 
   clickSubmit(){
-    cy.get(this.BTN_SUBMIT).click();
+    cy.get(this.BTN_SUBMIT).click().wait(500);
     return this;
   },
 
