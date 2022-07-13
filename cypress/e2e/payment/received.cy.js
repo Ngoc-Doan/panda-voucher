@@ -15,7 +15,11 @@ describe('RECEIVED ORDER', () => {
     modalDialog.clickPaymentPage();
     
     paymentPage
-      .clickLastOrder()
+      .clickLastOrder();
+
+    cy.wait(500);
+
+    paymentPage
       .clickReceived();
   }); 
 });

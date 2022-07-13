@@ -73,5 +73,3 @@ describe('CONFIRM ORDER', () => {
   });
 
 });
-
-

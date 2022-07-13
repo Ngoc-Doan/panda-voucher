@@ -24,6 +24,8 @@ describe('ADD TO CART AND PURCHASE', () => {
     modalDialog
       .clickCartPage();
 
+    cy.wait(1000);
+
     cy.get('@create').then((create) => {
       cartPage
         .typeDistrict(create.checkout[0].district)
