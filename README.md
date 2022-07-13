@@ -6,7 +6,6 @@ Web được phát triển dựa trên framework Nodejs + Cloud MongoAtlas + Clo
 
 - Website quản lý bán voucher (Admin server): Quản lý các nhân viên kinh doanh, doanh số bán hàng, yêu cầu đổi trả, hủy đơn đặt hàng, chăm sóc khách hàng...
 
-
 ### CYPRESS TESTING:
 
 - Install package:
@@ -21,4 +20,4 @@ or
   `npx cypress run --e2e --browser chrome`
 
 - Run specs with GUI - Dashboard Cypress:
-  `npx cypress run --record --key f470d3b8-7c7a-4cc4-9df9-5f929483615c`
+  `npx cypress run --record --key d1be392d-58b5-4145-8817-b945eac93dee`
