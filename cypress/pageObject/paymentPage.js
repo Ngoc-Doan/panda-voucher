@@ -12,7 +12,7 @@ export const paymentPage = {
   },
 
   clickReceived(){
-    cy.scrollTo('bottom');
+    cy.scrollTo('center');
     cy.xpath(this.BTN_RECEIVED).click().wait(500);
     return this;
   },
