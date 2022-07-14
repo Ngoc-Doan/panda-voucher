@@ -16,10 +16,5 @@ describe('RECEIVED ORDER', () => {
     
     paymentPage
       .clickLastOrder();
-
-    cy.wait(500);
-
-    paymentPage
-      .clickReceived();
   }); 
 });
