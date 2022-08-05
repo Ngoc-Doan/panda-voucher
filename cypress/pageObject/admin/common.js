@@ -23,6 +23,7 @@ export const common = {
 
   DDL_PROFILE: "#navbarDropdownProfile",
   DDL_LOGOUT: "//a[contains(text(),'Đăng xuất')]",
+  DDL_INFO: "//a[contains(text(),'Thông tin')]",
 
   clickProfile() {
     cy.get(this.DDL_PROFILE).click();
@@ -31,6 +32,11 @@ export const common = {
 
   clickLogout() {
     cy.xpath(this.DDL_LOGOUT).click();
+    return this;
+  },
+
+  clickInfo() {
+    cy.xpath(this.DDL_INFO).click();
     return this;
   },
 };

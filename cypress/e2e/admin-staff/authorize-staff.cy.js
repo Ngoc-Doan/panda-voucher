@@ -44,8 +44,8 @@ describe("Admin - Authorize staff", () => {
   it("Verify that Admin HR (manage staff-client) user is authorized to manage user ", () => {
     cy.get("@staff").then((staff) => {
       //prepare test data
-      cy.addStaff(staff.add[0]);
-      cy.url().should("include", common.LNK_STAFF);
+      cy.addStaff(staff.add[0]).wait(5000);
+      cy.wait(5000).url().should("include", common.LNK_STAFF);
 
       // steps
       cy.contains(staff.add[0].name)
@@ -67,22 +67,8 @@ describe("Admin - Authorize staff", () => {
         .contains("Thông tin cơ bản của nhân viên")
         .visit(common.LNK_CUSTOMER)
         .contains("Danh sách tài khoản khách hàng")
-        // .visit(common.LNK_ORDER)
-        // .url()
-        // .should("include", common.LNK_ORDER)
-        // .visit(common.LNK_VOUCHER)
-        // .url()
-        // .should("include", common.LNK_VOUCHER)
-        // .visit(common.LNK_SUPPORT)
-        // .contains("Thông tin cơ bản, hỏi đáp của khách hàng")
-        // .visit(common.LNK_REVIEWS)
-        // .contains("Danh sách đánh giá của khách hàng")
         .visit(common.LNK_ADD_STAFF)
         .contains("Thêm nhân viên mới")
-        // .visit(common.LNK_ADD_CATEGORY);
-        // .contains("Thêm các danh mục mới của sản phẩm")
-        // .visit(common.LNK_ADD_BRAND)
-        // .contains("Thêm thương hiệu của sản phẩm")
         .visit(common.LNK_EDIT_USER)
         .contains("Hoàn thành thông tin của bạn")
         .visit(common.LNK_CHANGE_PASSWORD)
@@ -103,7 +89,7 @@ describe("Admin - Authorize staff", () => {
     cy.get("@staff").then((staff) => {
       //prepare test data
       cy.addStaff(staff.add[1]);
-      cy.url().should("include", common.LNK_STAFF);
+      cy.wait(5000).url().should("include", common.LNK_STAFF);
 
       // steps
       cy.contains(staff.add[1].name)
@@ -119,24 +105,13 @@ describe("Admin - Authorize staff", () => {
       cy.adminLogin(staff.add[1].username, staff.add[1].password);
       cy.url()
         .should("not.include", Cypress.env("admin_login"))
-        // .visit(common.LNK_AUTHORIZATION)
-        // .contains("Phân quyền nhân viên")
         .visit(common.LNK_STAFF)
         .contains("Thông tin cơ bản của nhân viên")
         .visit(common.LNK_CUSTOMER)
         .contains("Danh sách tài khoản khách hàng")
-        // .visit(common.LNK_ORDER)
-        // .url()
-        // .should("include", common.LNK_ORDER)
         .visit(common.LNK_VOUCHER)
         .url()
         .should("include", common.LNK_VOUCHER)
-        // .visit(common.LNK_SUPPORT)
-        // .contains("Thông tin cơ bản, hỏi đáp của khách hàng")
-        // .visit(common.LNK_REVIEWS)
-        // .contains("Danh sách đánh giá của khách hàng")
-        // .visit(common.LNK_ADD_STAFF)
-        // .contains("Thêm nhân viên mới")
         .visit(common.LNK_ADD_PRODUCT)
         .contains("Thêm voucher vào shop")
         .visit(common.LNK_ADD_CATEGORY)
@@ -180,30 +155,9 @@ describe("Admin - Authorize staff", () => {
       cy.url()
         .should("not.include", Cypress.env("admin_login"))
         .should("include", common.LNK_DASHBOARD)
-        // .visit(common.LNK_AUTHORIZATION)
-        // .contains("Phân quyền nhân viên")
-        // .visit(common.LNK_STAFF)
-        // .contains("Thông tin cơ bản của nhân viên")
-        // .visit(common.LNK_CUSTOMER)
-        // .contains("Danh sách tài khoản khách hàng")
         .visit(common.LNK_ORDER)
         .url()
         .should("include", common.LNK_ORDER)
-        // .visit(common.LNK_VOUCHER)
-        // .url()
-        // .should("include", common.LNK_VOUCHER)
-        // .visit(common.LNK_SUPPORT)
-        // .contains("Thông tin cơ bản, hỏi đáp của khách hàng")
-        // .visit(common.LNK_REVIEWS)
-        // .contains("Danh sách đánh giá của khách hàng")
-        // .visit(common.LNK_ADD_STAFF)
-        // .contains("Thêm nhân viên mới")
-        // .visit(common.LNK_ADD_PRODUCT)
-        // .contains("Thêm voucher vào shop")
-        // .visit(common.LNK_ADD_CATEGORY)
-        // .contains("Thêm các danh mục mới của sản phẩm")
-        // .visit(common.LNK_ADD_BRAND)
-        // .contains("Thêm thương hiệu của sản phẩm")
         .visit(common.LNK_EDIT_USER)
         .contains("Hoàn thành thông tin của bạn")
         .visit(common.LNK_CHANGE_PASSWORD)
@@ -241,10 +195,6 @@ describe("Admin - Authorize staff", () => {
       cy.url()
         .should("not.include", Cypress.env("admin_login"))
         .should("include", common.LNK_DASHBOARD)
-        // .visit(common.LNK_AUTHORIZATION)
-        // .contains("Phân quyền nhân viên")
-        // .visit(common.LNK_STAFF)
-        // .contains("Thông tin cơ bản của nhân viên")
         .visit(common.LNK_CUSTOMER)
         .contains("Danh sách tài khoản khách hàng")
         .visit(common.LNK_ORDER)
@@ -253,18 +203,6 @@ describe("Admin - Authorize staff", () => {
         .visit(common.LNK_VOUCHER)
         .url()
         .should("include", common.LNK_VOUCHER)
-        // .visit(common.LNK_SUPPORT)
-        // .contains("Thông tin cơ bản, hỏi đáp của khách hàng")
-        // .visit(common.LNK_REVIEWS)
-        // .contains("Danh sách đánh giá của khách hàng")
-        // .visit(common.LNK_ADD_STAFF)
-        // .contains("Thêm nhân viên mới")
-        // .visit(common.LNK_ADD_PRODUCT)
-        // .contains("Thêm voucher vào shop")
-        // .visit(common.LNK_ADD_CATEGORY)
-        // .contains("Thêm các danh mục mới của sản phẩm")
-        // .visit(common.LNK_ADD_BRAND)
-        // .contains("Thêm thương hiệu của sản phẩm")
         .visit(common.LNK_EDIT_USER)
         .contains("Hoàn thành thông tin của bạn")
         .visit(common.LNK_CHANGE_PASSWORD)
@@ -301,31 +239,10 @@ describe("Admin - Authorize staff", () => {
       cy.adminLogin(staff.add[4].username, staff.add[4].password);
       cy.url()
         .should("not.include", Cypress.env("admin_login"))
-        // .should("include", common.LNK_DASHBOARD)
-        // .visit(common.LNK_AUTHORIZATION)
-        // .contains("Phân quyền nhân viên")
-        // .visit(common.LNK_STAFF)
-        // .contains("Thông tin cơ bản của nhân viên")
-        // .visit(common.LNK_CUSTOMER)
-        // .contains("Danh sách tài khoản khách hàng")
-        // .visit(common.LNK_ORDER)
-        // .url()
-        // .should("include", common.LNK_ORDER)
-        // .visit(common.LNK_VOUCHER)
-        // .url()
-        // .should("include", common.LNK_VOUCHER)
         .visit(common.LNK_SUPPORT)
         .contains("Thông tin cơ bản, hỏi đáp của khách hàng")
         .visit(common.LNK_REVIEWS)
         .contains("Danh sách đánh giá của khách hàng")
-        // .visit(common.LNK_ADD_STAFF)
-        // .contains("Thêm nhân viên mới")
-        // .visit(common.LNK_ADD_PRODUCT)
-        // .contains("Thêm voucher vào shop")
-        // .visit(common.LNK_ADD_CATEGORY)
-        // .contains("Thêm các danh mục mới của sản phẩm")
-        // .visit(common.LNK_ADD_BRAND)
-        // .contains("Thêm thương hiệu của sản phẩm")
         .visit(common.LNK_EDIT_USER)
         .contains("Hoàn thành thông tin của bạn")
         .visit(common.LNK_CHANGE_PASSWORD)
@@ -404,6 +321,7 @@ describe("Admin - Authorize staff", () => {
         .wait(500);
       // log into new created account
       cy.adminLogin(staff.add[5].username, staff.add[5].password);
+
       cy.url()
         .should("not.include", Cypress.env("admin_login"))
         //verify not able to access

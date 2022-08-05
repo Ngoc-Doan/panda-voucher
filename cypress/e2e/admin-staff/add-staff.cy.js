@@ -30,10 +30,10 @@ describe("Admin - Add new staff", () => {
       //   .typeRewriteStaffPassword(staff.add[0].re_password)
       //   .typeAdminPassword(Cypress.env("pass_admin"))
       //   .clickAddNewStaff();
-      // cy.wait(5000);
+      cy.wait(10000);
 
       cy.url().should("include", common.LNK_STAFF);
-      cy.contains(staff.name).scrollIntoView().should("be.visible");
+      cy.contains(staff.add[0].name).scrollIntoView().should("be.visible");
 
       cy.deleteStaff(staff.add[0]);
     });
@@ -173,7 +173,7 @@ describe("Admin - Add new staff", () => {
 
   it("Verify that warning message is shown when entering duplicate staff Phone number", () => {
     throw new Error(
-      "User are able to add new staff with duplicate phone number"
+      "[ADMIN-Create new staff] User are able to add new staff with duplicate phone number"
     );
     cy.get("@user").then((user) => {
       cy.get("@staff").then((staff) => {

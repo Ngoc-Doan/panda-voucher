@@ -14,7 +14,7 @@ describe("Admin - Edit staff", () => {
 
   it("Verify that Admin (full-control) edit staff successfully", () => {
     cy.get("@staff").then((staff) => {
-      cy.addStaff(staff.edit[2]);
+      cy.addStaff(staff.edit[2]).wait(5000);
       cy.url().should("include", common.LNK_STAFF);
 
       cy.contains(staff.edit[2].name).scrollIntoView().should("be.visible");
@@ -181,9 +181,10 @@ describe("Admin - Edit staff", () => {
     });
   });
 
+  // ISSUE //
   it("Verify that warning message is shown when entering duplicate staff Phone number ", () => {
     throw new Error(
-      "User are able to edit new staff with duplicate phone number"
+      "[ADMIN-Edit staff] User are able to edit new staff with duplicate phone number"
     );
     cy.get("@staff").then((staff) => {
       cy.visit(common.LNK_STAFF).wait(200);

@@ -13,11 +13,11 @@ describe("Admin - Delete staff", () => {
     cy.url().should("include", "/admin/dashboard");
   });
 
-  it("Verify that Admin (full-control) edit staff successfully", () => {
+  it("Verify that Admin (full-control) delete staff successfully", () => {
     cy.get("@staff").then((staff) => {
       cy.visit(common.LNK_STAFF).wait(200);
 
-      cy.addStaff(staff.delete[0]);
+      cy.addStaff(staff.delete[0]).wait(5000);
       cy.url().should("include", common.LNK_STAFF);
 
       cy.contains(staff.delete[0].name).scrollIntoView();
@@ -38,9 +38,11 @@ describe("Admin - Delete staff", () => {
   it("Verify that deleting staft unsuccessfully when confirming to cancel", () => {
     cy.get("@user").then((user) => {
       //steps
-      cy.visit(common.LNK_STAFF).wait(200);
+      cy.visit(common.LNK_STAFF).wait(2000);
       cy.contains(user.authentication[2].name).scrollIntoView();
-      adminStaffsListPage.clickDeleteStaff(staff.delete[0]).clickClose();
+      adminStaffsListPage
+        .clickDeleteStaff(user.authentication[2].name)
+        .clickClose();
       //verify
       cy.contains(user.authentication[2].name).should("be.visible");
     });

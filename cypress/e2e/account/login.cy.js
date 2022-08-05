@@ -16,9 +16,8 @@ describe("Login with created account", () => {
       .typeUsername(Cypress.env("user_customer"))
       .typePassword(Cypress.env("pass_customer"))
       .clickLogin();
-    cy.url('/');
+    cy.url("/");
   });
-
 
   it("Should show error message when missing username", () => {
     cy.get("@user").then((user) => {
@@ -29,7 +28,6 @@ describe("Login with created account", () => {
     });
   });
 
-
   it("Should show error message when missing password", () => {
     cy.get("@user").then((user) => {
       loginPage
@@ -39,12 +37,15 @@ describe("Login with created account", () => {
     });
   });
 
-
   /*=== ISSUE ===*/
-  //it("Should show error message when missing username and password", () => {
-  //  loginPage.clickLogin().shouldShowErrorMessage("Vui lòng nhập username và password");
-  //});
-
+  it("Should show error message when missing username and password", () => {
+    throw new Error(
+      "[CLIENT] No error message is shown when login missing username and password"
+    );
+    loginPage
+      .clickLogin()
+      .shouldShowErrorMessage("Vui lòng nhập username và password");
+  });
 
   it("Should show error message when invalid username", () => {
     cy.get("@user").then((user) => {
@@ -58,7 +59,6 @@ describe("Login with created account", () => {
     });
   });
 
-
   it("Should show error message when invalid password", () => {
     cy.get("@user").then((user) => {
       loginPage
@@ -70,7 +70,6 @@ describe("Login with created account", () => {
         );
     });
   });
-
 
   it("Should show error message when invalid username and password", () => {
     cy.get("@user").then((user) => {
@@ -84,7 +83,6 @@ describe("Login with created account", () => {
     });
   });
 });
-
 
 describe("Admin - Authentication", () => {
   beforeEach(() => {
@@ -100,7 +98,6 @@ describe("Admin - Authentication", () => {
 
       cy.visit(common.LNK_EDIT_USER).wait(200);
       cy.contains("Đinh Thức").should("be.visible");
-
     });
   });
 
@@ -246,7 +243,19 @@ describe("Admin - Authentication", () => {
     });
   });
 
-  // it("Verify that it redirects to use's info page when clicking Information at top left dropdown list", () => {
+  it("Verify that it redirects to use's info page when clicking Information at top left dropdown list", () => {
+    throw new Error(
+      "[ADMIN-Login] Unable to view user information when clicking Information at top left dropdown list"
+    );
 
-  // });
+    cy.get("@user").then((user) => {
+      cy.adminLogin(
+        user.authentication[4].username,
+        user.authentication[4].password
+      ).wait(500);
+      common.clickProfile().clickInfo();
+
+      cy.url().should("include", "/user");
+    });
+  });
 });
