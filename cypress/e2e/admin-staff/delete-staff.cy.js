@@ -40,9 +40,8 @@ describe("Admin - Delete staff", () => {
       //steps
       cy.visit(common.LNK_STAFF).wait(2000);
       cy.contains(user.authentication[2].name).scrollIntoView();
-      adminStaffsListPage
-        .clickDeleteStaff(user.authentication[2].name)
-        .clickClose();
+      adminStaffsListPage.clickDeleteStaff(user.authentication[2]).clickClose();
+
       //verify
       cy.contains(user.authentication[2].name).should("be.visible");
     });

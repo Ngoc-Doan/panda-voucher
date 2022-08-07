@@ -1,23 +1,50 @@
-# PANDAS VOUCHER SHOP
-
-Web được phát triển dựa trên framework Nodejs + Cloud MongoAtlas + Cloud Cloudinary:
-
-- Website bán voucher (customer server): Cung cấp các Voucher cho khách hàng có thể lựa chọn của các doanh nghiệp kinh doanh, cửa hàng nhỏ,... trên các tỉnh thành tại Việt Nam.
-
-- Website quản lý bán voucher (Admin server): Quản lý các nhân viên kinh doanh, doanh số bán hàng, yêu cầu đổi trả, hủy đơn đặt hàng, chăm sóc khách hàng...
-
 ### CYPRESS TESTING:
+
+# RUN CYPRESS ON LOCAL
 
 - Install package:
   `npm install`
 
-- Run cypress without GUI:
+- Run app:
+  `npm start`
+
+- Run cypress with GUI:
   `npx cypress open`
+  Choose specific spec file and run
 
 or
 
-- Run all specs:
+- Run all specs without GUI:
   `npx cypress run --e2e --browser chrome`
 
-- Run specs with GUI - Dashboard Cypress:
-  `npx cypress run --record --key d1be392d-58b5-4145-8817-b945eac93dee`
+- Run specs without GUI - report on Dashboard Cypress:
+  `npx cypress run --record --key a690db61-481b-4217-a9c8-2adb54a70fac`
+
+# (CI/CD)
+
+- Check the latest action in: https://github.com/Ngoc-Doan/panda-voucher/actions
+
+# HOW TO WATCH TEST RESULT ON CYPRESS DASHBOARD:
+
+- Open browser and go to https://dashboard.cypress.io/projects/j2zxfj/runs
+- Choose latest runs and view
+
+or
+
+- Open defects list: https://github.com/users/hangocmy/projects/10/views/5
+
+# ABOUT PANDAS VOUCHER SHOP
+
+Web được phát triển dựa trên framework Nodejs + Cloud MongoAtlas + Cloud Cloudinary:
+
+- Github: https://github.com/Ngoc-Doan/panda-voucher.git
+
+- Website bán voucher (customer server): Cung cấp các Voucher cho khách hàng có thể lựa chọn của các doanh nghiệp kinh doanh, cửa hàng nhỏ,... trên các tỉnh thành tại Việt Nam.
+  http://pandasnd.azurewebsites.net/
+  Username: hangocmy
+  Password: M@123456
+
+- Website quản lý bán voucher (Admin server): Quản lý các nhân viên kinh doanh, doanh số bán hàng, yêu cầu đổi trả, hủy đơn đặt hàng, chăm sóc khách hàng...
+  http://pandasnd.azurewebsites.net/22012000/login
+  Username: admin30
+  Password: 123123

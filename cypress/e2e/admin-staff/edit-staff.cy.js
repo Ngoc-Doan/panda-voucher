@@ -12,7 +12,7 @@ describe("Admin - Edit staff", () => {
     cy.url().should("include", "/admin/dashboard");
   });
 
-  it("Verify that Admin (full-control) edit staff successfully", () => {
+  it.only("Verify that Admin (full-control) edit staff successfully", () => {
     cy.get("@staff").then((staff) => {
       cy.addStaff(staff.edit[2]).wait(5000);
       cy.url().should("include", common.LNK_STAFF);
@@ -38,7 +38,9 @@ describe("Admin - Edit staff", () => {
         .clickUpdateStaff();
       cy.wait(1000);
 
-      cy.visit(common.LNK_STAFF).wait(200).deleteStaff(staff.edit[2]);
+      cy.contains(staff.edit[1].name).scrollIntoView().should("be.visible");
+
+      cy.visit(common.LNK_STAFF).wait(200).deleteStaff(staff.edit[1]);
     });
   });
 

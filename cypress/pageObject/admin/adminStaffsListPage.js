@@ -1,5 +1,5 @@
 export const adminStaffsListPage = {
-  BTN_CLOSE: "//button[contains(text(),'Đóng')]",
+  BTN_CLOSE: "//button[contains(text(),'Đóng') and @type='button']",
   BTN_CONFIRM_DELETE:
     "button[id='btn-delete-staff-user-admin-modal'][type='button']",
 
@@ -32,7 +32,7 @@ export const adminStaffsListPage = {
   },
 
   clickClose() {
-    cy.xpath(this.BTN_CLOSE).click();
+    cy.xpath(this.BTN_CLOSE).click({ force: true });
     return this;
   },
 };
