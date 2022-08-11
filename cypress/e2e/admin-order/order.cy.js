@@ -53,11 +53,11 @@ describe("CONFIRM ORDER", () => {
     cy.url().should("include", common.LNK_DASHBOARD);
   });
 
-  it.skip("Click detail order", () => {
-    cy.visit(common.LNK_ORDER).wait(500);
+  // it.skip("Click detail order", () => {
+  //   cy.visit(common.LNK_ORDER).wait(500);
 
-    adminOrderPage.clickDetail();
-  });
+  //   adminOrderPage.clickDetail();
+  // });
 
   it("Confirmed order", () => {
     cy.visit(common.LNK_ORDER).wait(500);
