@@ -27,26 +27,26 @@ describe("Update account", () => {
     });
   });
 
-  // /*=== ISSUE ===*/
-  // it("Update profile successfully", () => {
-  //   throw new Error("[CLIENT-Edit profile] User are unable to update profile");
-  //   let r = (Math.random() + 1).toString(36).substring(7);
-  //   cy.get("@update").then((update) => {
-  //     profilePage
-  //       .clickProfile()
-  //       .clickEdit()
-  //       .typePhone(update.profile[1].phone)
-  //       .typeEmail(update.profile[1].email)
-  //       .typeWebsite(update.profile[1].website)
-  //       .typeStreet(`District ${r}${Math.floor(Math.random() * 100) + 1}`)
-  //       .typeCity(update.profile[1].city)
-  //       .typeState(update.profile[1].state)
-  //       .typeZip(update.profile[1].zip)
-  //       .typeDescription(update.profile[1].description)
-  //       .typePassword(Cypress.env("pass_customer"))
-  //       .clickUpdate();
-  //   });
-  // });
+  /*=== ISSUE ===*/
+  it("Update profile successfully", () => {
+    throw new Error("[CLIENT-Edit profile] User are unable to update profile");
+    let r = (Math.random() + 1).toString(36).substring(7);
+    cy.get("@update").then((update) => {
+      profilePage
+        .clickProfile()
+        .clickEdit()
+        .typePhone(update.profile[1].phone)
+        .typeEmail(update.profile[1].email)
+        .typeWebsite(update.profile[1].website)
+        .typeStreet(`District ${r}${Math.floor(Math.random() * 100) + 1}`)
+        .typeCity(update.profile[1].city)
+        .typeState(update.profile[1].state)
+        .typeZip(update.profile[1].zip)
+        .typeDescription(update.profile[1].description)
+        .typePassword(Cypress.env("pass_customer"))
+        .clickUpdate();
+    });
+  });
 
   afterEach(() => {
     cy.logout();

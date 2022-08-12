@@ -171,33 +171,33 @@ describe("Admin - Add new staff", () => {
     });
   });
 
-  // it("Verify that warning message is shown when entering duplicate staff Phone number", () => {
-  //   throw new Error(
-  //     "[ADMIN-Create new staff] User are able to add new staff with duplicate phone number"
-  //   );
-  //   cy.get("@user").then((user) => {
-  //     cy.get("@staff").then((staff) => {
-  //       cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
-  //       cy.url().should("include", "/admin/dashboard");
+  it("Verify that warning message is shown when entering duplicate staff Phone number", () => {
+    throw new Error(
+      "[ADMIN-Create new staff] User are able to add new staff with duplicate phone number"
+    );
+    cy.get("@user").then((user) => {
+      cy.get("@staff").then((staff) => {
+        cy.adminLogin(Cypress.env("user_admin"), Cypress.env("pass_admin"));
+        cy.url().should("include", "/admin/dashboard");
 
-  //       cy.visit(common.LNK_ADD_STAFF).wait(200);
-  //       adminAddStaffPage
-  //         .typeName(staff.add[0].name)
-  //         .typeEmail(staff.add[0].email)
-  //         .typeUsername(staff.add[0].username)
-  //         .typePhone(user.authentication[0].phone)
-  //         .typeSalary(staff.add[0].salary)
-  //         .uploadAvatar(staff.add[0].avatar)
-  //         .typeStaffPassword(staff.add[0].password)
-  //         .typeRewriteStaffPassword(staff.add[0].re_password)
-  //         .typeAdminPassword(Cypress.env("pass_admin"))
-  //         .clickAddNewStaff()
-  //         .shouldShowErrorMessage();
+        cy.visit(common.LNK_ADD_STAFF).wait(200);
+        adminAddStaffPage
+          .typeName(staff.add[0].name)
+          .typeEmail(staff.add[0].email)
+          .typeUsername(staff.add[0].username)
+          .typePhone(user.authentication[0].phone)
+          .typeSalary(staff.add[0].salary)
+          .uploadAvatar(staff.add[0].avatar)
+          .typeStaffPassword(staff.add[0].password)
+          .typeRewriteStaffPassword(staff.add[0].re_password)
+          .typeAdminPassword(Cypress.env("pass_admin"))
+          .clickAddNewStaff()
+          .shouldShowErrorMessage();
 
-  //       cy.url().should("include", common.LNK_ADD_STAFF);
-  //     });
-  //   });
-  // });
+        cy.url().should("include", common.LNK_ADD_STAFF);
+      });
+    });
+  });
 
   it("Verify that warning message is shown when missing staff Salary", () => {
     cy.get("@staff").then((staff) => {

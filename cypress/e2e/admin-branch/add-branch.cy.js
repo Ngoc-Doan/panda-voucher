@@ -79,21 +79,21 @@ describe("MODULE ADMIN BRANCH", () => {
     });
   });
 
-  // /*=== ISSUE ===*/
-  // it("Should show error message when entering a phone number less than 10 digits", () => {
-  //   throw new Error(
-  //     "[ADMIN-Create brand] No error message is shown when entering a phone number less than 10 digits"
-  //   );
-  //   cy.visit(common.LNK_ADD_BRANCH).wait(500);
+  /*=== ISSUE ===*/
+  it("Should show error message when entering a phone number less than 10 digits", () => {
+    throw new Error(
+      "[ADMIN-Create brand] No error message is shown when entering a phone number less than 10 digits"
+    );
+    cy.visit(common.LNK_ADD_BRANCH).wait(500);
 
-  //   cy.get("@branch").then((branch) => {
-  //     adminAddBranch
-  //       .typeNameBranch(branch.branch[0].name)
-  //       .typeAddressBranch(branch.branch[0].address)
-  //       .selectCityBranch(branch.branch[0].city)
-  //       .typePhoneBranch("0888")
-  //       .clickAddBranch()
-  //       .shouldShowMessage("Vui lòng nhập số điện thoại hợp lệ");
-  //   });
-  // });
+    cy.get("@branch").then((branch) => {
+      adminAddBranch
+        .typeNameBranch(branch.branch[0].name)
+        .typeAddressBranch(branch.branch[0].address)
+        .selectCityBranch(branch.branch[0].city)
+        .typePhoneBranch("0888")
+        .clickAddBranch()
+        .shouldShowMessage("Vui lòng nhập số điện thoại hợp lệ");
+    });
+  });
 });
