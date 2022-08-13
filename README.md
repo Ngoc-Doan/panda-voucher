@@ -12,6 +12,8 @@
   `npx cypress open`
   Choose specific spec file and run
 
+or
+
 - Run all specs without GUI:
   `npx cypress run --e2e --browser chrome`
 
