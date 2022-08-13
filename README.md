@@ -18,7 +18,7 @@ or
   `npx cypress run --e2e --browser chrome`
 
 - Run specs without GUI - report on Dashboard Cypress:
-  `npx cypress run --record --key a690db61-481b-4217-a9c8-2adb54a70fac`
+  `npx cypress run --record --key ba91936f-b6a9-4220-8b4d-96e4968aaa83`
 
 # (CI/CD)
 
